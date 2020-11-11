@@ -1,0 +1,4 @@
+name: "get commit message"
+runs:
+  using: "node12"
+  main: "out/index.js"

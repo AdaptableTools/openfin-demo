@@ -1,0 +1,21 @@
+.Navbar {
+  display: flex;
+  flex-flow: column;
+  background: var(--ab-color-accent);
+  color: var(--ab-color-accentlight);
+  border-bottom: 2px solid white;
+}
+
+.Navbar a {
+  color: inherit;
+  display: inline-block;
+  padding: 1rem;
+}
+
+.Navbar a.active {
+  background: var(--ab-color-accentlight);
+  color: var(--ab-color-accent);
+}
+.Navbar + * {
+  flex: 1;
+}

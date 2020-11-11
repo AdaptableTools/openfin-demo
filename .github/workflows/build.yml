@@ -1,0 +1,66 @@
+name: BUILD
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: actions/checkout@v2
+        with:
+          path: poc
+
+      - name: get commit_message
+        uses: "./poc/.github/actions/get-commit-message"
+
+      - run: echo @adaptabletools:registry=https://registry.adaptabletools.com/ > .npmrc
+      - run: echo //registry.adaptabletools.com/:_authToken=${NPM_TOKEN} >> .npmrc
+
+      - run: cp .npmrc poc
+
+      - name: Echo whoami
+        run: npm whoami --registry=https://registry.adaptabletools.com
+        working-directory: poc
+
+      - name: Executing npm install
+        run: npm i
+        working-directory: poc
+
+      - name: Building
+        run: npm run build
+        working-directory: poc
+        env:
+          CI: true
+
+      - name: checkout POC DIST repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.POC_GITHUB_TOKEN }}
+          repository: ${{ github.repository }}-dist
+          path: poc-dist
+
+      - name: move poc to poc-dist
+        run: rm -fr ./poc-dist/out && mv ./poc/out ./poc-dist
+
+      - uses: "./poc/.github/actions/git-push-action"
+        name: Push changes
+        with:
+          github_token: ${{ secrets.POC_GITHUB_TOKEN }}
+          branch: master
+          directory: poc-dist
+          repository: ${{ github.repository }}-dist
+          commit_message: ${COMMIT_MESSAGE}
