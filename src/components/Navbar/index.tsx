@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 
-import NextLink from "next/link";
 import "../../styles";
 import "./index.css";
 
@@ -19,8 +18,14 @@ function Link({ href, children }) {
 const Navbar = () => {
   return (
     <div className="Navbar">
-      <Link href="/">
-        <a>Home</a>
+      <Link href="/trade">
+        <a>Trade</a>
+      </Link>
+      <Link href="/price">
+        <a>Price</a>
+      </Link>
+      <Link href="/position">
+        <a>Position</a>
       </Link>
     </div>
   );

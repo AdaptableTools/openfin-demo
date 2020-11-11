@@ -1,0 +1,136 @@
+{
+  "devtools_port": 9090,
+  "startup_app": {
+    "name": "AdapTable_dev",
+    "description": "AdapTableOpenFin",
+    "uuid": "Openfin-demo",
+    "autoShow": true,
+    "permissions": {
+      "ExternalWindow": {
+        "wrap": true
+      },
+      "System": {
+        "getAllExternalWindows": true,
+        "launchExternalProcess": true,
+        "readRegistryValue": false,
+        "terminateExternalProcess": true,
+        "webAPIs": ["notifications", "audio", "video"]
+      }
+    }
+  },
+  "runtime": {
+    "arguments": "",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "Openfin POC",
+    "name": "Openfin POC"
+  },
+  "services": [
+    {
+      "name": "excel",
+      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json"
+    },
+    {
+      "name": "notifications"
+    }
+  ],
+  "snapshot": {
+    "windows": [
+      {
+        "defaultWidth": 800,
+        "defaultHeight": 600,
+        "defaultLeft": 0,
+        "defaultTop": 0,
+        "saveWindowState": false,
+        "backgroundThrottling": true,
+        "layout": {
+          "content": [
+            {
+              "type": "row",
+              "id": "mainRow",
+              "isClosable": true,
+              "reorderEnabled": true,
+              "title": "",
+              "content": [
+                {
+                  "type": "stack",
+                  "width": 50,
+                  "isClosable": true,
+                  "reorderEnabled": true,
+                  "title": "",
+                  "activeItemIndex": 0,
+                  "content": [
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "url": "https://localhost:3001/trade",
+                        "name": "trade"
+                      },
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "view"
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "isClosable": true,
+                  "reorderEnabled": true,
+                  "title": "",
+                  "width": 50,
+                  "content": [
+                    {
+                      "type": "stack",
+                      "height": 50,
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "",
+                      "activeItemIndex": 0,
+                      "content": [
+                        {
+                          "type": "component",
+                          "componentName": "view",
+                          "componentState": {
+                            "url": "https://localhost:3001/price",
+                            "name": "price"
+                          },
+                          "isClosable": true,
+                          "reorderEnabled": true,
+                          "title": "view"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "stack",
+                      "height": 50,
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "",
+                      "activeItemIndex": 0,
+                      "content": [
+                        {
+                          "type": "component",
+                          "componentName": "view",
+                          "componentState": {
+                            "url": "https://localhost:3001/position",
+                            "name": "position"
+                          },
+                          "isClosable": true,
+                          "reorderEnabled": true,
+                          "title": "view"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
