@@ -20,6 +20,7 @@ import { LicenseManager } from '@ag-grid-enterprise/core';
 LicenseManager.setLicenseKey(process.env.NEXT_PUBLIC_AG_GRID_LICENSE);
 
 import { getDataSource as getTrades } from '../data/trades';
+import { columnTypes } from '../data/columnTypes';
 
 // create ag-Grid Column Definitions
 const columnDefs: ColDef[] = [
@@ -105,11 +106,13 @@ const columnDefs: ColDef[] = [
 
 const rowData = getTrades({ size: 1000 });
 
-// let ag-grid know which columns and what data to use and add some other properties
 const gridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
     editable: true,
+    filter: true,
+    floatingFilter: true,
+    sortable: true,
   },
   rowData: rowData,
   components: {
@@ -118,22 +121,10 @@ const gridOptions: GridOptions = {
   sideBar: true,
   suppressMenuHide: true,
   enableRangeSelection: true,
-  onSelectionChanged: (...args) => {
-    console.log('!!!!', args);
-  },
 
-  columnTypes: {
-    // not required but helpful for column data type identification
-    abColDefNumber: {},
-    abColDefString: {},
-    abColDefBoolean: {},
-    abColDefDate: {},
-    abColDefObject: {},
-  },
+  columnTypes,
 };
 
-// build the AdaptableOptions object
-// in this example we are NOT passing in predefined config but in the real world you will ship the AdapTable with objects and permissions
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'id',
   adaptableId: 'TradeView',
@@ -160,13 +151,10 @@ const App: React.FC = () => {
         gridOptions={gridOptions}
         adaptableOptions={adaptableOptions}
         onAdaptableReady={({ adaptableApi }) => {
-          console.log('ready!!!!');
-          adaptableApi.eventApi.on('SelectionChanged', (args) => {
-            console.warn(args);
-          });
+          console.log('ready!!!!', adaptableApi);
         }}
       />
-      <div className="ag-theme-alpine" style={{ flex: 1 }}>
+      <div className="ag-theme-balham" style={{ flex: 1 }}>
         <AgGridReact
           gridOptions={gridOptions}
           modules={[...AllEnterpriseModules, ClientSideRowModelModule]}
