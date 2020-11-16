@@ -3,21 +3,21 @@
   "startup_app": {
     "name": "AdapTable_dev",
     "description": "AdapTableOpenFin POC",
-    "url": "http://localhost:8081/agGrid/openfindemo",
+    "url": "http://localhost:3001/trade",
     "uuid": "OpenfinPOC-jnhkluwepvm",
     "autoShow": true,
     "permissions": {
       "ExternalWindow": {
-          "wrap": true
+        "wrap": true
       },
       "System": {
-          "getAllExternalWindows": true,
-          "launchExternalProcess": true,
-          "readRegistryValue": false,
-          "terminateExternalProcess": true,
-          "webAPIs": ["notifications", "audio", "video"]
-        }
+        "getAllExternalWindows": true,
+        "launchExternalProcess": true,
+        "readRegistryValue": false,
+        "terminateExternalProcess": true,
+        "webAPIs": ["notifications", "audio", "video"]
       }
+    }
   },
   "runtime": {
     "arguments": "",
@@ -29,8 +29,10 @@
     "name": "Openfin POC"
   },
   "services": [
-    { "name": "excel",
-      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json" },
+    {
+      "name": "excel",
+      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json"
+    },
     {
       "name": "notifications"
     }

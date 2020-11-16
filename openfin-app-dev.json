@@ -1,41 +1,17 @@
 {
-  "devtools_port": 9090,
-  "startup_app": {
-    "name": "AdapTable_dev",
-    "description": "AdapTableOpenFin",
-    "uuid": "Openfin-demo",
-    "autoShow": true,
-    "permissions": {
-      "ExternalWindow": {
-        "wrap": true
-      },
-      "System": {
-        "getAllExternalWindows": true,
-        "launchExternalProcess": true,
-        "readRegistryValue": false,
-        "terminateExternalProcess": true,
-        "webAPIs": ["notifications", "audio", "video"]
-      }
-    }
-  },
-  "runtime": {
-    "arguments": "",
-    "version": "stable"
-  },
+  "runtime": { "arguments": "--v=1 --inspect", "version": "alpha" },
   "shortcut": {
     "company": "OpenFin",
-    "description": "Openfin POC",
-    "name": "Openfin POC"
+    "description": "Platform Demo",
+    "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+    "name": "Platform Generated App"
   },
-  "services": [
-    {
-      "name": "excel",
-      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json"
-    },
-    {
-      "name": "notifications"
-    }
-  ],
+  "platform": {
+    "uuid": "platform_prototype_generated",
+
+    "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
+    "autoShow": false
+  },
   "snapshot": {
     "windows": [
       {
@@ -48,35 +24,14 @@
         "layout": {
           "content": [
             {
-              "type": "row",
+              "type": "column",
               "id": "mainRow",
               "isClosable": true,
               "reorderEnabled": true,
               "title": "",
               "content": [
                 {
-                  "type": "stack",
-                  "width": 50,
-                  "isClosable": true,
-                  "reorderEnabled": true,
-                  "title": "",
-                  "activeItemIndex": 0,
-                  "content": [
-                    {
-                      "type": "component",
-                      "componentName": "view",
-                      "componentState": {
-                        "url": "https://localhost:3001/trade",
-                        "name": "trade"
-                      },
-                      "isClosable": true,
-                      "reorderEnabled": true,
-                      "title": "view"
-                    }
-                  ]
-                },
-                {
-                  "type": "column",
+                  "type": "row",
                   "isClosable": true,
                   "reorderEnabled": true,
                   "title": "",
@@ -94,8 +49,8 @@
                           "type": "component",
                           "componentName": "view",
                           "componentState": {
-                            "url": "https://localhost:3001/price",
-                            "name": "price"
+                            "url": "http://localhost:3001/price",
+                            "name": "Price View"
                           },
                           "isClosable": true,
                           "reorderEnabled": true,
@@ -115,14 +70,35 @@
                           "type": "component",
                           "componentName": "view",
                           "componentState": {
-                            "url": "https://localhost:3001/position",
-                            "name": "position"
+                            "url": "http://localhost:3001/position",
+                            "name": "Position View"
                           },
                           "isClosable": true,
                           "reorderEnabled": true,
                           "title": "view"
                         }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "type": "stack",
+                  "width": 50,
+                  "isClosable": true,
+                  "reorderEnabled": true,
+                  "title": "",
+                  "activeItemIndex": 0,
+                  "content": [
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "url": "http://localhost:3001/trade",
+                        "name": "Trade View"
+                      },
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "view"
                     }
                   ]
                 }
