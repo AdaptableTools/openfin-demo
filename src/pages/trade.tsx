@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Common from '../components/Common';
 
 import AdaptableReact, {
+  AdaptableApi,
   AdaptableOptions,
 } from '@adaptabletools/adaptable-react-aggrid';
 
@@ -9,107 +9,26 @@ import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src
 
 import { AgGridReact } from '@ag-grid-community/react';
 
-import {
-  AllEnterpriseModules,
-  GridOptions,
-  ClientSideRowModelModule,
-  ColDef,
-} from '@ag-grid-enterprise/all-modules';
+import { GridOptions, ColDef, GridApi } from '@ag-grid-enterprise/all-modules';
 
-import { LicenseManager } from '@ag-grid-enterprise/core';
-LicenseManager.setLicenseKey(process.env.NEXT_PUBLIC_AG_GRID_LICENSE);
-
-import { getDataSource as getTrades } from '../data/trades';
+import { createTrade, getDataSource as getTrades } from '../data/trades';
 import { columnTypes } from '../data/columnTypes';
+import { tradeColumns } from '../data/trades/columns';
+import MainLayout from '../components/MainLayout';
+import { modules } from '../components/modules';
+import { plugins } from '../components/plugins';
+import { useEffect, useRef } from 'react';
+import { useChannelData } from '../components/hooks';
 
-// create ag-Grid Column Definitions
-const columnDefs: ColDef[] = [
-  {
-    field: 'tradeId',
-    editable: false,
-    initialWidth: 110,
-    type: 'abColDefNumber',
-  },
-  {
-    field: 'instrumentId',
-    initialWidth: 150,
-    type: 'abColDefString',
-  },
-  {
-    field: 'instrumentName',
-    initialWidth: 250,
-    type: 'abColDefString',
-  },
-  {
-    field: 'notional',
-    initialWidth: 180,
-    type: 'abColDefNumber',
-  },
+const columnDefs: ColDef[] = tradeColumns;
 
-  {
-    field: 'deskId',
-    initialWidth: 120,
-    type: 'abColDefNumber',
-  },
-
-  {
-    field: 'counterparty',
-    type: 'abColDefString',
-  },
-  {
-    field: 'currency',
-    initialWidth: 150,
-    type: 'abColDefString',
-  },
-  {
-    field: 'country',
-    initialWidth: 180,
-    type: 'abColDefString',
-  },
-  {
-    field: 'changeOnYear',
-    type: 'abColDefNumber',
-  },
-  {
-    field: 'price',
-    type: 'abColDefNumber',
-  },
-  {
-    field: 'moodysRating',
-    type: 'abColDefString',
-  },
-  {
-    field: 'fitchRating',
-    type: 'abColDefString',
-  },
-  {
-    field: 'sandpRating',
-    type: 'abColDefString',
-  },
-  {
-    field: 'tradeDate',
-    type: 'abColDefDate',
-  },
-  {
-    field: 'settlementDate',
-    type: 'abColDefDate',
-  },
-  {
-    field: 'lastUpdated',
-    type: 'abColDefDate',
-  },
-  {
-    field: 'lastUpdatedBy',
-    type: 'abColDefString',
-  },
-];
-
-const rowData = getTrades({ size: 1000 });
+let rowData = getTrades({ size: 1000 });
+let lastTradeId = rowData[rowData.length - 1].tradeId;
 
 const gridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
-    editable: true,
+    editable: false,
     filter: true,
     floatingFilter: true,
     sortable: true,
@@ -126,41 +45,62 @@ const gridOptions: GridOptions = {
 };
 
 const adaptableOptions: AdaptableOptions = {
-  primaryKey: 'id',
+  primaryKey: 'tradeId',
   adaptableId: 'TradeView',
   adaptableStateKey: `${Date.now()}`,
-  predefinedConfig: {},
+  predefinedConfig: {
+    Dashboard: {
+      Tabs: [{ Name: 'Dashboard', Toolbars: ['OpenFin', 'Export', 'Layout'] }],
+    },
+  },
   userInterfaceOptions: {
     showAdaptableToolPanel: true,
   },
+  plugins,
 };
 
 const App: React.FC = () => {
+  const { dispatch } = useChannelData();
+  useEffect(() => {
+    dispatch('set-trades', rowData);
+
+    setInterval(() => {
+      lastTradeId++;
+      const trade = createTrade(lastTradeId);
+
+      adaptableApiRef.current.gridApi.addGridData([trade], {
+        runAsync: true,
+        callback: () => {
+          rowData = rowData.concat(trade);
+
+          console.log('done setting data', rowData.length);
+          dispatch('set-trades', rowData);
+        },
+      });
+    }, 1500);
+  }, []);
+
+  const adaptableApiRef = useRef<AdaptableApi>(null);
+  const vendorApiRef = useRef<GridApi>(null);
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexFlow: 'column',
-        height: '100vh',
-        width: '100%',
-        background: 'white',
-      }}
-    >
-      <AdaptableReact
-        style={{ flex: 'none' }}
-        gridOptions={gridOptions}
-        adaptableOptions={adaptableOptions}
-        onAdaptableReady={({ adaptableApi }) => {
-          console.log('ready!!!!', adaptableApi);
-        }}
-      />
-      <div className="ag-theme-balham" style={{ flex: 1 }}>
-        <AgGridReact
+    <>
+      <MainLayout>
+        <AdaptableReact
+          style={{ flex: 'none' }}
           gridOptions={gridOptions}
-          modules={[...AllEnterpriseModules, ClientSideRowModelModule]}
+          modules={modules}
+          adaptableOptions={adaptableOptions}
+          onAdaptableReady={({ adaptableApi, vendorGrid }) => {
+            console.log('ready!!!!', adaptableApi);
+            adaptableApiRef.current = adaptableApi;
+            vendorApiRef.current = vendorGrid.api;
+            (globalThis as any).adaptableApi = adaptableApi;
+          }}
         />
-      </div>
-    </div>
+
+        <AgGridReact gridOptions={gridOptions} modules={modules} />
+      </MainLayout>
+    </>
   );
 };
 

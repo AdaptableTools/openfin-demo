@@ -3,7 +3,7 @@ import {
   generateRandomDateAndTime,
   getRandomItem,
   getMoodysRatings,
-  getInstrumentId,
+  getInstrumentIds,
   getInstrumentName,
   getNotionals,
   generateRandomInt,
@@ -14,7 +14,7 @@ import {
   getRatingFromMoodyRating,
   addDays,
   getNames,
-} from './utils';
+} from '../utils';
 
 type DataSourceParams = {
   size: number;
@@ -29,12 +29,32 @@ export const getDataSource = ({ size }: DataSourceParams) => {
   return trades;
 };
 
-const createTrade = (index: number) => {
-  var price = getMeaningfulDouble();
-  var tradeDate = generateRandomDateAndTime(-1000, 1000);
-  var moodyRating = getRandomItem(getMoodysRatings());
-  var instrumentId = getRandomItem(getInstrumentId());
-  var trade = {
+export type Trade = {
+  tradeId: number;
+  instrumentId: string;
+  instrumentName: string;
+  notional: number;
+  deskId: number;
+  counterparty: string;
+  currency: string;
+  country: string;
+  changeOnYear: number;
+  price: number;
+  moodysRating: string;
+  fitchRating: string;
+  sandpRating: string;
+  tradeDate: Date;
+  settlementDate: Date;
+  lastUpdated: Date;
+  lastUpdatedBy: string;
+};
+
+export const createTrade = (index: number): Trade => {
+  const price = getMeaningfulDouble();
+  const tradeDate = generateRandomDateAndTime(-1000, 1000);
+  const moodyRating = getRandomItem(getMoodysRatings());
+  const instrumentId = getRandomItem(getInstrumentIds());
+  return {
     tradeId: index,
     instrumentId: instrumentId,
     instrumentName: getInstrumentName(instrumentId),
@@ -53,5 +73,4 @@ const createTrade = (index: number) => {
     lastUpdated: generateRandomDateAndTime(-7, 0),
     lastUpdatedBy: getRandomItem(getNames()),
   };
-  return trade;
 };

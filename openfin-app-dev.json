@@ -1,5 +1,8 @@
 {
-  "runtime": { "arguments": "--v=1 --inspect", "version": "alpha" },
+  "runtime": {
+    "arguments": "",
+    "version": "stable"
+  },
   "shortcut": {
     "company": "OpenFin",
     "description": "Platform Demo",
@@ -12,6 +15,15 @@
     "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
     "autoShow": false
   },
+  "services": [
+    {
+      "name": "excel",
+      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json"
+    },
+    {
+      "name": "notifications"
+    }
+  ],
   "snapshot": {
     "windows": [
       {

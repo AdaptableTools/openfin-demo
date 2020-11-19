@@ -1,12 +1,14 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '../components/Navbar';
+import type { Price } from '../data/prices';
+import type { Trade } from '../data/trades';
 
 const DynamicComponent = dynamic(() => import('./price'), { ssr: false });
 
 async function makeProvider() {
   let x = 0;
-  const channelName = 'counter';
+  const channelName = 'AdapTable';
   const provider = await fin.InterApplicationBus.Channel.create(channelName);
   provider.onConnection((identity, payload) => {
     console.log('onConnection identity: ', JSON.stringify(identity));
@@ -15,21 +17,35 @@ async function makeProvider() {
   provider.onDisconnection((identity) => {
     console.log('onDisconnection identity: ', JSON.stringify(identity));
   });
-  provider.register('get', (payload, identity) => {
-    console.log('Value of x', payload, ', requested from', identity);
-    return x;
-  });
-  provider.register('set', (payload) => {
-    x = payload;
-    console.log('SETTING', payload);
 
-    provider.publish('get', payload);
-    return x;
+  let prices: Price[] = [];
+  let trades: Trade[] = [];
+
+  const getData = () => {
+    return {
+      prices,
+      trades,
+    };
+  };
+
+  provider.register('prices', () => prices);
+  provider.register('trades', () => trades);
+  provider.register('data', () => getData());
+  provider.register('refresh', () => {
+    provider.publish('data', getData());
   });
-  provider.register('increment', () => ++x);
-  provider.register('incrementBy', (payload) => (x += payload.amount));
-  provider.register('throwError', () => {
-    throw new Error('Error in channelProvider');
+  provider.register('set-prices', (newPrices: Price[]) => {
+    prices = newPrices;
+
+    provider.publish('data', getData());
+    return newPrices;
+  });
+  provider.register('set-trades', (newTrades: Trade[]) => {
+    trades = newTrades;
+
+    provider.publish('trades', newTrades);
+    provider.publish('data', getData());
+    return newTrades;
   });
 }
 

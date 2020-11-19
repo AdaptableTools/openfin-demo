@@ -61,7 +61,7 @@ export const getNotionals = () => {
   var notionals = [1000000, 2000000, 5000000, 7500000, 10000000];
   return notionals;
 };
-export const getInstrumentId = () => {
+export const getInstrumentIds = () => {
   var instruments = [
     'AAPL',
     'ABBV',
@@ -167,6 +167,10 @@ export const getInstrumentId = () => {
     'XOM',
   ];
   return instruments;
+};
+export const getBidOfferSpreads = () => {
+  var bo = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5];
+  return bo;
 };
 
 // for s&P and Fitch we got one of 3 ratings based off the moodys rating
@@ -475,6 +479,19 @@ export const getCounterparties = () => {
 export const getCurrencies = () => {
   var currencies = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'AUD', 'ZAR'];
   return currencies;
+};
+
+export const groupByAndSum = (
+  array: any[],
+  propGroupby: string,
+  propAggreg: string
+) => {
+  return array.reduce((acc, item) => {
+    var key = item[propGroupby];
+    var propToAdd = item[propAggreg];
+    acc[key] = (acc[key] || 0) + propToAdd;
+    return acc;
+  }, {});
 };
 
 export const getCountries = () => {
