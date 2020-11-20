@@ -6,7 +6,7 @@ import type { Price } from '../prices';
 export type Position = {
   instrumentId: string;
   position: number;
-  currency: string;
+
   currentPrice: number;
   closingPrice: number;
   pnl: number;
@@ -16,21 +16,24 @@ export const getPositions = (
   trades: Trade[],
   prices: Price[]
 ) => {
-  const positionSum = groupByAndSum(trades, 'instrumentId', 'notional');
+  const positionSum = groupByAndSum(
+    trades,
+    'instrumentId',
+    'notional',
+    (t: Trade) => t.status === 'active'
+  );
   const positions = [];
 
   for (let instrument of instruments) {
     let priceObj: Price = prices.find((y) => y.instrumentId === instrument);
     if (priceObj) {
+      const position = positionSum[instrument] || 0;
       positions.push({
         instrumentId: instrument,
-        position: positionSum[instrument] || 0,
-        currency: getRandomItem(getCurrencies()),
+        position,
         currentPrice: priceObj.price,
         closingPrice: priceObj.closingPrice,
-        pnl:
-          (priceObj.price - priceObj.closingPrice) * positionSum[instrument] ||
-          0,
+        pnl: (priceObj.price - priceObj.closingPrice) * position,
       });
     }
   }

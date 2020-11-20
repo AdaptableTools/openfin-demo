@@ -14,6 +14,7 @@ import {
   getRatingFromMoodyRating,
   addDays,
   getNames,
+  generateRandomBool,
 } from '../utils';
 
 type DataSourceParams = {
@@ -34,43 +35,48 @@ export type Trade = {
   instrumentId: string;
   instrumentName: string;
   notional: number;
-  deskId: number;
   counterparty: string;
   currency: string;
-  country: string;
-  changeOnYear: number;
-  price: number;
-  moodysRating: string;
-  fitchRating: string;
-  sandpRating: string;
+  buySell: 'buy' | 'sell';
+  rating: string;
+  status: 'active' | 'inactive';
   tradeDate: Date;
   settlementDate: Date;
   lastUpdated: Date;
   lastUpdatedBy: string;
 };
 
-export const createTrade = (index: number): Trade => {
+export const createTrade = (
+  index: number,
+  overrides?: Partial<Trade>
+): Trade => {
   const price = getMeaningfulDouble();
-  const tradeDate = generateRandomDateAndTime(-1000, 1000);
+  const tradeDate = generateRandomDateAndTime(1, 1000);
   const moodyRating = getRandomItem(getMoodysRatings());
   const instrumentId = getRandomItem(getInstrumentIds());
+  const sell = generateRandomBool();
+  const status = generateRandomBool() ? 'active' : 'inactive';
   return {
     tradeId: index,
     instrumentId: instrumentId,
     instrumentName: getInstrumentName(instrumentId),
     notional: getRandomItem(getNotionals()),
-    deskId: generateRandomInt(0, 250),
+    buySell: sell ? 'sell' : 'buy',
     counterparty: getRandomItem(getCounterparties()),
     currency: getRandomItem(getCurrencies()),
-    country: getRandomItem(getCountries()),
-    changeOnYear: getMeaningfulPositiveNegativeDouble(),
-    price: price,
-    moodysRating: moodyRating,
-    fitchRating: getRatingFromMoodyRating(moodyRating),
-    sandpRating: getRatingFromMoodyRating(moodyRating),
+    rating: moodyRating,
     tradeDate: tradeDate,
+    status,
     settlementDate: addDays(tradeDate, 3),
     lastUpdated: generateRandomDateAndTime(-7, 0),
     lastUpdatedBy: getRandomItem(getNames()),
+    ...overrides,
   };
+};
+
+export const createNewTrade = (index: number) => {
+  return createTrade(index, {
+    tradeDate: generateRandomDateAndTime(1, 1000),
+    status: 'active',
+  });
 };

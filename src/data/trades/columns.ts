@@ -1,7 +1,6 @@
 export const tradeColumns = [
   {
     field: 'tradeId',
-    editable: false,
     initialWidth: 110,
     type: 'abColDefNumber',
   },
@@ -18,15 +17,9 @@ export const tradeColumns = [
   {
     field: 'notional',
     initialWidth: 180,
+    editable: true,
     type: 'abColDefNumber',
   },
-
-  {
-    field: 'deskId',
-    initialWidth: 120,
-    type: 'abColDefNumber',
-  },
-
   {
     field: 'counterparty',
     type: 'abColDefString',
@@ -37,28 +30,7 @@ export const tradeColumns = [
     type: 'abColDefString',
   },
   {
-    field: 'country',
-    initialWidth: 180,
-    type: 'abColDefString',
-  },
-  {
-    field: 'changeOnYear',
-    type: 'abColDefNumber',
-  },
-  {
-    field: 'price',
-    type: 'abColDefNumber',
-  },
-  {
-    field: 'moodysRating',
-    type: 'abColDefString',
-  },
-  {
-    field: 'fitchRating',
-    type: 'abColDefString',
-  },
-  {
-    field: 'sandpRating',
+    field: 'rating',
     type: 'abColDefString',
   },
   {
@@ -68,6 +40,11 @@ export const tradeColumns = [
   {
     field: 'settlementDate',
     type: 'abColDefDate',
+  },
+  {
+    field: 'status',
+    type: 'abColDefString',
+    editable: true,
   },
   {
     field: 'lastUpdated',

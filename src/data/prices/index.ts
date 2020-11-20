@@ -4,6 +4,7 @@ import {
   getInstrumentIds,
   roundTo4Dp,
   getBidOfferSpreads,
+  generateRandomBool,
 } from '../utils';
 
 export const getDataSource = () => {
@@ -39,4 +40,12 @@ const createPrice = (instrument: string) => {
     bloombergBid: roundTo4Dp(bid - 0.01),
     bloombergAsk: roundTo4Dp(ask + 0.01),
   };
+};
+
+export const tickPrice = (priceObj: Price) => {
+  const numberToAdd = generateRandomBool() ? -0.5 : 0.5;
+
+  priceObj.price += numberToAdd;
+  priceObj.price = Math.max(priceObj.price, 0);
+  return priceObj;
 };

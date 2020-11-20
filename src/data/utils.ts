@@ -1,7 +1,14 @@
+import { GridApi } from '@ag-grid-enterprise/all-modules';
+
 export const generateRandomDouble = () => {
   return Math.random();
 };
 
+export const getRowData = (gridApi: GridApi) => {
+  const rowData = [];
+  gridApi.forEachNode((node) => rowData.push(node.data));
+  return rowData;
+};
 export const roundTo4Dp = (val) => {
   return Math.round(val * 10000) / 10000;
 };
@@ -484,12 +491,17 @@ export const getCurrencies = () => {
 export const groupByAndSum = (
   array: any[],
   propGroupby: string,
-  propAggreg: string
+  propAggreg: string,
+  filterFn?: (item: any) => boolean
 ) => {
   return array.reduce((acc, item) => {
-    var key = item[propGroupby];
-    var propToAdd = item[propAggreg];
-    acc[key] = (acc[key] || 0) + propToAdd;
+    const include = filterFn ? filterFn(item) : true;
+
+    if (include) {
+      var key = item[propGroupby];
+      var propToAdd = item[propAggreg];
+      acc[key] = (acc[key] || 0) + propToAdd * 1;
+    }
     return acc;
   }, {});
 };

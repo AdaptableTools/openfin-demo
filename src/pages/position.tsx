@@ -3,6 +3,7 @@ import * as React from 'react';
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
+  ColumnFilter,
 } from '@adaptabletools/adaptable-react-aggrid';
 
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
@@ -21,12 +22,13 @@ import { positionColumns } from '../data/position/columns';
 import MainLayout from '../components/MainLayout';
 import { modules } from '../components/modules';
 import { plugins } from '../components/plugins';
-import { useChannelData } from '../components/hooks';
+import { useChannelData } from '../components/hooks/useChannelData';
 import { getPositions } from '../data/position';
 import { getInstrumentIds } from '../data/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { DisplayFormat4Digits } from '../data/displayFormat';
+import { useFilters } from '../components/hooks/useFilters';
 
-// create ag-Grid Column Definitions
 const columnDefs: ColDef[] = positionColumns;
 
 const rowData = null;
@@ -55,8 +57,19 @@ const adaptableOptions: AdaptableOptions = {
   adaptableId: 'PositionView',
   adaptableStateKey: `${Date.now()}`,
   predefinedConfig: {
+    FormatColumn: {
+      FormatColumns: [
+        {
+          Scope: {
+            ColumnIds: ['pnl'],
+          },
+          DisplayFormat: DisplayFormat4Digits,
+        },
+      ],
+    },
     Dashboard: {
-      Tabs: [{ Name: 'Dashboard', Toolbars: ['OpenFin', 'Export', 'Layout'] }],
+      IsCollapsed: true,
+      Tabs: [{ Name: 'Position', Toolbars: ['SmartEdit', 'OpenFin'] }],
     },
   },
   userInterfaceOptions: {
@@ -67,9 +80,13 @@ const adaptableOptions: AdaptableOptions = {
 
 const App: React.FC = () => {
   const gridApiRef = useRef<GridApi>(null);
+  const adaptableApiRef = useRef<AdaptableApi>(null);
   const [positions, setPositions] = useState<Position[]>([]);
-  const { dispatch } = useChannelData(
-    useCallback((data) => {
+
+  useFilters(adaptableApiRef.current);
+
+  useChannelData({
+    data: useCallback((data) => {
       const positions = getPositions(
         getInstrumentIds(),
         data.trades,
@@ -77,18 +94,8 @@ const App: React.FC = () => {
       );
 
       setPositions(positions);
-    }, [])
-  );
-  const dispatchRef = useRef<any>(null);
-  dispatchRef.current = dispatch;
-  useEffect(() => {
-    setInterval(() => {
-      if (dispatchRef.current) {
-        console.log('refresh');
-        dispatchRef.current('refresh');
-      }
-    }, 1000);
-  }, []);
+    }, []),
+  });
 
   useEffect(() => {
     const { current: gridApi } = gridApiRef;
@@ -105,8 +112,8 @@ const App: React.FC = () => {
         gridOptions={gridOptions}
         adaptableOptions={adaptableOptions}
         modules={modules}
-        onAdaptableReady={({ adaptableApi, vendorGrid }) => {
-          (globalThis as any).adaptableApi = adaptableApi;
+        onAdaptableReady={({ adaptableApi }) => {
+          adaptableApiRef.current = adaptableApi;
         }}
       />
 

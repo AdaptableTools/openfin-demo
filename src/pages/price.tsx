@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import AdaptableReact, {
+  AdaptableApi,
   AdaptableOptions,
 } from '@adaptabletools/adaptable-react-aggrid';
 
@@ -10,22 +11,25 @@ import { AgGridReact } from '@ag-grid-community/react';
 
 import { GridOptions, ColDef } from '@ag-grid-enterprise/all-modules';
 
-import { getDataSource as getPrices } from '../data/prices';
+import { getDataSource as getPrices, tickPrice } from '../data/prices';
 import { columnTypes } from '../data/columnTypes';
 import { priceColumns } from '../data/prices/columns';
 import MainLayout from '../components/MainLayout';
 
 import { modules } from '../components/modules';
 import { plugins } from '../components/plugins';
-import { useChannelData } from '../components/hooks';
-import { useEffect } from 'react';
+import { useChannelData } from '../components/hooks/useChannelData';
+import { useEffect, useRef } from 'react';
+import { generateRandomInt, getRowData } from '../data/utils';
+import { DisplayFormat4Digits } from '../data/displayFormat';
+import { useFilters } from '../components/hooks/useFilters';
 
 // create ag-Grid Column Definitions
 const columnDefs: ColDef[] = priceColumns;
 
-const rowData = getPrices();
+const prices = getPrices();
 
-const gridOptions: GridOptions = {
+const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
     editable: false,
@@ -33,7 +37,7 @@ const gridOptions: GridOptions = {
     floatingFilter: true,
     sortable: true,
   },
-  rowData: rowData,
+  rowData: prices,
   components: {
     AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
   },
@@ -85,22 +89,18 @@ const adaptableOptions: AdaptableOptions = {
           Scope: {
             ColumnIds: ['bid', 'ask'],
           },
-          DisplayFormat: {
-            Formatter: 'NumberFormatter',
-            Options: {
-              FractionDigits: 4,
-            },
-          },
+          DisplayFormat: DisplayFormat4Digits,
         },
       ],
     },
     Dashboard: {
       Tabs: [
         {
-          Name: 'Dashboard',
-          Toolbars: ['SmartEdit', 'OpenFin', 'Export', 'Layout'],
+          Name: 'Price',
+          Toolbars: ['SmartEdit', 'OpenFin'],
         },
       ],
+      IsCollapsed: true,
     },
     Layout: {
       CurrentLayout: 'Price',
@@ -144,22 +144,55 @@ const adaptableOptions: AdaptableOptions = {
 };
 
 const App: React.FC = () => {
+  const adaptableApiRef = useRef<AdaptableApi>(null);
+  const gridOptionsRef = useRef<GridOptions>(null);
   const { dispatch } = useChannelData();
 
+  useFilters(adaptableApiRef.current);
+
   useEffect(() => {
-    dispatch('set-prices', rowData);
-  }, []);
+    dispatch('set-prices', prices);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const priceIndex = 0; //generateRandomInt(0, prices.length - 1);
+      const priceObject = tickPrice(prices[priceIndex]);
+
+      prices[priceIndex] = priceObject;
+
+      const { current: adaptableApi } = adaptableApiRef;
+
+      if (!adaptableApi) {
+        return;
+      }
+
+      adaptableApi.gridApi.updateGridData([priceObject], {
+        runAsync: true,
+        callback: () => {
+          dispatch('set-prices', getRowData(gridOptionsRef.current.api));
+        },
+      });
+    }, 2500);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dispatch]);
   return (
     <>
       <MainLayout>
         <AdaptableReact
           style={{ flex: 'none' }}
-          gridOptions={gridOptions}
+          gridOptions={initialGridOptions}
           adaptableOptions={adaptableOptions}
           modules={modules}
           onAdaptableReady={({ adaptableApi, vendorGrid }) => {
-            console.log('ready!!!!', adaptableApi);
+            adaptableApiRef.current = adaptableApi;
+            gridOptionsRef.current = vendorGrid;
+
             (globalThis as any).adaptableApi = adaptableApi;
+            (globalThis as any).gridOptions = vendorGrid;
 
             // adaptableApi.eventApi.on(
             //   'GridDataChanged',
@@ -192,7 +225,7 @@ const App: React.FC = () => {
           }}
         />
 
-        <AgGridReact gridOptions={gridOptions} modules={modules} />
+        <AgGridReact gridOptions={initialGridOptions} modules={modules} />
       </MainLayout>
     </>
   );

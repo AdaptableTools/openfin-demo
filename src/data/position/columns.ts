@@ -11,10 +11,6 @@ export const positionColumns: ColDef[] = [
     type: 'abColDefNumber',
   },
   {
-    field: 'currency',
-    type: 'abColDefNumber',
-  },
-  {
     field: 'currentPrice',
     type: 'abColDefNumber',
   },

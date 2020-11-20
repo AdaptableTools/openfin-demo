@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Navbar from '../components/Navbar';
 import type { Price } from '../data/prices';
 import type { Trade } from '../data/trades';
+import { ColumnFilter } from '@adaptabletools/adaptable/types';
 
 const DynamicComponent = dynamic(() => import('./price'), { ssr: false });
 
@@ -20,6 +21,7 @@ async function makeProvider() {
 
   let prices: Price[] = [];
   let trades: Trade[] = [];
+  let filters: ColumnFilter[] = [];
 
   const getData = () => {
     return {
@@ -31,8 +33,11 @@ async function makeProvider() {
   provider.register('prices', () => prices);
   provider.register('trades', () => trades);
   provider.register('data', () => getData());
-  provider.register('refresh', () => {
-    provider.publish('data', getData());
+  provider.register('set-filters', (newFilters: ColumnFilter[]) => {
+    filters = newFilters;
+
+    provider.publish('filters', filters);
+    return newFilters;
   });
   provider.register('set-prices', (newPrices: Price[]) => {
     prices = newPrices;
@@ -43,7 +48,8 @@ async function makeProvider() {
   provider.register('set-trades', (newTrades: Trade[]) => {
     trades = newTrades;
 
-    provider.publish('trades', newTrades);
+    // provider.publish('trades', newTrades);
+    console.log('published trades, not doing data');
     provider.publish('data', getData());
     return newTrades;
   });
