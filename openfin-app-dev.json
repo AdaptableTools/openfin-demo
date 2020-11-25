@@ -10,10 +10,22 @@
     "name": "Platform Generated App"
   },
   "platform": {
-    "uuid": "platform_prototype_generated",
+    "providerUrl": "http://localhost:3001/provider",
+    "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
+    "uuid": "Adaptable Demo",
+    "autoShow": false,
+    "frame": true,
+    "alwaysOnTop": true,
+    "maximizable": true,
+    "defaultHeight": 800,
+    "defaultWidth": 900,
+    "resizable": true,
 
-    "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
-    "autoShow": false
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true
+      }
+    }
   },
   "services": [
     {

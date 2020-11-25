@@ -3,6 +3,7 @@ import * as React from 'react';
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
+  GridDataChangedEventArgs,
   SearchChangedEventArgs,
 } from '@adaptabletools/adaptable-react-aggrid';
 
@@ -22,15 +23,13 @@ import { tradeColumns } from '../data/trades/columns';
 import MainLayout from '../components/MainLayout';
 import { modules } from '../components/modules';
 import { plugins } from '../components/plugins';
+import { once } from '../components/once';
 import { useEffect, useRef } from 'react';
 import { useChannelData } from '../components/hooks/useChannelData';
-import { getRowData } from '../data/utils';
+
 import { useFilters } from '../components/hooks/useFilters';
 
 const columnDefs: ColDef[] = tradeColumns;
-
-let rowData = getTrades({ size: 1000 });
-let lastTradeId = rowData[rowData.length - 1].tradeId;
 
 const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
@@ -40,7 +39,7 @@ const initialGridOptions: GridOptions = {
     floatingFilter: true,
     sortable: true,
   },
-  rowData: rowData,
+  rowData: null,
   components: {
     AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
   },
@@ -115,37 +114,64 @@ const App: React.FC = () => {
 
   useFilters(adaptableApiRef.current);
 
-  const { dispatch } = useChannelData();
-  useEffect(() => {
-    if (!adaptableApiRef.current) {
-      return;
-    }
-    dispatch('set-trades', rowData);
-
-    const intervalId = setInterval(() => {
-      const { current: gridOptions } = gridOptionsRef;
-      if (!gridOptions) {
-        return;
-      }
-      lastTradeId++;
-      const newTradeIndex = lastTradeId;
-      const trade = createNewTrade(newTradeIndex);
-
+  const { dispatch } = useChannelData({
+    trades: once((trades) => {
+      gridOptionsRef.current.api?.setRowData(trades);
+    }),
+    addtrade: (trade) => {
       adaptableApiRef.current.gridApi.addGridData([trade], {
         runAsync: true,
-        callback: () => {
-          dispatch('set-trades', getRowData(gridOptionsRef.current.api));
-        },
       });
-    }, 1500);
+    },
+  });
 
-    const off = adaptableApiRef.current.eventApi.on('GridDataChanged', () => {
-      dispatch('set-trades', getRowData(gridOptionsRef.current.api));
-    });
+  // const { dispatch } = useChannelData();
+  // useEffect(() => {
+  //   if (!adaptableApiRef.current) {
+  //     return;
+  //   }
+  //   dispatch('set-trades', rowData);
+
+  //   const intervalId = setInterval(() => {
+  //     const { current: gridOptions } = gridOptionsRef;
+  //     if (!gridOptions) {
+  //       return;
+  //     }
+  //     lastTradeId++;
+  //     const newTradeIndex = lastTradeId;
+  //     const trade = createNewTrade(newTradeIndex);
+
+  //     adaptableApiRef.current.gridApi.addGridData([trade], {
+  //       runAsync: true,
+  //       callback: () => {
+  //         dispatch('set-trades', getRowData(gridOptionsRef.current.api));
+  //       },
+  //     });
+  //   }, 1500);
+
+  useEffect(() => {
+    const eventApi = adaptableApiRef.current?.eventApi;
+    if (!eventApi) {
+      return;
+    }
+    const off = eventApi.on(
+      'GridDataChanged',
+      (event: GridDataChangedEventArgs) => {
+        const {
+          dataChangedInfo,
+        } = eventApi.getGridDataChangedInfoFromEventArgs(event);
+
+        dispatch('updatetrade', {
+          primaryKey: dataChangedInfo.PrimaryKeyValue,
+          columnId: dataChangedInfo.ColumnId,
+          newValue: dataChangedInfo.NewValue,
+        });
+      }
+    );
 
     return () => {
       off();
-      clearInterval(intervalId);
+      //     clearInterval(intervalId);
     };
   }, [dispatch]);
 

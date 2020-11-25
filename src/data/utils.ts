@@ -173,6 +173,7 @@ export const getInstrumentIds = () => {
     'WMT',
     'XOM',
   ];
+  instruments.length = 20;
   return instruments;
 };
 export const getBidOfferSpreads = () => {

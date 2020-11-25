@@ -4,14 +4,14 @@ import { useCallback, useEffect, useRef } from 'react';
 import type { Price } from '../../data/prices';
 import type { Trade } from '../../data/trades';
 
-type DispatchChannelData = (
-  what: 'set-trades' | 'set-prices' | 'refresh' | 'set-filters',
-  arr: any
-) => void;
+type DispatchChannelData = (what: string, arr?: any) => void;
 
 export const useChannelData = (callbacks?: {
   data?: (data: { prices: Price[]; trades: Trade[] }) => void;
   filters?: (filters: ColumnFilter[]) => void;
+  prices?: (prices: Price[]) => void;
+  trades?: (trades: Trade[]) => void;
+  addtrade?: (trade: Trade) => void;
 }): {
   dispatch: DispatchChannelData;
 } => {
@@ -24,14 +24,11 @@ export const useChannelData = (callbacks?: {
       return;
     }
 
-    const dataCallback = callbacks?.data;
-    const filtersCallback = callbacks?.filters;
-    if (dataCallback) {
-      client.register('data', dataCallback);
-    }
-    if (filtersCallback) {
-      client.register('filters', filtersCallback);
-    }
+    Object.keys(callbacks).forEach((name) => {
+      const callback = callbacks[name];
+      client.register(name, callback);
+      client.dispatch(name);
+    });
   }, [client]);
 
   useEffect(() => {

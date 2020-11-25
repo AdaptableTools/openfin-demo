@@ -11,7 +11,6 @@ import { AgGridReact } from '@ag-grid-community/react';
 
 import { GridOptions, ColDef } from '@ag-grid-enterprise/all-modules';
 
-import { getDataSource as getPrices, tickPrice } from '../data/prices';
 import { columnTypes } from '../data/columnTypes';
 import { priceColumns } from '../data/prices/columns';
 import MainLayout from '../components/MainLayout';
@@ -27,8 +26,6 @@ import { useFilters } from '../components/hooks/useFilters';
 // create ag-Grid Column Definitions
 const columnDefs: ColDef[] = priceColumns;
 
-const prices = getPrices();
-
 const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
@@ -37,7 +34,7 @@ const initialGridOptions: GridOptions = {
     floatingFilter: true,
     sortable: true,
   },
-  rowData: prices,
+  rowData: null,
   components: {
     AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
   },
@@ -146,39 +143,40 @@ const adaptableOptions: AdaptableOptions = {
 const App: React.FC = () => {
   const adaptableApiRef = useRef<AdaptableApi>(null);
   const gridOptionsRef = useRef<GridOptions>(null);
-  const { dispatch } = useChannelData();
+  useChannelData({
+    prices: (prices) => {
+      console.log({ prices });
+      gridOptionsRef.current.api?.setRowData(prices);
+    },
+  });
 
   useFilters(adaptableApiRef.current);
 
-  useEffect(() => {
-    dispatch('set-prices', prices);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const priceIndex = 0; //generateRandomInt(0, prices.length - 1);
+  //     const priceObject = tickPrice(prices[priceIndex]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const priceIndex = 0; //generateRandomInt(0, prices.length - 1);
-      const priceObject = tickPrice(prices[priceIndex]);
+  //     prices[priceIndex] = priceObject;
 
-      prices[priceIndex] = priceObject;
+  //     const { current: adaptableApi } = adaptableApiRef;
 
-      const { current: adaptableApi } = adaptableApiRef;
+  //     if (!adaptableApi) {
+  //       return;
+  //     }
 
-      if (!adaptableApi) {
-        return;
-      }
+  //     adaptableApi.gridApi.updateGridData([priceObject], {
+  //       runAsync: true,
+  //       callback: () => {
+  //         dispatch('set-prices', getRowData(gridOptionsRef.current.api));
+  //       },
+  //     });
+  //   }, 2500);
 
-      adaptableApi.gridApi.updateGridData([priceObject], {
-        runAsync: true,
-        callback: () => {
-          dispatch('set-prices', getRowData(gridOptionsRef.current.api));
-        },
-      });
-    }, 2500);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [dispatch]);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [dispatch]);
   return (
     <>
       <MainLayout>
