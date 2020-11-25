@@ -10,9 +10,9 @@
     "name": "Platform Generated App"
   },
   "platform": {
-    "uuid": "platform_prototype_generated",
+    "uuid": "AdapTable OpenFin integration Demo",
 
-    "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
+    "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
     "autoShow": false
   },
   "services": [

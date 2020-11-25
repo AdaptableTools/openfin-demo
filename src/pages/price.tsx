@@ -156,7 +156,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const priceIndex = 0; //generateRandomInt(0, prices.length - 1);
+      const priceIndex = generateRandomInt(0, prices.length - 1);
       const priceObject = tickPrice(prices[priceIndex]);
 
       prices[priceIndex] = priceObject;

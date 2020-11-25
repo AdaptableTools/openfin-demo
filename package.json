@@ -19,7 +19,7 @@
     "start": "next start",
     "start-openfin": "openfin --launch --config ./openfin-app.json",
     "dev-openfin": "openfin --launch --config ./openfin-app-dev.json",
-    "build": "next build && next export"
+    "build": "next build && next export && cp openfin-app-dev.json out"
   },
   "dependencies": {
     "@adaptabletools/adaptable": "7.2.3",
