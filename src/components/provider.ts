@@ -1,10 +1,11 @@
-import type { Price } from '../data/prices';
-import { createTrade, Trade } from '../data/trades';
-import { ColumnFilter } from '@adaptabletools/adaptable/types';
+import type { Price } from "../data/prices";
+import type { Position } from "../data/position";
+import { createTrade, Trade } from "../data/trades";
+import { ColumnFilter } from "@adaptabletools/adaptable/types";
 
-import { getDataSource as getPrices, tickPrice } from '../data/prices';
-import { generateRandomInt, getInstrumentIds } from '../data/utils';
-import { getPositions } from '../data/position';
+import { getDataSource as getPrices, tickPrice } from "../data/prices";
+import { generateRandomInt, getInstrumentIds } from "../data/utils";
+import { getPositions } from "../data/position";
 
 let prices: Price[] = getPrices();
 let trades: Trade[] = [];
@@ -22,15 +23,15 @@ const getPositionsArray = ({
 };
 
 export async function makeProvider() {
-  const channelName = 'AdapTable';
+  const channelName = "AdapTable";
   const provider = await fin.InterApplicationBus.Channel.create(channelName);
 
   provider.onConnection((identity, payload) => {
-    console.log('onConnection identity: ', JSON.stringify(identity));
-    console.log('onConnection payload: ', JSON.stringify(payload));
+    console.log("onConnection identity: ", JSON.stringify(identity));
+    console.log("onConnection payload: ", JSON.stringify(payload));
   });
   provider.onDisconnection((identity) => {
-    console.log('onDisconnection identity: ', JSON.stringify(identity));
+    console.log("onDisconnection identity: ", JSON.stringify(identity));
   });
 
   const getData = () => {
@@ -48,11 +49,11 @@ export async function makeProvider() {
     }
   };
 
-  provider.register('data', () => getData());
-  provider.register('set-filters', (newFilters: ColumnFilter[]) => {
+  provider.register("data", () => getData());
+  provider.register("set-filters", (newFilters: ColumnFilter[]) => {
     filters = newFilters;
 
-    publish('filters', filters);
+    publish("filters", filters);
     return newFilters;
   });
 
@@ -70,36 +71,36 @@ export async function makeProvider() {
       }
     }
     positions = positionsArray;
-    publish('positions', positionsArray);
-    publish('tickpositions', changes);
+    publish("positions", positionsArray);
+    publish("tickpositions", changes);
   };
 
   const updateTrades = () => {
     updatePositions();
-    publish('trades', trades);
+    publish("trades", trades);
   };
   const updatePrices = () => {
     updatePositions();
-    publish('prices', prices);
+    publish("prices", prices);
   };
 
   const addTrade = (trade: Trade) => {
     trades = trades.concat(trade);
-    publish('addtrade', trade);
+    publish("addtrade", trade);
     updateTrades();
   };
 
-  provider.register('trades', updateTrades);
-  provider.register('prices', updatePrices);
-  provider.register('positions', updatePositions);
-  provider.register('themechange', (theme: string) => {
-    console.log('publish theme change:', theme);
-    publish('themechange', theme);
+  provider.register("trades", updateTrades);
+  provider.register("prices", updatePrices);
+  provider.register("positions", updatePositions);
+  provider.register("themechange", (theme: string) => {
+    console.log("publish theme change:", theme);
+    publish("themechange", theme);
   });
   //   provider.register('addtrade', addTrade);
 
   provider.register(
-    'updatetrade',
+    "updatetrade",
     (info: { primaryKey: string; columnId: string; newValue: any }) => {
       const id = ((info.primaryKey as any) as number) * 1;
 
@@ -113,7 +114,7 @@ export async function makeProvider() {
   );
 
   provider.register(
-    'updateprice',
+    "updateprice",
     (info: { primaryKey: string; columnId: string; newValue: any }) => {
       const index = prices.findIndex(
         (price) => price.instrumentId == info.primaryKey
@@ -126,8 +127,8 @@ export async function makeProvider() {
     }
   );
 
-  publish('trades', trades);
-  publish('prices', prices);
+  publish("trades", trades);
+  publish("prices", prices);
   updatePositions();
 
   setInterval(() => {
@@ -140,6 +141,6 @@ export async function makeProvider() {
 
     prices[priceIndex] = priceObject;
 
-    provider.publish('tickprice', priceObject);
+    provider.publish("tickprice", priceObject);
   }, 3000);
 }
