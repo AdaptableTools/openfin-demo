@@ -1,7 +1,8 @@
-import { ColumnFilter } from '@adaptabletools/adaptable/types';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import type { Price } from '../../data/prices';
-import type { Trade } from '../../data/trades';
+import { ColumnFilter } from "@adaptabletools/adaptable/types";
+import { useEffect, useLayoutEffect, useState } from "react";
+import type { Price } from "../../data/prices";
+import type { Trade } from "../../data/trades";
+import type { Position } from "../../data/position";
 
 type DispatchChannelData = (what: string, arr?: any) => void;
 
@@ -13,7 +14,7 @@ export type ChannelClient = {
 };
 
 let theClient: ChannelClient = null;
-const clientPromise = fin.InterApplicationBus.Channel.connect('AdapTable');
+const clientPromise = fin.InterApplicationBus.Channel.connect("AdapTable");
 
 clientPromise.then((client) => {
   theClient = client;
