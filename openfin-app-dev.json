@@ -6,14 +6,26 @@
   "shortcut": {
     "company": "OpenFin",
     "description": "Platform Demo",
-    "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-    "name": "Platform Generated App"
+    "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
+    "name": "AdapTable OpenFin Demo"
   },
   "platform": {
-    "uuid": "AdapTable OpenFin integration Demo",
-
+    "providerUrl": "http://localhost:3001/provider",
     "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
-    "autoShow": false
+    "uuid": "Adaptable Demo",
+    "autoShow": false,
+    "frame": true,
+    "alwaysOnTop": true,
+    "maximizable": true,
+    "defaultHeight": 800,
+    "defaultWidth": 900,
+    "resizable": true,
+
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true
+      }
+    }
   },
   "services": [
     {

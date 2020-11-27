@@ -1,59 +1,64 @@
 import { ColumnFilter } from '@adaptabletools/adaptable/types';
-import { useChannelClient } from 'openfin-react-hooks';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import type { Price } from '../../data/prices';
 import type { Trade } from '../../data/trades';
 
-type DispatchChannelData = (
-  what: 'set-trades' | 'set-prices' | 'refresh' | 'set-filters',
-  arr: any
-) => void;
+type DispatchChannelData = (what: string, arr?: any) => void;
+
+type TypeRegister = (name: string, callback: (data: any) => void) => void;
+
+export type ChannelClient = {
+  dispatch: DispatchChannelData;
+  register: TypeRegister;
+};
+
+let theClient: ChannelClient = null;
+const clientPromise = fin.InterApplicationBus.Channel.connect('AdapTable');
+
+clientPromise.then((client) => {
+  theClient = client;
+});
+
+const useChannelClient = (): ChannelClient | null => {
+  const [client, setClient] = useState(null);
+
+  useLayoutEffect(() => {
+    if (!client) {
+      clientPromise.then((c) => setClient(c));
+    }
+  }, [client]);
+
+  return client;
+};
 
 export const useChannelData = (callbacks?: {
   data?: (data: { prices: Price[]; trades: Trade[] }) => void;
   filters?: (filters: ColumnFilter[]) => void;
+  prices?: (prices: Price[]) => void;
+  trades?: (trades: Trade[]) => void;
+  positions?: (positions: Position[]) => void;
+  addtrade?: (trade: Trade) => void;
+  tickprice?: (price: Price) => void;
+  tickpositions?: (positions: Position[]) => void;
+  themechange?: (theme: string) => void;
 }): {
-  dispatch: DispatchChannelData;
+  client: ChannelClient | null;
 } => {
-  const { client } = useChannelClient('AdapTable');
-
-  const dataToDispatchRef = useRef<any>(null);
+  const client = useChannelClient();
 
   useEffect(() => {
     if (!client) {
       return;
     }
 
-    const dataCallback = callbacks?.data;
-    const filtersCallback = callbacks?.filters;
-    if (dataCallback) {
-      client.register('data', dataCallback);
-    }
-    if (filtersCallback) {
-      client.register('filters', filtersCallback);
-    }
+    Object.keys(callbacks).forEach((name) => {
+      const callback = callbacks[name];
+      client.register(name, callback);
+      client.dispatch(name);
+    });
   }, [client]);
-
-  useEffect(() => {
-    if (client && dataToDispatchRef.current) {
-      const [what, data] = dataToDispatchRef.current;
-      client.dispatch(what, data);
-      dataToDispatchRef.current = null;
-    }
-  }, [client]);
-
-  const dispatch: DispatchChannelData = useCallback(
-    (what, data) => {
-      if (client) {
-        client.dispatch(what, data);
-      } else {
-        dataToDispatchRef.current = [what, data];
-      }
-    },
-    [client]
-  );
 
   return {
-    dispatch,
+    client,
   };
 };
