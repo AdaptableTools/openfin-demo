@@ -20,8 +20,14 @@ import { plugins } from '../components/plugins';
 import { useChannelData } from '../components/hooks/useChannelData';
 import { useEffect, useRef } from 'react';
 import { generateRandomInt, getRowData } from '../data/utils';
+import { once } from '../components/once';
 import { DisplayFormat4Digits } from '../data/displayFormat';
 import { useFilters } from '../components/hooks/useFilters';
+import { useDispatchOnDataChanged } from '../components/hooks/useDispatchOnDataChanged';
+import { Price } from '../data/prices';
+import { useThemeSync } from '../components/hooks/useThemeSync';
+import Head from '../components/Head';
+import { initAdaptableOptions } from '../components/initAdaptableOptions';
 
 // create ag-Grid Column Definitions
 const columnDefs: ColDef[] = priceColumns;
@@ -45,10 +51,9 @@ const initialGridOptions: GridOptions = {
   columnTypes,
 };
 
-const adaptableOptions: AdaptableOptions = {
+const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: 'instrumentId',
   adaptableId: 'PriceView',
-  adaptableStateKey: `${Date.now()}`,
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
     //   if (dataChangeInfo.ColumnId === 'bidOfferSpread') {
@@ -66,6 +71,32 @@ const adaptableOptions: AdaptableOptions = {
     // },
   },
   predefinedConfig: {
+    ConditionalStyle: {
+      ConditionalStyles: [
+        {
+          Scope: {
+            ColumnIds: ['changeOnDay'],
+          },
+          Style: {
+            BackColor: 'green',
+            ForeColor: '#000000',
+          },
+          Expression: '[changeOnDay] > 0',
+          ExcludeGroupedRows: true,
+        },
+        {
+          Scope: {
+            ColumnIds: ['changeOnDay'],
+          },
+          Style: {
+            BackColor: 'red',
+            ForeColor: '#000000',
+          },
+          Expression: '[changeOnDay] < 0',
+          ExcludeGroupedRows: true,
+        },
+      ],
+    },
     CalculatedColumn: {
       CalculatedColumns: [
         {
@@ -134,51 +165,35 @@ const adaptableOptions: AdaptableOptions = {
       auditAsAlert: true,
     },
   },
-  userInterfaceOptions: {
-    showAdaptableToolPanel: true,
-  },
-  plugins,
-};
+});
 
 const App: React.FC = () => {
   const adaptableApiRef = useRef<AdaptableApi>(null);
   const gridOptionsRef = useRef<GridOptions>(null);
-  useChannelData({
-    prices: (prices) => {
-      console.log({ prices });
+  const { client } = useChannelData({
+    prices: once((prices) => {
       gridOptionsRef.current.api?.setRowData(prices);
+    }),
+    tickprice: (priceObject: Price) => {
+      adaptableApiRef.current?.gridApi.updateGridData([priceObject], {
+        runAsync: true,
+      });
     },
   });
 
-  useFilters(adaptableApiRef.current);
+  useFilters(adaptableApiRef);
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const priceIndex = 0; //generateRandomInt(0, prices.length - 1);
-  //     const priceObject = tickPrice(prices[priceIndex]);
+  useThemeSync(adaptableApiRef);
 
-  //     prices[priceIndex] = priceObject;
+  useDispatchOnDataChanged({
+    client,
+    dispatchChannelName: 'updateprice',
+    adaptableApiRef,
+  });
 
-  //     const { current: adaptableApi } = adaptableApiRef;
-
-  //     if (!adaptableApi) {
-  //       return;
-  //     }
-
-  //     adaptableApi.gridApi.updateGridData([priceObject], {
-  //       runAsync: true,
-  //       callback: () => {
-  //         dispatch('set-prices', getRowData(gridOptionsRef.current.api));
-  //       },
-  //     });
-  //   }, 2500);
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [dispatch]);
   return (
     <>
+      <Head title="Prices" />
       <MainLayout>
         <AdaptableReact
           style={{ flex: 'none' }}
@@ -191,35 +206,6 @@ const App: React.FC = () => {
 
             (globalThis as any).adaptableApi = adaptableApi;
             (globalThis as any).gridOptions = vendorGrid;
-
-            // adaptableApi.eventApi.on(
-            //   'GridDataChanged',
-            //   (gridDataChangedEvent: GridDataChangedEventArgs) => {
-            //     const event: any = gridDataChangedEvent as any;
-
-            //     if (event.ColumnId === 'bidOfferSpread') {
-            //       const bidOfferSpread = event.NewValue * 1;
-            //       const primaryKey = event.PrimaryKeyValue;
-            //       if (isNaN(bidOfferSpread)) {
-            //         setTimeout(() => {
-            //           adaptableApi.gridApi.setCellValue(
-            //             event.ColumnId,
-            //             event.OldValue,
-            //             primaryKey,
-            //             false
-            //           );
-            //         }, 100);
-            //       } else {
-            //         const { data } = event.RowNode;
-            //         const { price } = data;
-
-            //         adaptableApi.gridApi.updateGridData([
-            //           { ...data, bidOfferSpread },
-            //         ]);
-            //       }
-            //     }
-            //   }
-            // );
           }}
         />
 

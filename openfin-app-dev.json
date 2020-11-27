@@ -6,8 +6,8 @@
   "shortcut": {
     "company": "OpenFin",
     "description": "Platform Demo",
-    "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-    "name": "Platform Generated App"
+    "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
+    "name": "AdapTable OpenFin Demo"
   },
   "platform": {
     "providerUrl": "http://localhost:3001/provider",

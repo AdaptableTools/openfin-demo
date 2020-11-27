@@ -4,7 +4,7 @@ import {
   SearchChangedEventArgs,
 } from '@adaptabletools/adaptable/types';
 
-import { useCallback, useEffect } from 'react';
+import { MutableRefObject, useCallback, useEffect } from 'react';
 import { useChannelData } from './useChannelData';
 
 const deleteExtraInfo = (filter) => {
@@ -14,8 +14,9 @@ const deleteExtraInfo = (filter) => {
 
 let lastFilterTimestamp = 0;
 
-export const useFilters = (adaptableApi: AdaptableApi) => {
-  const { dispatch } = useChannelData({
+export const useFilters = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
+  const { current: adaptableApi } = adaptableApiRef;
+  const { client } = useChannelData({
     filters: useCallback(
       (columnFilters: ColumnFilter[]) => {
         const firstFilter = columnFilters[0] ? { ...columnFilters[0] } : null;
@@ -53,7 +54,7 @@ export const useFilters = (adaptableApi: AdaptableApi) => {
   });
 
   useEffect(() => {
-    if (!adaptableApi) {
+    if (!adaptableApi || !client) {
       return;
     }
     const off = adaptableApi.eventApi.on(
@@ -85,7 +86,7 @@ export const useFilters = (adaptableApi: AdaptableApi) => {
           });
           lastFilterTimestamp = Date.now();
 
-          dispatch('set-filters', columnFilters);
+          client.dispatch('set-filters', columnFilters);
         }
       }
     );
@@ -93,5 +94,5 @@ export const useFilters = (adaptableApi: AdaptableApi) => {
     return () => {
       off();
     };
-  }, [adaptableApi, dispatch]);
+  }, [adaptableApi, client]);
 };

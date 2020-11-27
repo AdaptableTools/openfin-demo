@@ -1,33 +1,30 @@
 import * as React from 'react';
+import { useRef } from 'react';
 
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
-  GridDataChangedEventArgs,
-  SearchChangedEventArgs,
 } from '@adaptabletools/adaptable-react-aggrid';
 
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 
 import { AgGridReact } from '@ag-grid-community/react';
 
-import { GridOptions, ColDef, GridApi } from '@ag-grid-enterprise/all-modules';
+import { GridOptions, ColDef } from '@ag-grid-enterprise/all-modules';
 
-import {
-  createNewTrade,
-  createTrade,
-  getDataSource as getTrades,
-} from '../data/trades';
 import { columnTypes } from '../data/columnTypes';
 import { tradeColumns } from '../data/trades/columns';
 import MainLayout from '../components/MainLayout';
 import { modules } from '../components/modules';
-import { plugins } from '../components/plugins';
 import { once } from '../components/once';
-import { useEffect, useRef } from 'react';
+
 import { useChannelData } from '../components/hooks/useChannelData';
 
 import { useFilters } from '../components/hooks/useFilters';
+import { useDispatchOnDataChanged } from '../components/hooks/useDispatchOnDataChanged';
+import { useThemeSync } from '../components/hooks/useThemeSync';
+import Head from '../components/Head';
+import { initAdaptableOptions } from '../components/initAdaptableOptions';
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -51,18 +48,53 @@ const initialGridOptions: GridOptions = {
   columnTypes,
 };
 
-const adaptableOptions: AdaptableOptions = {
+const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: 'tradeId',
   adaptableId: 'TradeView',
-  adaptableStateKey: `${Date.now()}`,
   auditOptions: {
     auditFunctionEvents: {
       auditAsEvent: true,
     },
   },
+  userFunctions: [
+    {
+      name: 'renderCancelButton',
+      type: 'ActionColumnShouldRenderPredicate',
+      handler: (params) => {
+        return params.rowData.status !== 'active';
+      },
+    },
+  ],
   predefinedConfig: {
     Dashboard: {
       Tabs: [{ Name: 'Dashboard', Toolbars: ['OpenFin', 'Export', 'Layout'] }],
+    },
+    ActionColumn: {
+      ActionColumns: [
+        {
+          ColumnId: 'setStatusCancel',
+          FriendlyName: 'Cancel',
+          ButtonText: 'Cancel',
+          ShouldRenderPredicate: 'renderCancelButton',
+        },
+      ],
+    },
+    ConditionalStyle: {
+      ConditionalStyles: [
+        {
+          Scope: {
+            All: true,
+          },
+
+          Style: {
+            BackColor: '#ffffcc',
+            FontStyle: 'Italic',
+            ForeColor: '#000000',
+          },
+          Expression: '[status] = "active"',
+          ExcludeGroupedRows: true,
+        },
+      ],
     },
     Layout: {
       Layouts: [
@@ -73,6 +105,7 @@ const adaptableOptions: AdaptableOptions = {
             'instrumentId',
             'instrumentName',
             'notional',
+            'setStatusCancel',
             'status',
             'counterparty',
             'currency',
@@ -102,19 +135,15 @@ const adaptableOptions: AdaptableOptions = {
       ],
     },
   },
-  userInterfaceOptions: {
-    showAdaptableToolPanel: true,
-  },
-  plugins,
-};
+});
 
 const App: React.FC = () => {
   const adaptableApiRef = useRef<AdaptableApi>(null);
   const gridOptionsRef = useRef<GridOptions>(null);
 
-  useFilters(adaptableApiRef.current);
+  useFilters(adaptableApiRef);
 
-  const { dispatch } = useChannelData({
+  const { client } = useChannelData({
     trades: once((trades) => {
       gridOptionsRef.current.api?.setRowData(trades);
     }),
@@ -125,58 +154,17 @@ const App: React.FC = () => {
     },
   });
 
-  // const { dispatch } = useChannelData();
-  // useEffect(() => {
-  //   if (!adaptableApiRef.current) {
-  //     return;
-  //   }
-  //   dispatch('set-trades', rowData);
+  useDispatchOnDataChanged({
+    client,
+    dispatchChannelName: 'updatetrade',
+    adaptableApiRef,
+  });
 
-  //   const intervalId = setInterval(() => {
-  //     const { current: gridOptions } = gridOptionsRef;
-  //     if (!gridOptions) {
-  //       return;
-  //     }
-  //     lastTradeId++;
-  //     const newTradeIndex = lastTradeId;
-  //     const trade = createNewTrade(newTradeIndex);
-
-  //     adaptableApiRef.current.gridApi.addGridData([trade], {
-  //       runAsync: true,
-  //       callback: () => {
-  //         dispatch('set-trades', getRowData(gridOptionsRef.current.api));
-  //       },
-  //     });
-  //   }, 1500);
-
-  useEffect(() => {
-    const eventApi = adaptableApiRef.current?.eventApi;
-    if (!eventApi) {
-      return;
-    }
-    const off = eventApi.on(
-      'GridDataChanged',
-      (event: GridDataChangedEventArgs) => {
-        const {
-          dataChangedInfo,
-        } = eventApi.getGridDataChangedInfoFromEventArgs(event);
-
-        dispatch('updatetrade', {
-          primaryKey: dataChangedInfo.PrimaryKeyValue,
-          columnId: dataChangedInfo.ColumnId,
-          newValue: dataChangedInfo.NewValue,
-        });
-      }
-    );
-
-    return () => {
-      off();
-      //     clearInterval(intervalId);
-    };
-  }, [dispatch]);
+  useThemeSync(adaptableApiRef);
 
   return (
     <>
+      <Head title="Trades" />
       <MainLayout>
         <AdaptableReact
           style={{ flex: 'none' }}
@@ -186,7 +174,6 @@ const App: React.FC = () => {
           onAdaptableReady={({ adaptableApi, vendorGrid }) => {
             adaptableApiRef.current = adaptableApi;
             gridOptionsRef.current = vendorGrid;
-            (globalThis as any).adaptableApi = adaptableApi;
           }}
         />
 
