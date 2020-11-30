@@ -26,22 +26,22 @@ async function init() {
   fin.Platform.init({
     overrideCallback: async (Provider) => {
       class Override extends Provider {
-        async quit(...args) {
-          await setLastSnapShot();
-          return super.quit(...args);
-        }
+        // async quit(...args) {
+        //   await setLastSnapShot();
+        //   return super.quit(...args);
+        // }
 
-        async applySnapshot({ snapshot, options }, callerIdentity) {
-          const lastSnapshot = getLastSnapShot();
-          if (lastSnapshot) {
-            return super.applySnapshot(
-              { snapshot: lastSnapshot, options },
-              callerIdentity
-            );
-          } else {
-            return super.applySnapshot({ snapshot, options }, callerIdentity);
-          }
-        }
+        // async applySnapshot({ snapshot, options }, callerIdentity) {
+        //   const lastSnapshot = getLastSnapShot();
+        //   if (lastSnapshot) {
+        //     return super.applySnapshot(
+        //       { snapshot: lastSnapshot, options },
+        //       callerIdentity
+        //     );
+        //   } else {
+        //     return super.applySnapshot({ snapshot, options }, callerIdentity);
+        //   }
+        // }
       }
       return new Override();
     },
@@ -49,7 +49,7 @@ async function init() {
 
   makeProvider();
 
-  setInterval(setLastSnapShot, 250);
+  //setInterval(setLastSnapShot, 250);
 }
 
 const App: React.FC = () => {
