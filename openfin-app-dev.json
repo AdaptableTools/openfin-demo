@@ -20,7 +20,11 @@
     "defaultHeight": 800,
     "defaultWidth": 900,
     "resizable": true,
-
+    "defaultWindowOptions": {
+      "url": "http://localhost:3001/platform-window",
+      "contextMenu": true,
+      "frame": false
+    },
     "permissions": {
       "System": {
         "launchExternalProcess": true
