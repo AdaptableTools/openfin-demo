@@ -6,41 +6,80 @@ import {
 import { MutableRefObject, useEffect } from 'react';
 import { useChannelData } from './useChannelData';
 
+
 export const useThemeSync = (
   adaptableApiRef: MutableRefObject<AdaptableApi>
 ) => {
-  const { client } = useChannelData({
-    themechange: (theme: string) => {
-      const currentTheme = adaptableApiRef.current?.themeApi.getCurrentTheme();
+  // const { client } = useChannelData({
+  //   themechange: (theme: string) => {
+  //     const currentTheme = adaptableApiRef.current?.themeApi.getCurrentTheme();
 
-      if (currentTheme != theme && theme) {
-        console.log('setting theme', theme);
-        adaptableApiRef.current?.themeApi.loadTheme(theme);
-      }
-    },
-  });
+  //     if (currentTheme != theme && theme) {
+
+  //       adaptableApiRef.current?.themeApi.loadTheme(theme);
+  //     }
+  //   },
+  // });
   useEffect(() => {
     const { current: adaptableApi } = adaptableApiRef;
-    if (!adaptableApi || !client) {
+    if (!adaptableApi) {
       return;
     }
 
     const offThemeChanged = adaptableApi.eventApi.on(
       'ThemeChanged',
-      (args: ThemeChangedEventArgs) => {
+      async (args: ThemeChangedEventArgs) => {
+
+
         const info = adaptableApi.eventApi.getThemeChangedInfoFromEventArgs(
           args
         );
 
         const themeName = (info.theme as AdaptableTheme).Name || info.theme;
-        console.log('theme change', themeName);
+        const context = await fin.Platform.getCurrentSync().getWindowContext() || {};
 
-        client.dispatch('themechange', themeName);
+
+        if (themeName !== context.theme) {
+          console.log('theme change', themeName);
+          fin.Platform.getCurrentSync().setWindowContext({ theme: themeName });
+        }
+
+        // client.dispatch('themechange', themeName);
       }
     );
 
+
+
     return () => {
       offThemeChanged();
+
     };
-  }, [adaptableApiRef.current, client]);
+  }, [adaptableApiRef.current]);
+
+  useEffect(function () {
+
+    const execute = async () => {
+      const contextChangeHandler = ({ context }) => {
+
+
+        const { theme } = context
+
+        console.log('setting theme', theme)
+
+        //adaptableApiRef.current?.themeApi.getCurrentTheme()
+        adaptableApiRef.current?.themeApi.loadTheme(theme);
+
+      }
+
+      await fin.me.on('host-context-changed', contextChangeHandler);
+
+    }
+
+    execute()
+
+    return () => {
+
+    }
+
+  }, [])
 };
