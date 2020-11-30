@@ -16,10 +16,10 @@ import { priceColumns } from '../data/prices/columns';
 import MainLayout from '../components/MainLayout';
 
 import { modules } from '../components/modules';
-import { plugins } from '../components/plugins';
+
 import { useChannelData } from '../components/hooks/useChannelData';
-import { useEffect, useRef } from 'react';
-import { generateRandomInt, getRowData } from '../data/utils';
+import { useRef } from 'react';
+
 import { once } from '../components/once';
 import { DisplayFormat4Digits } from '../data/displayFormat';
 import { useFilters } from '../components/hooks/useFilters';

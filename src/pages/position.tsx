@@ -23,10 +23,7 @@ import { modules } from '../components/modules';
 
 import { useChannelData } from '../components/hooks/useChannelData';
 import { useRef } from 'react';
-import {
-  DisplayFormat4Digits,
-  DisplayFormatInteger,
-} from '../data/displayFormat';
+import { DisplayFormatInteger } from '../data/displayFormat';
 import { useFilters } from '../components/hooks/useFilters';
 import { once } from '../components/once';
 import { useThemeSync } from '../components/hooks/useThemeSync';
