@@ -25,6 +25,7 @@ import { useDispatchOnDataChanged } from '../components/hooks/useDispatchOnDataC
 import { useThemeSync } from '../components/hooks/useThemeSync';
 import Head from '../components/Head';
 import { initAdaptableOptions } from '../components/initAdaptableOptions';
+import { DateFormat } from '../data/displayFormat';
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -61,7 +62,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       name: 'renderCancelButton',
       type: 'ActionColumnShouldRenderPredicate',
       handler: (params) => {
-        return params.rowData.status !== 'active';
+        return true; //params.rowData.status !== "active";
       },
     },
   ],
@@ -70,6 +71,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       Tabs: [{ Name: 'Dashboard', Toolbars: ['OpenFin', 'Export', 'Layout'] }],
     },
     ActionColumn: {
+      Revision: 2,
       ActionColumns: [
         {
           ColumnId: 'setStatusCancel',
@@ -96,7 +98,19 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
+    FormatColumn: {
+      Revision: 1,
+      FormatColumns: [
+        {
+          Scope: {
+            ColumnIds: ['tradeDate', 'settlementDate', 'lastUpdated'],
+          },
+          DisplayFormat: DateFormat,
+        },
+      ],
+    },
     Layout: {
+      Revision: 1,
       Layouts: [
         {
           Name: 'Latest Trades',

@@ -43,11 +43,11 @@
   "snapshot": {
     "windows": [
       {
-        "defaultWidth": 800,
-        "defaultHeight": 600,
+        "defaultWidth": 1200,
+        "defaultHeight": 900,
         "defaultLeft": 0,
         "defaultTop": 0,
-        "saveWindowState": false,
+        "saveWindowState": true,
         "backgroundThrottling": true,
         "layout": {
           "content": [
@@ -62,7 +62,7 @@
                   "type": "row",
                   "isClosable": true,
                   "reorderEnabled": true,
-                  "title": "",
+                  "title": "Price and position",
                   "width": 50,
                   "content": [
                     {
