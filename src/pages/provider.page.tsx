@@ -7,12 +7,12 @@ async function setLastSnapShot() {
 
   if (snapshot.windows.length) {
     const strSnapshot = JSON.stringify(snapshot);
-    localStorage.setItem('adaptable-layout', strSnapshot);
+    localStorage.setItem('adaptable-layout1', strSnapshot);
   }
 }
 
 function getLastSnapShot() {
-  let snapshot: any = localStorage.getItem('adaptable-layout');
+  let snapshot: any = localStorage.getItem('adaptable-layout1');
   snapshot = snapshot ? JSON.parse(snapshot) : null;
 
   if (snapshot) {
@@ -22,8 +22,7 @@ function getLastSnapShot() {
   }
   return snapshot;
 }
-
-function init() {
+async function init() {
   fin.Platform.init({
     overrideCallback: async (Provider) => {
       class Override extends Provider {

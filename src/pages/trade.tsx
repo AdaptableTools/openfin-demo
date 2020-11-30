@@ -1,30 +1,31 @@
-import * as React from "react";
-import { useRef } from "react";
+import * as React from 'react';
+import { useRef } from 'react';
 
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
-} from "@adaptabletools/adaptable-react-aggrid";
+} from '@adaptabletools/adaptable-react-aggrid';
 
-import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 
-import { AgGridReact } from "@ag-grid-community/react";
+import { AgGridReact } from '@ag-grid-community/react';
 
-import { GridOptions, ColDef } from "@ag-grid-enterprise/all-modules";
+import { GridOptions, ColDef } from '@ag-grid-enterprise/all-modules';
 
-import { columnTypes } from "../data/columnTypes";
-import { tradeColumns } from "../data/trades/columns";
-import MainLayout from "../components/MainLayout";
-import { modules } from "../components/modules";
-import { once } from "../components/once";
+import { columnTypes } from '../data/columnTypes';
+import { tradeColumns } from '../data/trades/columns';
+import MainLayout from '../components/MainLayout';
+import { modules } from '../components/modules';
+import { once } from '../components/once';
 
-import { useChannelData } from "../components/hooks/useChannelData";
+import { useChannelData } from '../components/hooks/useChannelData';
 
-import { useFilters } from "../components/hooks/useFilters";
-import { useDispatchOnDataChanged } from "../components/hooks/useDispatchOnDataChanged";
-import { useThemeSync } from "../components/hooks/useThemeSync";
-import Head from "../components/Head";
-import { initAdaptableOptions } from "../components/initAdaptableOptions";
+import { useFilters } from '../components/hooks/useFilters';
+import { useDispatchOnDataChanged } from '../components/hooks/useDispatchOnDataChanged';
+import { useThemeSync } from '../components/hooks/useThemeSync';
+import Head from '../components/Head';
+import { initAdaptableOptions } from '../components/initAdaptableOptions';
+import { DateFormat } from '../data/displayFormat';
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -49,8 +50,8 @@ const initialGridOptions: GridOptions = {
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
-  primaryKey: "tradeId",
-  adaptableId: "TradeView",
+  primaryKey: 'tradeId',
+  adaptableId: 'TradeView',
   auditOptions: {
     auditFunctionEvents: {
       auditAsEvent: true,
@@ -58,24 +59,25 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   },
   userFunctions: [
     {
-      name: "renderCancelButton",
-      type: "ActionColumnShouldRenderPredicate",
+      name: 'renderCancelButton',
+      type: 'ActionColumnShouldRenderPredicate',
       handler: (params) => {
-        return params.rowData.status !== "active";
+        return true; //params.rowData.status !== "active";
       },
     },
   ],
   predefinedConfig: {
     Dashboard: {
-      Tabs: [{ Name: "Dashboard", Toolbars: ["OpenFin", "Export", "Layout"] }],
+      Tabs: [{ Name: 'Dashboard', Toolbars: ['OpenFin', 'Export', 'Layout'] }],
     },
     ActionColumn: {
+      Revision: 2,
       ActionColumns: [
         {
-          ColumnId: "setStatusCancel",
-          FriendlyName: "Cancel",
-          ButtonText: "Cancel",
-          ShouldRenderPredicate: "renderCancelButton",
+          ColumnId: 'setStatusCancel',
+          FriendlyName: 'Cancel',
+          ButtonText: 'Cancel',
+          ShouldRenderPredicate: 'renderCancelButton',
         },
       ],
     },
@@ -87,38 +89,50 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           },
 
           Style: {
-            BackColor: "#ffffcc",
-            FontStyle: "Italic",
-            ForeColor: "#000000",
+            BackColor: '#ffffcc',
+            FontStyle: 'Italic',
+            ForeColor: '#000000',
           },
           Expression: '[status] = "active"',
           ExcludeGroupedRows: true,
         },
       ],
     },
+    FormatColumn: {
+      Revision: 1,
+      FormatColumns: [
+        {
+          Scope: {
+            ColumnIds: ['tradeDate', 'settlementDate', 'lastUpdated'],
+          },
+          DisplayFormat: DateFormat,
+        },
+      ],
+    },
     Layout: {
+      Revision: 1,
       Layouts: [
         {
-          Name: "Latest Trades",
+          Name: 'Latest Trades',
           Columns: [
-            "tradeId",
-            "instrumentId",
-            "instrumentName",
-            "notional",
-            "setStatusCancel",
-            "status",
-            "counterparty",
-            "currency",
-            "rating",
-            "tradeDate",
-            "settlementDate",
-            "lastUpdated",
-            "lastUpdatedBy",
+            'tradeId',
+            'instrumentId',
+            'instrumentName',
+            'notional',
+            'setStatusCancel',
+            'status',
+            'counterparty',
+            'currency',
+            'rating',
+            'tradeDate',
+            'settlementDate',
+            'lastUpdated',
+            'lastUpdatedBy',
           ],
           ColumnSorts: [
             {
-              ColumnId: "tradeId",
-              SortOrder: "Desc",
+              ColumnId: 'tradeId',
+              SortOrder: 'Desc',
             },
           ],
         },
@@ -128,9 +142,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       EditLookUpItems: [
         {
           Scope: {
-            ColumnIds: ["status"],
+            ColumnIds: ['status'],
           },
-          LookUpValues: ["active", "inactive"],
+          LookUpValues: ['active', 'inactive'],
         },
       ],
     },
@@ -156,7 +170,7 @@ const App: React.FC = () => {
 
   useDispatchOnDataChanged({
     client,
-    dispatchChannelName: "updatetrade",
+    dispatchChannelName: 'updatetrade',
     adaptableApiRef,
   });
 
@@ -167,7 +181,7 @@ const App: React.FC = () => {
       <Head title="Trades" />
       <MainLayout>
         <AdaptableReact
-          style={{ flex: "none" }}
+          style={{ flex: 'none' }}
           gridOptions={initialGridOptions}
           modules={modules}
           adaptableOptions={adaptableOptions}

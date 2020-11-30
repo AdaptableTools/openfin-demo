@@ -113,6 +113,27 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
+    PlusMinus: {
+      PlusMinusRules: [
+        {
+          ColumnId: 'bidOfferSpread',
+          NudgeValue: 0.5,
+          IsDefaultNudge: true,
+        },
+        {
+          ColumnId: 'bidOfferSpread',
+          NudgeValue: 1,
+          IsDefaultNudge: false,
+          Expression: '[instrumentId]= "AAPL"',
+        },
+        // {
+        //   ColumnId: 'bidOfferSpread',
+        //   NudgeValue: 0,
+        //   IsDefaultNudge: false,
+        //   Expression: '[price] > 130',
+        // },
+      ],
+    },
     FormatColumn: {
       Revision: 1,
       FormatColumns: [
