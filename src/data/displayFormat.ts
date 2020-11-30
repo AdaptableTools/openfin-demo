@@ -4,3 +4,10 @@ export const DisplayFormat4Digits = {
     FractionDigits: 4,
   },
 };
+
+export const DisplayFormatInteger = {
+  Formatter: 'NumberFormatter' as 'NumberFormatter',
+  Options: {
+    FractionDigits: 0,
+  },
+};

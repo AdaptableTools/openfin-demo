@@ -1,28 +1,30 @@
-import { AdaptableOptions } from "@adaptabletools/adaptable/types";
-import { plugins } from "./plugins";
+import { AdaptableOptions } from '@adaptabletools/adaptable/types';
+import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
-const defaultAdaptableOptions: Partial<AdaptableOptions> = {
-  layoutOptions: {
-    autoSizeColumnsInLayout: true,
-  },
-  plugins,
-  userInterfaceOptions: {
-    showAdaptableToolPanel: true,
-  },
-};
 export const initAdaptableOptions = (
   adaptableOptions: AdaptableOptions
 ): AdaptableOptions => {
+  const defaultAdaptableOptions: Partial<AdaptableOptions> = {
+    layoutOptions: {
+      autoSizeColumnsInLayout: true,
+    },
+
+    userInterfaceOptions: {
+      showAdaptableToolPanel: true,
+      useCustomMacLikeScrollbars: true,
+    },
+  };
+
   const defaults = {
     ...defaultAdaptableOptions,
-    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}`,
+    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-1`,
   };
   const common = {};
 
   Object.keys(defaults).forEach((key) => {
     const defaultValue = defaults[key];
 
-    if (typeof defaultValue === "object") {
+    if (typeof defaultValue === 'object') {
       common[key] = { ...defaultValue, ...adaptableOptions[key] };
     }
   });
@@ -31,5 +33,6 @@ export const initAdaptableOptions = (
     ...defaults,
     ...adaptableOptions,
     ...common,
+    plugins: [openfin()],
   };
 };
