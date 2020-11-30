@@ -19,7 +19,8 @@
     "start": "next start",
     "start-openfin": "openfin --launch --config ./openfin-app.json",
     "dev-openfin": "openfin --launch --config ./openfin-app-dev.json",
-    "build": "next build && next export && cp openfin-app-dev.json out"
+    "build": "next build && next export && npm run appjson",
+    "appjson": "node appdev.js"
   },
   "dependencies": {
     "@adaptabletools/adaptable": "7.2.7",
@@ -44,6 +45,7 @@
     "dotenv-webpack": "^5.1.0",
     "openfin-cli": "^3.0.2",
     "prettier": "^2.1.2",
+    "traverse": "^0.6.6",
     "typescript": "^4.0.5"
   }
 }
