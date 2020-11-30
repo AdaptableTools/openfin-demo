@@ -1,5 +1,5 @@
-import { AdaptableOptions } from '@adaptabletools/adaptable/types';
-import { plugins } from './plugins';
+import { AdaptableOptions } from "@adaptabletools/adaptable/types";
+import { plugins } from "./plugins";
 
 const defaultAdaptableOptions: Partial<AdaptableOptions> = {
   layoutOptions: {
@@ -15,14 +15,14 @@ export const initAdaptableOptions = (
 ): AdaptableOptions => {
   const defaults = {
     ...defaultAdaptableOptions,
-    adaptableStateKey: `${Date.now()}`,
+    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}`,
   };
   const common = {};
 
   Object.keys(defaults).forEach((key) => {
     const defaultValue = defaults[key];
 
-    if (typeof defaultValue === 'object') {
+    if (typeof defaultValue === "object") {
       common[key] = { ...defaultValue, ...adaptableOptions[key] };
     }
   });

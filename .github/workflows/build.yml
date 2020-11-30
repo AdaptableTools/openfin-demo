@@ -45,6 +45,7 @@ jobs:
         working-directory: poc
         env:
           CI: true
+          NEXT_PUBLIC_AG_GRID_LICENSE: ${{ secrets.NEXT_PUBLIC_AG_GRID_LICENSE }}
 
       - name: checkout POC DIST repo
         uses: actions/checkout@v2
