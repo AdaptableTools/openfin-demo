@@ -14,36 +14,6 @@
     display: none;
 }
 
-left-menu {
-    padding-left: 4px;
-    margin-top: 4px;
-    padding-right: 4px;
-    border-right: 1px solid var(--tab-button-hover-color);
-}
-
-left-menu ul {
-    list-style: none;
-    padding-inline-start: 0px;
-    margin-block-start: 20px;
-}
-
-left-menu button {
-    width: var(--sidebar-width);
-    border: none;
-    background-color: var(--main-background-color);
-    color: var(--body-font-color);
-    text-align: left;
-}
-
-left-menu button:hover {
-    cursor: pointer;
-    background-color: var(--tab-button-hover-color);
-}
-
-left-menu button:focus {
-    outline: 1px solid var(--tab-button-active-color);
-}
-
 fieldset button {
     width: var(--sidebar-width);
     border: 1px solid var(--tab-button-active-color);
@@ -96,14 +66,6 @@ fieldset label {
     background-color: var(--of-dark-theme);
 }
 
-#theme-button:after {
-    content: "";
-    background-color: var(--of-default-grey-light);
-    padding: 5px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 10px;
-}
 
 #menu-button {
     background-image: var(--menu-icon);

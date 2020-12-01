@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 
+import { Icon } from '@adaptabletools/adaptable/src/components/icons'
 import './index.css'
 const LIGHT_THEME = 'light';
 const DARK_THEME = 'dark';
@@ -54,6 +55,9 @@ const maxOrRestore = async () => {
   return fin.me.restore();
 }
 
+const toggleSidebar = () => {
+  document.querySelector('#left-menu').classList.toggle('hidden');
+}
 
 export const TitleBar = () => {
   React.useEffect(() => {
@@ -81,7 +85,12 @@ export const TitleBar = () => {
       <div id="title">Welcome to AdapTable</div>
     </div>
     <div id="buttons-wrapper">
-      <div className="button" title="Toggle Theme" id="theme-button" onClick={toggleTheme} ></div>
+      <div className="button" title="Toggle Theme" id="theme-button" onClick={toggleTheme} >
+        <Icon name="conditional-style" />
+      </div>
+      <div className="button" style={{
+        backgroundImage: 'var(--menu-icon)'
+      }} title="Toggle SideBar" id="menu-button" onClick={toggleSidebar} ></div>
 
 
       <div

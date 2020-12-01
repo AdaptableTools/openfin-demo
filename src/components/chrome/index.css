@@ -17,11 +17,10 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-#theme-button:after {
-    content: "";
-    background-color: var(--of-default-grey-light);
+#theme-button {
+    
     padding: 5px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

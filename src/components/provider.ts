@@ -6,11 +6,15 @@ import { ColumnFilter } from '@adaptabletools/adaptable/types';
 import { getDataSource as getPrices, tickPrice } from '../data/prices';
 import { generateRandomInt, getInstrumentIds } from '../data/utils';
 import { getPositions } from '../data/position';
+import type { CellEditAudit } from './types';
 
 let prices: Price[] = getPrices();
 let trades: Trade[] = [];
 let filters: ColumnFilter[] = [];
 let positions: Position[] = [];
+
+
+let priceAudits: CellEditAudit<Price>[] = []
 
 const getPositionsArray = ({
   trades,
@@ -43,6 +47,7 @@ export async function makeProvider() {
 
   const publish = (channelName, data) => {
     try {
+      console.log('publish', channelName)
       provider.publish(channelName, data);
     } catch (ex) {
       console.warn(ex);
@@ -92,6 +97,17 @@ export async function makeProvider() {
 
   provider.register('trades', updateTrades);
   provider.register('prices', updatePrices);
+  provider.register('priceaudits', (priceAudit) => {
+    if (!priceAudit || priceAudit.audit_trigger !== 'CellEdit') {
+      return
+    }
+    // priceAudits = [priceAudit].concat(priceAudits)
+    priceAudits = priceAudits.concat(priceAudit)
+
+    console.log('audits', priceAudits)
+    publish('priceaudits', priceAudits.filter(x => x && x.audit_trigger === 'CellEdit'))
+    publish('addpriceaudit', priceAudit)
+  })
   provider.register('positions', updatePositions);
   provider.register('themechange', (theme: string) => {
     console.log('publish theme change:', theme);

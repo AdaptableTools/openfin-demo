@@ -4,18 +4,26 @@ import {
 } from '@adaptabletools/adaptable/types';
 
 import { MutableRefObject, useEffect } from 'react';
+import type { Price } from '../../data/prices';
+import type { CellEditAudit } from '../types';
+import { useChannelData } from './useChannelData';
+
 
 export const useAudit = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
   const { current: adaptableApi } = adaptableApiRef;
 
+  const { client } = useChannelData()
   useEffect(() => {
-    if (!adaptableApi) {
+    if (!adaptableApi || !client) {
       return;
     }
     const callback = (event: AuditLogEventArgs) => {
-      const data = event.data[0].id
+      const data = event.data[0].id as unknown as CellEditAudit<Price>
+      data.client_timestamp = `${data.client_timestamp}`
 
-      console.log({ data })
+      console.log('dispatch price audits', data)
+      client.dispatch('priceaudits', data)
+
     }
     console.log('listening to cell edits')
     const off1 = adaptableApi.auditEventApi.on(
@@ -37,5 +45,5 @@ export const useAudit = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
       off2();
       off3()
     };
-  }, [adaptableApi]);
+  }, [adaptableApi, client]);
 };

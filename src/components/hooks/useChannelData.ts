@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import type { Price } from "../../data/prices";
 import type { Trade } from "../../data/trades";
 import type { Position } from "../../data/position";
+import { CellEditAudit } from "../types";
 
 type DispatchChannelData = (what: string, arr?: any) => void;
 
@@ -41,8 +42,10 @@ export const useChannelData = (callbacks?: {
   addtrade?: (trade: Trade) => void;
   tickprice?: (price: Price) => void;
   tickpositions?: (positions: Position[]) => void;
+  priceaudits?: (priceAudits: CellEditAudit<Price>[]) => void;
+  addpriceaudit?: (priceAudit: CellEditAudit<Price>) => void;
   themechange?: (theme: string) => void;
-}): {
+}, deps?: any[]): {
   client: ChannelClient | null;
 } => {
   const client = useChannelClient();
@@ -52,12 +55,12 @@ export const useChannelData = (callbacks?: {
       return;
     }
 
-    Object.keys(callbacks).forEach((name) => {
+    Object.keys(callbacks || {}).forEach((name) => {
       const callback = callbacks[name];
       client.register(name, callback);
       client.dispatch(name);
     });
-  }, [client]);
+  }, [client, ...(deps || [])]);
 
   return {
     client,
