@@ -1,4 +1,4 @@
-import NextHead from 'next/head';
+import NextHead from "next/head";
 
 const Head = ({ title }: { title: string }) => {
   return (

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export default ({ children }) => {
   children = React.Children.toArray(children);
@@ -9,11 +9,11 @@ export default ({ children }) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexFlow: 'column',
-        height: '100vh',
-        width: '100%',
-        background: 'white',
+        display: "flex",
+        flexFlow: "column",
+        height: "100vh",
+        width: "100%",
+        background: "white",
       }}
     >
       {adaptable}

@@ -1,59 +1,59 @@
 export const tradeColumns = [
   {
-    field: 'tradeId',
+    field: "tradeId",
     initialWidth: 110,
-    type: 'abColDefNumber',
+    type: "abColDefNumber",
   },
   {
-    field: 'instrumentId',
+    field: "instrumentId",
     initialWidth: 150,
-    type: 'abColDefString',
+    type: "abColDefString",
   },
   {
-    field: 'instrumentName',
+    field: "instrumentName",
     initialWidth: 250,
-    type: 'abColDefString',
+    type: "abColDefString",
   },
   {
-    field: 'notional',
+    field: "notional",
     initialWidth: 180,
     editable: true,
-    type: 'abColDefNumber',
+    type: "abColDefNumber",
   },
   {
-    field: 'counterparty',
-    type: 'abColDefString',
+    field: "counterparty",
+    type: "abColDefString",
   },
   {
-    field: 'currency',
+    field: "currency",
     initialWidth: 150,
-    type: 'abColDefString',
+    type: "abColDefString",
   },
   {
-    field: 'rating',
-    type: 'abColDefString',
+    field: "rating",
+    type: "abColDefString",
   },
   {
-    field: 'tradeDate',
-    type: 'abColDefDate',
+    field: "tradeDate",
+    type: "abColDefDate",
   },
   {
-    field: 'settlementDate',
-    type: 'abColDefDate',
+    field: "settlementDate",
+    type: "abColDefDate",
   },
   {
-    field: 'status',
-    type: 'abColDefString',
+    field: "status",
+    type: "abColDefString",
     editable: true,
   },
   {
-    field: 'lastUpdated',
-    type: 'abColDefDate',
+    field: "lastUpdated",
+    type: "abColDefDate",
   },
   {
-    field: 'lastUpdatedBy',
-    type: 'abColDefString',
+    field: "lastUpdatedBy",
+    type: "abColDefString",
   },
-].map(c => {
-  return { ...c, colId: c.field }
-})
+].map((c) => {
+  return { ...c, colId: c.field };
+});

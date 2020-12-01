@@ -33,19 +33,22 @@ const useChannelClient = (): ChannelClient | null => {
   return client;
 };
 
-export const useChannelData = (callbacks?: {
-  data?: (data: { prices: Price[]; trades: Trade[] }) => void;
-  filters?: (filters: ColumnFilter[]) => void;
-  prices?: (prices: Price[]) => void;
-  trades?: (trades: Trade[]) => void;
-  positions?: (positions: Position[]) => void;
-  addtrade?: (trade: Trade) => void;
-  tickprice?: (price: Price) => void;
-  tickpositions?: (positions: Position[]) => void;
-  priceaudits?: (priceAudits: CellEditAudit<Price>[]) => void;
-  addpriceaudit?: (priceAudit: CellEditAudit<Price>) => void;
-  themechange?: (theme: string) => void;
-}, deps?: any[]): {
+export const useChannelData = (
+  callbacks?: {
+    data?: (data: { prices: Price[]; trades: Trade[] }) => void;
+    filters?: (filters: ColumnFilter[]) => void;
+    prices?: (prices: Price[]) => void;
+    trades?: (trades: Trade[]) => void;
+    positions?: (positions: Position[]) => void;
+    addtrade?: (trade: Trade) => void;
+    tickprice?: (price: Price) => void;
+    tickpositions?: (positions: Position[]) => void;
+    priceaudits?: (priceAudits: CellEditAudit<Price>[]) => void;
+    addpriceaudit?: (priceAudit: CellEditAudit<Price>) => void;
+    themechange?: (theme: string) => void;
+  },
+  deps?: any[]
+): {
   client: ChannelClient | null;
 } => {
   const client = useChannelClient();

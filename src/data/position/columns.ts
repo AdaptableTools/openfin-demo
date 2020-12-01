@@ -1,27 +1,27 @@
-import { ColDef } from '@ag-grid-enterprise/all-modules';
+import { ColDef } from "@ag-grid-enterprise/all-modules";
 
 export const positionColumns: ColDef[] = [
   {
-    field: 'instrumentId',
+    field: "instrumentId",
     initialWidth: 130,
-    type: 'abColDefString',
+    type: "abColDefString",
   },
   {
-    field: 'position',
-    type: 'abColDefNumber',
+    field: "position",
+    type: "abColDefNumber",
   },
   {
-    field: 'currentPrice',
-    type: 'abColDefNumber',
+    field: "currentPrice",
+    type: "abColDefNumber",
   },
   {
-    field: 'closingPrice',
-    type: 'abColDefNumber',
+    field: "closingPrice",
+    type: "abColDefNumber",
   },
   {
-    field: 'pnl',
+    field: "pnl",
 
-    headerName: 'Profit&Loss',
-    type: 'abColDefNumber',
+    headerName: "Profit&Loss",
+    type: "abColDefNumber",
   },
 ];

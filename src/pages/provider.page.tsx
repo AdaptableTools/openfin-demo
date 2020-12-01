@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { makeProvider } from '../components/provider';
+import * as React from "react";
+import { makeProvider } from "../components/provider";
 
-const STORAGE_KEY = 'adaptable-layout-4'
+const STORAGE_KEY = "adaptable-layout-4";
 async function setLastSnapShot() {
   const platform = fin.Platform.getCurrentSync();
   const snapshot = await platform.getSnapshot();
 
   if (snapshot.windows.length) {
-
     const strSnapshot = JSON.stringify(snapshot);
     localStorage.setItem(STORAGE_KEY, strSnapshot);
   }

@@ -1,18 +1,18 @@
-import { ColDef } from '@ag-grid-enterprise/all-modules';
+import { ColDef } from "@ag-grid-enterprise/all-modules";
 
 export const priceColumns: ColDef[] = [
   {
-    field: 'instrumentId',
+    field: "instrumentId",
     initialWidth: 130,
-    type: 'abColDefString',
+    type: "abColDefString",
   },
   {
-    field: 'price',
-    type: 'abColDefNumber',
+    field: "price",
+    type: "abColDefNumber",
   },
   {
-    field: 'bidOfferSpread',
-    type: 'abColDefNumber',
+    field: "bidOfferSpread",
+    type: "abColDefNumber",
     // cellEditor: 'numericCellEditor',
     editable: true,
   },
@@ -25,19 +25,19 @@ export const priceColumns: ColDef[] = [
   //   type: 'abColDefNumber',
   // },
   {
-    field: 'closingPrice',
-    type: 'abColDefNumber',
+    field: "closingPrice",
+    type: "abColDefNumber",
   },
   {
-    field: 'changeOnDay',
-    type: 'abColDefNumber',
+    field: "changeOnDay",
+    type: "abColDefNumber",
   },
   {
-    field: 'bloombergBid',
-    type: 'abColDefNumber',
+    field: "bloombergBid",
+    type: "abColDefNumber",
   },
   {
-    field: 'bloombergAsk',
-    type: 'abColDefNumber',
+    field: "bloombergAsk",
+    type: "abColDefNumber",
   },
 ];

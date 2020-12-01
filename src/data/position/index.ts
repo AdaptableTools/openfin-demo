@@ -1,7 +1,7 @@
-import { getRandomItem, getCurrencies, groupByAndSum } from '../utils';
+import { getRandomItem, getCurrencies, groupByAndSum } from "../utils";
 
-import type { Trade } from '../trades';
-import type { Price } from '../prices';
+import type { Trade } from "../trades";
+import type { Price } from "../prices";
 
 export type Position = {
   instrumentId: string;
@@ -18,9 +18,9 @@ export const getPositions = (
 ) => {
   const positionSum = groupByAndSum(
     trades,
-    'instrumentId',
-    'notional',
-    (t: Trade) => t.status === 'active'
+    "instrumentId",
+    "notional",
+    (t: Trade) => t.status === "active"
   );
   const positions = [];
 

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import * as React from "react";
+import { useEffect, useState } from "react";
 
 type CommonProps = {
   name: string;
@@ -8,7 +8,7 @@ type CommonProps = {
 const IDENTITY = fin.Window.me;
 
 export default function Common(props: CommonProps) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   return (
     <div>

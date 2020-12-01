@@ -15,7 +15,7 @@ import {
   addDays,
   getNames,
   generateRandomBool,
-} from '../utils';
+} from "../utils";
 
 type DataSourceParams = {
   size: number;
@@ -37,9 +37,9 @@ export type Trade = {
   notional: number;
   counterparty: string;
   currency: string;
-  buySell: 'buy' | 'sell';
+  buySell: "buy" | "sell";
   rating: string;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
   tradeDate: Date;
   settlementDate: Date;
   lastUpdated: Date;
@@ -55,13 +55,13 @@ export const createTrade = (
   const moodyRating = getRandomItem(getMoodysRatings());
   const instrumentId = getRandomItem(getInstrumentIds());
   const sell = generateRandomBool();
-  const status = generateRandomBool() ? 'active' : 'inactive';
+  const status = generateRandomBool() ? "active" : "inactive";
   return {
     tradeId: index,
     instrumentId: instrumentId,
     instrumentName: getInstrumentName(instrumentId),
     notional: getRandomItem(getNotionals()),
-    buySell: sell ? 'sell' : 'buy',
+    buySell: sell ? "sell" : "buy",
     counterparty: getRandomItem(getCounterparties()),
     currency: getRandomItem(getCurrencies()),
     rating: moodyRating,
@@ -77,6 +77,6 @@ export const createTrade = (
 export const createNewTrade = (index: number) => {
   return createTrade(index, {
     tradeDate: generateRandomDateAndTime(1, 1000),
-    status: 'active',
+    status: "active",
   });
 };

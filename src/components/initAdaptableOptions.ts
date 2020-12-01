@@ -1,5 +1,5 @@
-import { AdaptableOptions } from '@adaptabletools/adaptable/types';
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import { AdaptableOptions } from "@adaptabletools/adaptable/types";
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
 
 export const initAdaptableOptions = (
   adaptableOptions: AdaptableOptions
@@ -16,15 +16,15 @@ export const initAdaptableOptions = (
 
     auditOptions: {
       auditCellEdits: {
-        auditAsEvent: true
+        auditAsEvent: true,
       },
       auditUserStateChanges: {
-        auditAsEvent: true
+        auditAsEvent: true,
       },
       auditTickingDataUpdates: {
         // auditAsEvent: true
-      }
-    }
+      },
+    },
   };
 
   const defaults = {
@@ -36,7 +36,7 @@ export const initAdaptableOptions = (
   Object.keys(defaults).forEach((key) => {
     const defaultValue = defaults[key];
 
-    if (typeof defaultValue === 'object') {
+    if (typeof defaultValue === "object") {
       common[key] = { ...defaultValue, ...adaptableOptions[key] };
     }
   });

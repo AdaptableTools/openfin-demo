@@ -1,37 +1,37 @@
-import * as React from 'react';
+import * as React from "react";
 
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
-} from '@adaptabletools/adaptable-react-aggrid';
+} from "@adaptabletools/adaptable-react-aggrid";
 
-import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
 
-import { AgGridReact } from '@ag-grid-community/react';
+import { AgGridReact } from "@ag-grid-community/react";
 
-import { GridOptions, ColDef } from '@ag-grid-enterprise/all-modules';
+import { GridOptions, ColDef } from "@ag-grid-enterprise/all-modules";
 
-import { columnTypes } from '../data/columnTypes';
-import { priceColumns } from '../data/prices/columns';
-import MainLayout from '../components/MainLayout';
+import { columnTypes } from "../data/columnTypes";
+import { priceColumns } from "../data/prices/columns";
+import MainLayout from "../components/MainLayout";
 
-import { modules } from '../components/modules';
+import { modules } from "../components/modules";
 
-import { useChannelData } from '../components/hooks/useChannelData';
-import { useRef } from 'react';
+import { useChannelData } from "../components/hooks/useChannelData";
+import { useRef } from "react";
 
-import { once } from '../components/once';
-import { DisplayFormat4Digits } from '../data/displayFormat';
-import { useFilters } from '../components/hooks/useFilters';
-import { useDispatchOnDataChanged } from '../components/hooks/useDispatchOnDataChanged';
-import { Price } from '../data/prices';
-import { useThemeSync } from '../components/hooks/useThemeSync';
-import Head from '../components/Head';
-import { initAdaptableOptions } from '../components/initAdaptableOptions';
-import { useAudit } from '../components/hooks/useAudit';
+import { once } from "../components/once";
+import { DisplayFormat4Digits } from "../data/displayFormat";
+import { useFilters } from "../components/hooks/useFilters";
+import { useDispatchOnDataChanged } from "../components/hooks/useDispatchOnDataChanged";
+import { Price } from "../data/prices";
+import { useThemeSync } from "../components/hooks/useThemeSync";
+import Head from "../components/Head";
+import { initAdaptableOptions } from "../components/initAdaptableOptions";
+import { useAudit } from "../components/hooks/useAudit";
 
-const RED = '#ffc8c8';
-const GREEN = '#ceffce';
+const RED = "#ffc8c8";
+const GREEN = "#ceffce";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -55,8 +55,8 @@ const initialGridOptions: GridOptions = {
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
-  primaryKey: 'instrumentId',
-  adaptableId: 'PriceView',
+  primaryKey: "instrumentId",
+  adaptableId: "PriceView",
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
     //   if (dataChangeInfo.ColumnId === 'bidOfferSpread') {
@@ -78,24 +78,24 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ConditionalStyles: [
         {
           Scope: {
-            ColumnIds: ['changeOnDay'],
+            ColumnIds: ["changeOnDay"],
           },
           Style: {
             BackColor: GREEN,
-            ForeColor: '#000000',
+            ForeColor: "#000000",
           },
-          Expression: '[changeOnDay] > 0',
+          Expression: "[changeOnDay] > 0",
           ExcludeGroupedRows: true,
         },
         {
           Scope: {
-            ColumnIds: ['changeOnDay'],
+            ColumnIds: ["changeOnDay"],
           },
           Style: {
             BackColor: RED,
-            ForeColor: '#000000',
+            ForeColor: "#000000",
           },
-          Expression: '[changeOnDay] < 0',
+          Expression: "[changeOnDay] < 0",
           ExcludeGroupedRows: true,
         },
       ],
@@ -103,26 +103,26 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     CalculatedColumn: {
       CalculatedColumns: [
         {
-          ColumnId: 'bid',
-          FriendlyName: 'Bid',
-          ColumnExpression: '[price] - [bidOfferSpread] / 2',
+          ColumnId: "bid",
+          FriendlyName: "Bid",
+          ColumnExpression: "[price] - [bidOfferSpread] / 2",
         },
         {
-          ColumnId: 'ask',
-          FriendlyName: 'Ask',
-          ColumnExpression: '[price] + [bidOfferSpread] / 2',
+          ColumnId: "ask",
+          FriendlyName: "Ask",
+          ColumnExpression: "[price] + [bidOfferSpread] / 2",
         },
       ],
     },
     PlusMinus: {
       PlusMinusRules: [
         {
-          ColumnId: 'bidOfferSpread',
+          ColumnId: "bidOfferSpread",
           NudgeValue: 0.5,
           IsDefaultNudge: true,
         },
         {
-          ColumnId: 'bidOfferSpread',
+          ColumnId: "bidOfferSpread",
           NudgeValue: 1,
           IsDefaultNudge: false,
           Expression: '[instrumentId]= "AAPL"',
@@ -140,7 +140,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       FormatColumns: [
         {
           Scope: {
-            ColumnIds: ['bid', 'ask', 'changeOnDay'],
+            ColumnIds: ["bid", "ask", "changeOnDay"],
           },
           DisplayFormat: DisplayFormat4Digits,
         },
@@ -149,39 +149,39 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     Dashboard: {
       Tabs: [
         {
-          Name: 'Price',
-          Toolbars: ['SmartEdit', 'OpenFin'],
+          Name: "Price",
+          Toolbars: ["SmartEdit", "OpenFin"],
         },
       ],
       IsCollapsed: true,
     },
     Layout: {
-      CurrentLayout: 'Price',
+      CurrentLayout: "Price",
       Layouts: [
         {
-          Name: 'Price',
+          Name: "Price",
           Columns: [
-            'instrumentId',
-            'price',
-            'bidOfferSpread',
-            'bid',
-            'ask',
-            'closingPrice',
-            'changeOnDay',
-            'bloombergBid',
-            'bloombergAsk',
+            "instrumentId",
+            "price",
+            "bidOfferSpread",
+            "bid",
+            "ask",
+            "closingPrice",
+            "changeOnDay",
+            "bloombergBid",
+            "bloombergAsk",
           ],
         },
       ],
     },
     FlashingCell: {
       FlashingCells: [
-        { ColumnId: 'price', IsLive: true, UpColor: GREEN, DownColor: RED },
-        { ColumnId: 'bid', IsLive: true, UpColor: GREEN, DownColor: RED },
-        { ColumnId: 'ask', IsLive: true, UpColor: GREEN, DownColor: RED },
+        { ColumnId: "price", IsLive: true, UpColor: GREEN, DownColor: RED },
+        { ColumnId: "bid", IsLive: true, UpColor: GREEN, DownColor: RED },
+        { ColumnId: "ask", IsLive: true, UpColor: GREEN, DownColor: RED },
       ],
     },
-  }
+  },
 });
 
 const App: React.FC = () => {
@@ -200,13 +200,13 @@ const App: React.FC = () => {
 
   useFilters(adaptableApiRef);
 
-  useAudit(adaptableApiRef)
+  useAudit(adaptableApiRef);
 
   useThemeSync(adaptableApiRef);
 
   useDispatchOnDataChanged({
     client,
-    dispatchChannelName: 'updateprice',
+    dispatchChannelName: "updateprice",
     adaptableApiRef,
   });
 
@@ -215,7 +215,7 @@ const App: React.FC = () => {
       <Head title="Prices" />
       <MainLayout>
         <AdaptableReact
-          style={{ flex: 'none' }}
+          style={{ flex: "none" }}
           gridOptions={initialGridOptions}
           adaptableOptions={adaptableOptions}
           modules={modules}

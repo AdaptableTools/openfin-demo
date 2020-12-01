@@ -1,35 +1,35 @@
-import * as React from 'react';
+import * as React from "react";
 
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
-} from '@adaptabletools/adaptable-react-aggrid';
+} from "@adaptabletools/adaptable-react-aggrid";
 
-import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
 
-import { AgGridReact } from '@ag-grid-community/react';
+import { AgGridReact } from "@ag-grid-community/react";
 
 import {
   GridOptions,
   ColDef,
   GridReadyEvent,
   GridApi,
-} from '@ag-grid-enterprise/all-modules';
+} from "@ag-grid-enterprise/all-modules";
 
-import { columnTypes } from '../data/columnTypes';
-import { positionColumns } from '../data/position/columns';
-import MainLayout from '../components/MainLayout';
-import { modules } from '../components/modules';
+import { columnTypes } from "../data/columnTypes";
+import { positionColumns } from "../data/position/columns";
+import MainLayout from "../components/MainLayout";
+import { modules } from "../components/modules";
 
-import { useChannelData } from '../components/hooks/useChannelData';
-import { useRef } from 'react';
-import { DisplayFormatInteger } from '../data/displayFormat';
-import { useFilters } from '../components/hooks/useFilters';
-import { once } from '../components/once';
-import { useThemeSync } from '../components/hooks/useThemeSync';
-import Head from '../components/Head';
-import type { Position } from '../data/position';
-import { initAdaptableOptions } from '../components/initAdaptableOptions';
+import { useChannelData } from "../components/hooks/useChannelData";
+import { useRef } from "react";
+import { DisplayFormatInteger } from "../data/displayFormat";
+import { useFilters } from "../components/hooks/useFilters";
+import { once } from "../components/once";
+import { useThemeSync } from "../components/hooks/useThemeSync";
+import Head from "../components/Head";
+import type { Position } from "../data/position";
+import { initAdaptableOptions } from "../components/initAdaptableOptions";
 
 const columnDefs: ColDef[] = positionColumns;
 
@@ -55,8 +55,8 @@ const gridOptions: GridOptions = {
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
-  primaryKey: 'instrumentId',
-  adaptableId: 'PositionView',
+  primaryKey: "instrumentId",
+  adaptableId: "PositionView",
 
   predefinedConfig: {
     FormatColumn: {
@@ -64,7 +64,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       FormatColumns: [
         {
           Scope: {
-            ColumnIds: ['pnl'],
+            ColumnIds: ["pnl"],
           },
           DisplayFormat: DisplayFormatInteger,
         },
@@ -72,7 +72,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
     Dashboard: {
       IsCollapsed: true,
-      Tabs: [{ Name: 'Position', Toolbars: ['SmartEdit', 'OpenFin'] }],
+      Tabs: [{ Name: "Position", Toolbars: ["SmartEdit", "OpenFin"] }],
     },
     Alert: {
       AlertDefinitions: [
@@ -107,7 +107,7 @@ const App: React.FC = () => {
       <Head title="Positions" />
       <MainLayout>
         <AdaptableReact
-          style={{ flex: 'none' }}
+          style={{ flex: "none" }}
           gridOptions={gridOptions}
           adaptableOptions={adaptableOptions}
           modules={modules}

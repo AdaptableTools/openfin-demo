@@ -2,10 +2,9 @@ import {
   AdaptableApi,
   AdaptableTheme,
   ThemeChangedEventArgs,
-} from '@adaptabletools/adaptable/types';
-import { MutableRefObject, useEffect } from 'react';
-import { useChannelData } from './useChannelData';
-
+} from "@adaptabletools/adaptable/types";
+import { MutableRefObject, useEffect } from "react";
+import { useChannelData } from "./useChannelData";
 
 export const useThemeSync = (
   adaptableApiRef: MutableRefObject<AdaptableApi>
@@ -27,20 +26,18 @@ export const useThemeSync = (
     }
 
     const offThemeChanged = adaptableApi.eventApi.on(
-      'ThemeChanged',
+      "ThemeChanged",
       async (args: ThemeChangedEventArgs) => {
-
-
         const info = adaptableApi.eventApi.getThemeChangedInfoFromEventArgs(
           args
         );
 
         const themeName = (info.theme as AdaptableTheme).Name || info.theme;
-        const context = await fin.Platform.getCurrentSync().getWindowContext() || {};
-
+        const context =
+          (await fin.Platform.getCurrentSync().getWindowContext()) || {};
 
         if (themeName !== context.theme) {
-          console.log('theme change', themeName);
+          console.log("theme change", themeName);
           fin.Platform.getCurrentSync().setWindowContext({ theme: themeName });
         }
 
@@ -48,38 +45,27 @@ export const useThemeSync = (
       }
     );
 
-
-
     return () => {
       offThemeChanged();
-
     };
   }, [adaptableApiRef.current]);
 
   useEffect(function () {
-
     const execute = async () => {
       const contextChangeHandler = ({ context }) => {
+        const { theme } = context;
 
-
-        const { theme } = context
-
-        console.log('setting theme', theme)
+        console.log("setting theme", theme);
 
         //adaptableApiRef.current?.themeApi.getCurrentTheme()
         adaptableApiRef.current?.themeApi.loadTheme(theme);
+      };
 
-      }
+      await fin.me.on("host-context-changed", contextChangeHandler);
+    };
 
-      await fin.me.on('host-context-changed', contextChangeHandler);
+    execute();
 
-    }
-
-    execute()
-
-    return () => {
-
-    }
-
-  }, [])
+    return () => {};
+  }, []);
 };

@@ -1,22 +1,22 @@
-import { AdaptableFormat } from '@adaptabletools/adaptable/types';
+import { AdaptableFormat } from "@adaptabletools/adaptable/types";
 
 export const DisplayFormat4Digits = {
-  Formatter: 'NumberFormatter' as 'NumberFormatter',
+  Formatter: "NumberFormatter" as "NumberFormatter",
   Options: {
     FractionDigits: 4,
   },
 };
 
 export const DisplayFormatInteger = {
-  Formatter: 'NumberFormatter' as 'NumberFormatter',
+  Formatter: "NumberFormatter" as "NumberFormatter",
   Options: {
     FractionDigits: 0,
   },
 };
 
 export const DateFormat: AdaptableFormat = {
-  Formatter: 'DateFormatter',
+  Formatter: "DateFormatter",
   Options: {
-    Pattern: 'MM/DD/YYYY',
+    Pattern: "MM/DD/YYYY",
   },
 };

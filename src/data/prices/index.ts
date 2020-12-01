@@ -5,7 +5,7 @@ import {
   roundTo4Dp,
   getBidOfferSpreads,
   generateRandomBool,
-} from '../utils';
+} from "../utils";
 
 export const getDataSource = () => {
   return getInstrumentIds().map(createPrice);

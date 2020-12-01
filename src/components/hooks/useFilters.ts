@@ -2,10 +2,10 @@ import {
   AdaptableApi,
   ColumnFilter,
   SearchChangedEventArgs,
-} from '@adaptabletools/adaptable/types';
+} from "@adaptabletools/adaptable/types";
 
-import { MutableRefObject, useCallback, useEffect } from 'react';
-import { useChannelData } from './useChannelData';
+import { MutableRefObject, useCallback, useEffect } from "react";
+import { useChannelData } from "./useChannelData";
 
 const deleteExtraInfo = (filter) => {
   delete (filter as any).timestamp;
@@ -58,13 +58,13 @@ export const useFilters = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
       return;
     }
     const off = adaptableApi.eventApi.on(
-      'SearchChanged',
+      "SearchChanged",
       (event: SearchChangedEventArgs) => {
         const searchInfo = adaptableApi.eventApi.getSearchChangedInfoFromEventArgs(
           event
         );
 
-        if (searchInfo.searchChangedTrigger === 'Filter') {
+        if (searchInfo.searchChangedTrigger === "Filter") {
           const firstFilter = searchInfo.adaptableSearchState.columnFilters[0];
           const firstFilterTimestamp = firstFilter
             ? ((firstFilter as any).timestamp as number)
@@ -86,7 +86,7 @@ export const useFilters = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
           });
           lastFilterTimestamp = Date.now();
 
-          client.dispatch('set-filters', columnFilters);
+          client.dispatch("set-filters", columnFilters);
         }
       }
     );
