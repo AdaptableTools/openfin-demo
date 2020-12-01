@@ -7,6 +7,7 @@ async function setLastSnapShot() {
   const snapshot = await platform.getSnapshot();
 
   if (snapshot.windows.length) {
+
     const strSnapshot = JSON.stringify(snapshot);
     localStorage.setItem(STORAGE_KEY, strSnapshot);
   }
