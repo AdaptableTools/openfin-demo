@@ -83,6 +83,17 @@
                           "isClosable": true,
                           "reorderEnabled": true,
                           "title": "view"
+                        },
+                        {
+                          "type": "component",
+                          "componentName": "view",
+                          "componentState": {
+                            "url": "http://localhost:3001/price-audit",
+                            "name": "Price Audit"
+                          },
+                          "isClosable": true,
+                          "reorderEnabled": true,
+                          "title": ""
                         }
                       ]
                     },

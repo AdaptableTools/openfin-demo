@@ -54,4 +54,6 @@ export const tradeColumns = [
     field: 'lastUpdatedBy',
     type: 'abColDefString',
   },
-];
+].map(c => {
+  return { ...c, colId: c.field }
+})

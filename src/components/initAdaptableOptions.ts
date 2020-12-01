@@ -13,6 +13,18 @@ export const initAdaptableOptions = (
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
     },
+
+    auditOptions: {
+      auditCellEdits: {
+        auditAsEvent: true
+      },
+      auditUserStateChanges: {
+        auditAsEvent: true
+      },
+      auditTickingDataUpdates: {
+        // auditAsEvent: true
+      }
+    }
   };
 
   const defaults = {

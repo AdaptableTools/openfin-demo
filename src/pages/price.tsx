@@ -28,6 +28,7 @@ import { Price } from '../data/prices';
 import { useThemeSync } from '../components/hooks/useThemeSync';
 import Head from '../components/Head';
 import { initAdaptableOptions } from '../components/initAdaptableOptions';
+import { useAudit } from '../components/hooks/useAudit';
 
 const RED = '#ffc8c8';
 const GREEN = '#ceffce';
@@ -180,15 +181,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         { ColumnId: 'ask', IsLive: true, UpColor: GREEN, DownColor: RED },
       ],
     },
-  },
-  auditOptions: {
-    auditTickingDataUpdates: {
-      auditAsEvent: true,
-    },
-    auditCellEdits: {
-      auditAsAlert: true,
-    },
-  },
+  }
 });
 
 const App: React.FC = () => {
@@ -206,6 +199,8 @@ const App: React.FC = () => {
   });
 
   useFilters(adaptableApiRef);
+
+  useAudit(adaptableApiRef)
 
   useThemeSync(adaptableApiRef);
 

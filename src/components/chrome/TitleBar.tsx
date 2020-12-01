@@ -23,7 +23,7 @@ const toggleTheme = async () => {
 
 const setTheme = async (theme) => {
 
-  //  syncTheme(theme)
+  syncTheme(theme)
   const context = await fin.Platform.getCurrentSync().getWindowContext() || {};
 
   if (context.theme !== theme) {

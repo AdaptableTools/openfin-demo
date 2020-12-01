@@ -7,12 +7,12 @@ async function setLastSnapShot() {
 
   if (snapshot.windows.length) {
     const strSnapshot = JSON.stringify(snapshot);
-    localStorage.setItem('adaptable-layout1', strSnapshot);
+    localStorage.setItem('adaptable-layout3', strSnapshot);
   }
 }
 
 function getLastSnapShot() {
-  let snapshot: any = localStorage.getItem('adaptable-layout1');
+  let snapshot: any = localStorage.getItem('adaptable-layout3');
   snapshot = snapshot ? JSON.parse(snapshot) : null;
 
   if (snapshot) {
