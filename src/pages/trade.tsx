@@ -151,11 +151,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Export: {
+      Revision: 2,
       Reports: [
         {
           Name: 'Active Trades',
           ReportColumnScope: 'AllColumns',
-          ReportRowScope: 'AllRows',
+          ReportRowScope: 'ExpressionRows',
           Expression: '[status] = "active"'
         }
       ]
