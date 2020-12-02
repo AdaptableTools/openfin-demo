@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import "../../../node_modules/modern-normalize/modern-normalize.css";
 import { LeftMenu } from "../../components/chrome/LeftMenu";
 import { TitleBar } from "../../components/chrome/TitleBar";
 

@@ -22,6 +22,11 @@ const tabs = [
     title: "Trades",
     name: "Trade View",
   },
+  {
+    url: 'help',
+    title: 'How it works',
+    name: 'How it works'
+  }
 ];
 
 const addView = (tab: { url: string; title: string; name: string }) => {
@@ -35,6 +40,14 @@ const addView = (tab: { url: string; title: string; name: string }) => {
     fin.me.identity
   );
 };
+
+const openHelp = () => {
+  fin.Platform.getCurrentSync().createView({
+
+    url: `${window.location.origin}/help`,
+
+  });
+}
 export const LeftMenu = () => {
   return (
     <div id="left-menu">
@@ -48,6 +61,9 @@ export const LeftMenu = () => {
             </li>
           );
         })}
+        {/*}   <li key="help">
+          <button onClick={openHelp}>How it works</button>
+      </li>*/}
       </ul>
     </div>
   );
