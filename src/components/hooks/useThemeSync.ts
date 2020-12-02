@@ -38,7 +38,9 @@ export const useThemeSync = (
 
         if (themeName !== context.theme) {
           console.log("theme change", themeName);
-          fin.Platform.getCurrentSync().setWindowContext({ theme: themeName });
+          const context = { theme: themeName }
+          fin.Platform.getCurrentSync().setWindowContext(context);
+          fin.InterApplicationBus.send({ uuid: "*" }, 'default-window-context-changed', context)
         }
 
         // client.dispatch('themechange', themeName);
@@ -52,13 +54,15 @@ export const useThemeSync = (
 
   useEffect(function () {
     const execute = async () => {
-      const contextChangeHandler = ({ context }) => {
+      const contextChangeHandler = (e) => {
+        const { context } = e
         const { theme } = context;
 
         console.log("setting theme", theme);
 
         //adaptableApiRef.current?.themeApi.getCurrentTheme()
         adaptableApiRef.current?.themeApi.loadTheme(theme);
+
       };
 
       await fin.me.on("host-context-changed", contextChangeHandler);
@@ -66,6 +70,6 @@ export const useThemeSync = (
 
     execute();
 
-    return () => {};
+    return () => { };
   }, []);
 };

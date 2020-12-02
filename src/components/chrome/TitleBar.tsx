@@ -67,13 +67,12 @@ export const TitleBar = () => {
 
     // });
 
-    fin.Application.getCurrent().then((app) => {
-      app.on("host-context-changed", (context) => {
-        const { theme } = context;
+    fin.InterApplicationBus.subscribe({ uuid: "*" }, 'default-window-context-changed', (context) => {
+      const { theme } = context;
 
-        syncTheme(theme);
-      });
-    });
+      console.log(theme, context)
+      syncTheme(theme);
+    })
   }, []);
   return (
     <div id="title-bar">
