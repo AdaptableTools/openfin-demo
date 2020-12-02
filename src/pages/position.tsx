@@ -56,7 +56,7 @@ const gridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
-  adaptableId: "PositionView",
+  adaptableId: "Position View",
 
   predefinedConfig: {
     FormatColumn: {

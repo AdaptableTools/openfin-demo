@@ -1,4 +1,6 @@
 import * as React from "react";
+import { toggleSidebar } from "../TitleBar";
+import { useThemeChangeInProvider } from "../useThemeChangeInProvider";
 import "./index.css";
 
 const tabs = [
@@ -9,8 +11,8 @@ const tabs = [
   },
   {
     url: "price-audit",
-    title: "Price Audit",
-    name: "Price Audit",
+    title: "Prices Audit",
+    name: "Prices Audit",
   },
   {
     url: "position",
@@ -24,8 +26,8 @@ const tabs = [
   },
   {
     url: 'help',
-    title: 'How it works',
-    name: 'How it works'
+    title: 'Demo Guide',
+    name: 'Demo Guide'
   }
 ];
 
@@ -49,8 +51,22 @@ const openHelp = () => {
   });
 }
 export const LeftMenu = () => {
+  const theme = useThemeChangeInProvider()
   return (
     <div id="left-menu">
+      <div style={{
+        padding: '20px 0px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+
+        <a className="brand" href="https://adaptabletools.com">
+          <img src={`https://docs.adaptabletools.com/img/adaptablelogo${theme}theme.png`} />
+        </a>
+
+      </div>
+
       <span>Available applications</span>
 
       <ul>
@@ -61,10 +77,9 @@ export const LeftMenu = () => {
             </li>
           );
         })}
-        {/*}   <li key="help">
-          <button onClick={openHelp}>How it works</button>
-      </li>*/}
       </ul>
+
+      <button onClick={toggleSidebar}>Hide sidebar</button>
     </div>
   );
 };

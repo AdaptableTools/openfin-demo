@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Icon } from "@adaptabletools/adaptable/src/components/icons";
 import "./index.css";
+import { useThemeChangeInProvider } from "./useThemeChangeInProvider";
 const LIGHT_THEME = "light";
 const DARK_THEME = "dark";
 
@@ -28,6 +29,7 @@ const setTheme = async (theme) => {
     (await fin.Platform.getCurrentSync().getWindowContext()) || {};
 
   if (context.theme !== theme) {
+    fin.InterApplicationBus.send({ uuid: "*" }, 'default-window-context-changed', context)
     fin.Platform.getCurrentSync().setWindowContext({ theme });
   }
 };
@@ -52,32 +54,17 @@ const maxOrRestore = async () => {
   return fin.me.restore();
 };
 
-const toggleSidebar = () => {
+export const toggleSidebar = () => {
   document.querySelector("#left-menu").classList.toggle("hidden");
 };
 
 export const TitleBar = () => {
-  React.useEffect(() => {
-    // console.log(fin.me, '!!!!')
+  useThemeChangeInProvider(syncTheme)
 
-    //     fin.me.on('host-context-changed', (context) => {
-    //   const { theme } = context
-
-    //   syncTheme(theme)
-
-    // });
-
-    fin.InterApplicationBus.subscribe({ uuid: "*" }, 'default-window-context-changed', (context) => {
-      const { theme } = context;
-
-      console.log(theme, context)
-      syncTheme(theme);
-    })
-  }, []);
   return (
     <div id="title-bar">
       <div className="title-bar-draggable">
-        <div id="title">Welcome to AdapTable</div>
+        <div id="title">AdapTable OpenFin Demo App</div>
       </div>
       <div id="buttons-wrapper">
         <div

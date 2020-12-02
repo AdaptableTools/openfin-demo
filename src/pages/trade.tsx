@@ -51,7 +51,7 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "tradeId",
-  adaptableId: "TradeView",
+  adaptableId: "Trade View",
   auditOptions: {
     auditFunctionEvents: {
       auditAsEvent: true,
@@ -68,8 +68,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   ],
   predefinedConfig: {
     Dashboard: {
-      Tabs: [{ Name: "Dashboard", Toolbars: ["OpenFin", "Export", "Layout"] }],
+      Revision: 1,
+      Tabs: [{ Name: "Blotter", Toolbars: ["Layout", 'CellSummary', 'Query', 'Filter'] }, {
+        Name: 'Reports', Toolbars: ['OpenFin', 'Export']
+      }],
     },
+
     ActionColumn: {
       Revision: 2,
       ActionColumns: [
@@ -110,7 +114,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Layout: {
-      Revision: 1,
+      Revision: 2,
       Layouts: [
         {
           Name: "Latest Trades",
@@ -136,7 +140,25 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             },
           ],
         },
+        {
+          Name: 'Counterparties',
+          Columns: ['tradeId', 'instrumentId', 'instrumentName', 'counterparty', 'notional', 'rating', 'status'],
+          RowGroupedColumns: ['counterparty'],
+          AggregationColumns: {
+            notional: true
+          }
+        }
       ],
+    },
+    Export: {
+      Reports: [
+        {
+          Name: 'Active Trades',
+          ReportColumnScope: 'AllColumns',
+          ReportRowScope: 'AllRows',
+          Expression: '[status] = "active"'
+        }
+      ]
     },
     UserInterface: {
       EditLookUpItems: [

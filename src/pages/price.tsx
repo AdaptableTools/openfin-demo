@@ -56,7 +56,7 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
-  adaptableId: "PriceView",
+  adaptableId: "Price View",
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
     //   if (dataChangeInfo.ColumnId === 'bidOfferSpread') {

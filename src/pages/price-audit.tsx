@@ -73,7 +73,7 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "timestamp",
-  adaptableId: "Price Audit",
+  adaptableId: "Prices Audit",
 
   predefinedConfig: {
     Dashboard: {
@@ -113,7 +113,7 @@ const App = () => {
 
   return (
     <>
-      <Head title="Price Audits" />
+      <Head title="Prices Audit" />
       <MainLayout>
         <AdaptableReact
           style={{ flex: "none" }}

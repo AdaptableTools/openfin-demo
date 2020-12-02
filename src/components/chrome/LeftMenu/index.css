@@ -5,6 +5,10 @@
   border-right: 1px solid var(--tab-button-hover-color);
 }
 
+#left-menu .brand img {
+  width: 116px;
+}
+
 #left-menu ul {
   list-style: none;
   padding-inline-start: 0px;

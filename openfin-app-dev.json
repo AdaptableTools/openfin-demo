@@ -4,15 +4,15 @@
     "version": "stable"
   },
   "shortcut": {
-    "company": "OpenFin",
-    "description": "Platform Demo",
+    "company": "AdapTable",
+    "description": "AdapTable OpenFin Demo App",
     "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
-    "name": "AdapTable OpenFin Demo"
+    "name": "AdapTable OpenFin Demo App"
   },
   "platform": {
     "providerUrl": "http://localhost:3001/provider",
     "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
-    "uuid": "Adaptable Demo",
+    "uuid": "AdapTable OpenFin Demo App",
     "autoShow": false,
     "frame": true,
     "alwaysOnTop": true,
@@ -89,7 +89,7 @@
                           "componentName": "view",
                           "componentState": {
                             "url": "http://localhost:3001/price-audit",
-                            "name": "Price Audit"
+                            "name": "Prices Audit"
                           },
                           "isClosable": true,
                           "reorderEnabled": true,

@@ -5,7 +5,7 @@ const HelpPage: React.FC = () => {
   return (
     <>
       <div style={{ padding: 20, overflow: 'auto' }}>
-        <h2>How it all works</h2>
+        <h2>Guide</h2>
         <p>
           Explain how it works
         </p>
