@@ -89,7 +89,7 @@
                           "componentName": "view",
                           "componentState": {
                             "url": "http://localhost:3001/price-audit",
-                            "name": "Prices Audit"
+                            "name": "Price Audit"
                           },
                           "isClosable": true,
                           "reorderEnabled": true,

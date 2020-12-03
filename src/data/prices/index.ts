@@ -18,7 +18,7 @@ export type Price = {
   bid: number;
   ask: number;
   closingPrice: number;
-  changeOnDay: number;
+  // changeOnDay: number;
   bloombergBid: number;
   bloombergAsk: number;
 };
@@ -36,7 +36,7 @@ const createPrice = (instrument: string) => {
     bid: bid,
     ask: ask,
     closingPrice: closingPrice,
-    changeOnDay: price - closingPrice,
+    // changeOnDay: price - closingPrice,
     bloombergBid: roundTo4Dp(bid - 0.01),
     bloombergAsk: roundTo4Dp(ask + 0.01),
   };

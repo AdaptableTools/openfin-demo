@@ -56,7 +56,11 @@ export const useThemeSync = (
     const execute = async () => {
       const contextChangeHandler = (e) => {
         const { context } = e
-        const { theme } = context;
+        const { theme } = context || {};
+
+        if (!theme) {
+          return
+        }
 
         console.log("setting theme", theme);
 

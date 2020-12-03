@@ -30,6 +30,7 @@ import { useThemeSync } from "../components/hooks/useThemeSync";
 import Head from "../components/Head";
 import type { Position } from "../data/position";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
+import { GREEN, RED } from "../components/colors";
 
 const columnDefs: ColDef[] = positionColumns;
 
@@ -60,15 +61,35 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 
   predefinedConfig: {
     FormatColumn: {
-      Revision: 1,
+      Revision: 2,
       FormatColumns: [
         {
           Scope: {
             ColumnIds: ["pnl"],
           },
-          DisplayFormat: DisplayFormatInteger,
+          DisplayFormat: { ...DisplayFormatInteger, Options: { ...DisplayFormatInteger.Options, Parentheses: true } },
         },
       ],
+    },
+    FlashingCell: {
+      Revision: 1,
+      FlashingCells: [
+        { ColumnId: "position", IsLive: true, UpColor: GREEN, DownColor: RED }
+      ],
+    },
+    ConditionalStyle: {
+      Revision: 3,
+      ConditionalStyles: [
+        {
+          Scope: {
+            ColumnIds: ['pnl']
+          },
+          Style: {
+            ForeColor: 'red'
+          },
+          Expression: "[pnl] < 0"
+        }
+      ]
     },
     Dashboard: {
       IsCollapsed: true,

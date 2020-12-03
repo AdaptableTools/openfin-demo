@@ -29,9 +29,8 @@ import { useThemeSync } from "../components/hooks/useThemeSync";
 import Head from "../components/Head";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
+import { GREEN, RED } from "../components/colors";
 
-const RED = "#ffc8c8";
-const GREEN = "#ceffce";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -56,6 +55,7 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
+  userName: 'Demo User',
   adaptableId: "Price View",
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
@@ -101,6 +101,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     CalculatedColumn: {
+      Revision: 1,
       CalculatedColumns: [
         {
           ColumnId: "bid",
@@ -111,6 +112,11 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           ColumnId: "ask",
           FriendlyName: "Ask",
           ColumnExpression: "[price] + [bidOfferSpread] / 2",
+        },
+        {
+          ColumnId: "changeOnDay",
+          FriendlyName: "Change on Day",
+          ColumnExpression: "[price] - [closingPrice]",
         },
       ],
     },
@@ -136,12 +142,13 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 1,
+      Revision: 2,
       FormatColumns: [
         {
           Scope: {
             ColumnIds: ["bid", "ask", "changeOnDay"],
           },
+          CellAlignment: 'Right',
           DisplayFormat: DisplayFormat4Digits,
         },
       ],

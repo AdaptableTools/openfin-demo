@@ -29,6 +29,7 @@ type Item = {
   oldValue: string;
   newValue: string;
   instrumentId: string;
+  userName: string;
 };
 
 const columns = [
@@ -47,6 +48,10 @@ const columns = [
   },
   {
     field: "newValue",
+    type: "abColDefString",
+  },
+  {
+    field: "userName",
     type: "abColDefString",
   },
 ];
@@ -73,7 +78,7 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "timestamp",
-  adaptableId: "Prices Audit",
+  adaptableId: "Price Audit",
 
   predefinedConfig: {
     Dashboard: {
@@ -89,6 +94,7 @@ const toItem = (priceAudit) => {
     oldValue: priceAudit.data_change_details.previous_value,
     newValue: priceAudit.data_change_details.new_value,
     instrumentId: priceAudit.data_change_details.row_data.instrumentId,
+    userName: priceAudit.userName
   } as Item;
 };
 
@@ -113,7 +119,7 @@ const App = () => {
 
   return (
     <>
-      <Head title="Prices Audit" />
+      <Head title="Price Audit" />
       <MainLayout>
         <AdaptableReact
           style={{ flex: "none" }}

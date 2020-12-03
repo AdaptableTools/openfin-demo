@@ -11,8 +11,8 @@ const tabs = [
   },
   {
     url: "price-audit",
-    title: "Prices Audit",
-    name: "Prices Audit",
+    title: "Price Audit",
+    name: "Price Audit",
   },
   {
     url: "position",

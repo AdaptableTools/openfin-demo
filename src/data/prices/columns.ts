@@ -28,10 +28,10 @@ export const priceColumns: ColDef[] = [
     field: "closingPrice",
     type: "abColDefNumber",
   },
-  {
-    field: "changeOnDay",
-    type: "abColDefNumber",
-  },
+  // {
+  //   field: "changeOnDay",
+  //   type: "abColDefNumber",
+  // },
   {
     field: "bloombergBid",
     type: "abColDefNumber",

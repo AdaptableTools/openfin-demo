@@ -20,8 +20,7 @@ export const positionColumns: ColDef[] = [
   },
   {
     field: "pnl",
-
-    headerName: "Profit&Loss",
+    headerName: "PnL",
     type: "abColDefNumber",
   },
 ];
