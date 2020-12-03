@@ -138,6 +138,17 @@
                       "isClosable": true,
                       "reorderEnabled": true,
                       "title": "view"
+                    },
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "url": "http://localhost:3001/trade-audit",
+                        "name": "Trade Audit"
+                      },
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": ""
                     }
                   ]
                 }

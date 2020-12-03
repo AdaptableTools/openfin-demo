@@ -14,6 +14,7 @@ let filters: ColumnFilter[] = [];
 let positions: Position[] = [];
 
 let priceAudits: CellEditAudit<Price>[] = [];
+let tradeAudits: CellEditAudit<Trade>[] = [];
 
 const getPositionsArray = ({
   trades,
@@ -97,19 +98,42 @@ export async function makeProvider() {
   provider.register("trades", updateTrades);
   provider.register("prices", updatePrices);
   provider.register("priceaudits", (priceAudit) => {
-    if (!priceAudit || priceAudit.audit_trigger !== "CellEdit") {
-      console.log('invalid price audit', priceAudit)
-      return;
+    if (!priceAudit) {
+      return
     }
-    // priceAudits = [priceAudit].concat(priceAudits)
+    const trigger = priceAudit.audit_trigger
+
+    if (trigger !== 'TickingDataUpdate' && trigger !== 'CellEdit') {
+      return
+    }
+
     priceAudits = priceAudits.concat(priceAudit);
 
     console.log("audits", priceAudits);
     publish(
       "priceaudits",
-      priceAudits.filter((x) => x && x.audit_trigger === "CellEdit")
+      priceAudits
     );
     publish("addpriceaudit", priceAudit);
+  });
+  provider.register("tradeaudits", (tradeAudit) => {
+    if (!tradeAudit) {
+      return
+    }
+    const trigger = tradeAudit.audit_trigger
+
+    if (trigger !== 'TickingDataUpdate' && trigger !== 'CellEdit') {
+      return
+    }
+
+    tradeAudits = tradeAudits.concat(tradeAudit);
+
+    console.log("audits", tradeAudits);
+    publish(
+      "tradeaudits",
+      tradeAudits
+    );
+    publish("addtradeaudit", tradeAudit);
   });
   provider.register("positions", updatePositions);
   provider.register("themechange", (theme: string) => {

@@ -23,7 +23,7 @@ import { modules } from "../components/modules";
 
 import { useChannelData } from "../components/hooks/useChannelData";
 import { useRef } from "react";
-import { DisplayFormatInteger } from "../data/displayFormat";
+import { DisplayFormat4Digits, DisplayFormatInteger } from "../data/displayFormat";
 import { useFilters } from "../components/hooks/useFilters";
 import { once } from "../components/once";
 import { useThemeSync } from "../components/hooks/useThemeSync";
@@ -61,7 +61,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 
   predefinedConfig: {
     FormatColumn: {
-      Revision: 2,
+      Revision: 3,
       FormatColumns: [
         {
           Scope: {
@@ -69,6 +69,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           },
           DisplayFormat: { ...DisplayFormatInteger, Options: { ...DisplayFormatInteger.Options, Parentheses: true } },
         },
+        {
+          Scope: {
+            ColumnIds: ['currentPrice', 'closingPrice']
+          },
+          DisplayFormat: DisplayFormat4Digits
+        }
       ],
     },
     FlashingCell: {
@@ -96,9 +102,22 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       Tabs: [{ Name: "Position", Toolbars: ["SmartEdit", "OpenFin"] }],
     },
     Alert: {
+      Revision: 6,
       AlertDefinitions: [
-        // {
-        // }
+        {
+          Scope: {
+            ColumnIds: ['position']
+          },
+
+          Predicate: {
+            PredicateId: 'GreaterThan',
+            Inputs: [50000]
+          },
+          MessageType: 'Warning',
+          AlertProperties: {
+            ShowInOpenFin: true
+          }
+        }
       ],
     },
   },

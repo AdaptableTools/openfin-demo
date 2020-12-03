@@ -26,6 +26,7 @@ import { useThemeSync } from "../components/hooks/useThemeSync";
 import Head from "../components/Head";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { DateFormat } from "../data/displayFormat";
+import { useAudit } from "../components/hooks/useAudit";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -52,11 +53,7 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "tradeId",
   adaptableId: "Trade View",
-  auditOptions: {
-    auditFunctionEvents: {
-      auditAsEvent: true,
-    },
-  },
+
   userFunctions: [
     {
       name: "renderCancelButton",
@@ -179,6 +176,7 @@ const App: React.FC = () => {
   const gridOptionsRef = useRef<GridOptions>(null);
 
   useFilters(adaptableApiRef);
+  useAudit('tradeaudits', adaptableApiRef);
 
   const { client } = useChannelData({
     trades: once((trades) => {

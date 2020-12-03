@@ -45,6 +45,8 @@ export const useChannelData = (
     tickpositions?: (positions: Position[]) => void;
     priceaudits?: (priceAudits: CellEditAudit<Price>[]) => void;
     addpriceaudit?: (priceAudit: CellEditAudit<Price>) => void;
+    tradeaudits?: (tradeAudits: CellEditAudit<Trade>[]) => void;
+    addtradeaudit?: (tradeAudit: CellEditAudit<Trade>) => void;
     themechange?: (theme: string) => void;
   },
   deps?: any[]

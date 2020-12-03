@@ -9,6 +9,8 @@ export const initAdaptableOptions = (
       autoSizeColumnsInLayout: true,
     },
 
+    userName: 'Demo User',
+
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
@@ -22,14 +24,14 @@ export const initAdaptableOptions = (
         auditAsEvent: true,
       },
       auditTickingDataUpdates: {
-        // auditAsEvent: true
+        auditAsEvent: true
       },
     },
   };
 
   const defaults = {
     ...defaultAdaptableOptions,
-    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-2`,
+    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-4`,
   };
   const common = {};
 

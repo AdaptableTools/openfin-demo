@@ -12,6 +12,9 @@ export const getRowData = (gridApi: GridApi) => {
 export const roundTo4Dp = (val) => {
   return Math.round(val * 10000) / 10000;
 };
+export const roundTo1Dp = (val) => {
+  return Math.round(val * 10) / 10
+};
 
 // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
 // generates a value between 0 and 2 =[0, 2), adding 1 makes this

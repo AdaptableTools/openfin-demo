@@ -55,7 +55,6 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
-  userName: 'Demo User',
   adaptableId: "Price View",
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
@@ -142,11 +141,11 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 2,
+      Revision: 3,
       FormatColumns: [
         {
           Scope: {
-            ColumnIds: ["bid", "ask", "changeOnDay"],
+            ColumnIds: ["bid", "ask", "changeOnDay", 'price'],
           },
           CellAlignment: 'Right',
           DisplayFormat: DisplayFormat4Digits,
@@ -207,7 +206,7 @@ const App: React.FC = () => {
 
   useFilters(adaptableApiRef);
 
-  useAudit(adaptableApiRef);
+  useAudit('priceaudits', adaptableApiRef);
 
   useThemeSync(adaptableApiRef);
 
