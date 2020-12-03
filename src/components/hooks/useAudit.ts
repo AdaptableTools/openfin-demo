@@ -20,6 +20,7 @@ export const useAudit = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
       const data = (event.data[0].id as unknown) as CellEditAudit<Price>;
       data.client_timestamp = `${data.client_timestamp}`;
 
+      console.log('price audit:', data)
       client.dispatch("priceaudits", data);
     };
     console.log("listening to cell edits");

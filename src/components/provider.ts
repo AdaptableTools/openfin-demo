@@ -98,6 +98,7 @@ export async function makeProvider() {
   provider.register("prices", updatePrices);
   provider.register("priceaudits", (priceAudit) => {
     if (!priceAudit || priceAudit.audit_trigger !== "CellEdit") {
+      console.log('invalid price audit', priceAudit)
       return;
     }
     // priceAudits = [priceAudit].concat(priceAudits)

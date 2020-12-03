@@ -29,7 +29,7 @@ type Item = {
   oldValue: string;
   newValue: string;
   instrumentId: string;
-  userName: string;
+  username: string;
 };
 
 const columns = [
@@ -51,7 +51,7 @@ const columns = [
     type: "abColDefString",
   },
   {
-    field: "userName",
+    field: "username",
     type: "abColDefString",
   },
 ];
@@ -89,13 +89,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 });
 
 const toItem = (priceAudit) => {
-  return {
+  const item = {
     timestamp: priceAudit.client_timestamp,
     oldValue: priceAudit.data_change_details.previous_value,
     newValue: priceAudit.data_change_details.new_value,
     instrumentId: priceAudit.data_change_details.row_data.instrumentId,
-    userName: priceAudit.userName
+    username: priceAudit.username
   } as Item;
+
+  console.log(item)
+  return item
 };
 
 const App = () => {
