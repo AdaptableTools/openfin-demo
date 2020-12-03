@@ -8,7 +8,7 @@ import type { Price } from "../../data/prices";
 import type { CellEditAudit } from "../types";
 import { useChannelData } from "./useChannelData";
 
-export const useAudit = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
+export const useAudit = (channelName: string, adaptableApiRef: MutableRefObject<AdaptableApi>) => {
   const { current: adaptableApi } = adaptableApiRef;
 
   const { client } = useChannelData();
@@ -20,8 +20,8 @@ export const useAudit = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
       const data = (event.data[0].id as unknown) as CellEditAudit<Price>;
       data.client_timestamp = `${data.client_timestamp}`;
 
-      console.log('price audit:', data)
-      client.dispatch("priceaudits", data);
+      console.log('audit:', data)
+      client.dispatch(channelName, data);
     };
     console.log("listening to cell edits");
     const off1 = adaptableApi.auditEventApi.on("AuditCellEdited", callback);
@@ -37,5 +37,5 @@ export const useAudit = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
       off2();
       off3();
     };
-  }, [adaptableApi, client]);
+  }, [adaptableApi, client, channelName]);
 };

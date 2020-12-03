@@ -24,11 +24,13 @@ import { useFilters } from "../components/hooks/useFilters";
 import { useThemeSync } from "../components/hooks/useThemeSync";
 import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
+import { Trade } from "../data/trades";
 
 type Item = {
   timestamp: string;
-  oldValue: number;
-  newValue: number;
+  oldValue: string;
+  newValue: string;
+  column: string;
   instrumentId: string;
   username: string;
   trigger: string;
@@ -46,11 +48,15 @@ const columns = [
   },
   {
     field: "oldValue",
-    type: "abColDefNumber",
+    type: "abColDefString",
   },
   {
     field: "newValue",
-    type: "abColDefNumber",
+    type: "abColDefString",
+  },
+  {
+    field: "column",
+    type: "abColDefString",
   },
   {
     field: "username",
@@ -85,7 +91,7 @@ const initialGridOptions: GridOptions = {
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "timestamp",
-  adaptableId: "Price Audit",
+  adaptableId: "Trade Audit",
 
   predefinedConfig: {
     Dashboard: {
@@ -98,7 +104,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       Layouts: [
         {
           Name: 'Latest',
-          Columns: ['timestamp', 'instrumentId', 'oldValue', 'newValue', 'username', 'trigger'],
+          Columns: ['timestamp', 'instrumentId', 'oldValue', 'newValue', 'column', 'username', 'trigger'],
           ColumnSorts: [{
             ColumnId: 'timestamp',
             SortOrder: 'Desc'
@@ -132,14 +138,15 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   },
 });
 
-const toItem = (priceAudit) => {
+const toItem = (tradeAudit) => {
   const item = {
-    timestamp: priceAudit.client_timestamp,
-    oldValue: priceAudit.data_change_details.previous_value * 1,
-    newValue: priceAudit.data_change_details.new_value * 1,
-    instrumentId: priceAudit.data_change_details.row_data.instrumentId,
-    username: priceAudit.username,
-    trigger: priceAudit.audit_trigger
+    timestamp: tradeAudit.client_timestamp,
+    oldValue: tradeAudit.data_change_details.previous_value,
+    newValue: tradeAudit.data_change_details.new_value,
+    instrumentId: tradeAudit.data_change_details.row_data.instrumentId,
+    username: tradeAudit.username,
+    column: tradeAudit.data_change_details.column_id,
+    trigger: tradeAudit.audit_trigger
   } as Item;
 
   return item
@@ -150,12 +157,12 @@ const App = () => {
   const gridOptionsRef = useRef<GridOptions>(null);
 
   useChannelData({
-    priceaudits: once((priceAudits: CellEditAudit<Price>[]) => {
-      const items = priceAudits.map(toItem);
+    tradeaudits: once((tradeAudits: CellEditAudit<Trade>[]) => {
+      const items = tradeAudits.map(toItem);
       gridOptionsRef.current.api.setRowData(items);
     }),
-    addpriceaudit: (priceAudit: CellEditAudit<Price>) => {
-      adaptableApiRef.current.gridApi.addGridData([toItem(priceAudit)], {
+    addtradeaudit: (tradeAudit: CellEditAudit<Trade>) => {
+      adaptableApiRef.current.gridApi.addGridData([toItem(tradeAudit)], {
         runAsync: true,
       });
     },
@@ -166,7 +173,7 @@ const App = () => {
 
   return (
     <>
-      <Head title="Price Audit" />
+      <Head title="Trade Audit" />
       <MainLayout>
         <AdaptableReact
           style={{ flex: "none" }}

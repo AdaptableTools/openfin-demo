@@ -25,6 +25,11 @@ const tabs = [
     name: "Trade View",
   },
   {
+    url: "trade-audit",
+    title: "Trade Audit",
+    name: "Trade Audit",
+  },
+  {
     url: 'help',
     title: 'Demo Guide',
     name: 'Demo Guide'

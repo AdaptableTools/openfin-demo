@@ -5,6 +5,9 @@ import {
   roundTo4Dp,
   getBidOfferSpreads,
   generateRandomBool,
+  generateRandomDouble,
+  generateRandomInt,
+  roundTo1Dp,
 } from "../utils";
 
 export const getDataSource = () => {
@@ -43,7 +46,8 @@ const createPrice = (instrument: string) => {
 };
 
 export const tickPrice = (priceObj: Price) => {
-  const numberToAdd = generateRandomBool() ? -0.5 : 0.5;
+  const num = roundTo1Dp(generateRandomInt(0, 100) / 100)
+  const numberToAdd = generateRandomBool() ? - num : num;
 
   priceObj.price += numberToAdd;
   priceObj.price = Math.max(priceObj.price, 0);
