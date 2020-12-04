@@ -103,21 +103,25 @@ const HelpPage: React.FC = () => {
         </ul>
         <h4>Keeping in Sync</h4>
         <p>
-          One essential feature in the Demo is that all 3 Blotters stay in sync.
+          One essential feature in the Demo is that all 3 Blotters can stay in
+          sync with each other by using OpenFin communication APIs.
         </p>
-        <p>
-          For example, filtering on an Instrument in the Trade Blotter will
-          cause the Price and Positions Blotters to filter immediately on the
-          same instrument.
-        </p>
-        <p>
-          Likewise setting the Theme in one Blotter (e.g. to dark) will update
-          all other screens as well.
-        </p>
-        <p>
-          (This action can also be performed outside of the Grid by toggling the
-          Theme button at the top of the main window).
-        </p>
+        <p>This happens in various ways in the application:</p>
+        <ul>
+          <li>
+            <b>Set the Filter</b> on an <i>InstrumentId</i> in any Blotter will
+            cause the other Blotters to filter immediately on the same
+            instrument.
+          </li>{" "}
+          <li>
+            <b>Clear the Filter</b> on an <i>InstrumentId</i> in any Blotter
+            will clear the Filters for that Column in all screens.
+          </li>
+          <li>
+            <b>Changing the Theme</b> in one screen will update the theme in all
+            (also possible in the buttons at top of application)
+          </li>
+        </ul>
         <h4>Notifications and Alerts</h4>
         <p>
           The Positions Blotter has been set up to fire an{" "}
@@ -174,8 +178,8 @@ const HelpPage: React.FC = () => {
         <a id="live-export"></a>
         <h3>Live Export</h3>
         <p>
-          AdapTable provides a number of compelling, extra features, only
-          available when it is running in the OpenFin container.
+          AdapTable ships with many compelling, extra features, only available
+          when it is running in the OpenFin container.
         </p>
         <p>
           One of these is Live Export - whereby grid data can be sent from
@@ -184,7 +188,7 @@ const HelpPage: React.FC = () => {
         <ul>
           <li>
             Excel will automatically update in line with cell edits and ticking
-            data changes in AdapTable in AdapTable
+            data changes in AdapTable
           </li>
           <li>
             Any date edits made directly in Excel will be automatically
