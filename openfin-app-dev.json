@@ -17,8 +17,8 @@
     "frame": true,
     "alwaysOnTop": true,
     "maximizable": true,
-    "defaultHeight": 800,
-    "defaultWidth": 900,
+    "defaultHeight": 1200,
+    "defaultWidth": 1200,
     "resizable": true,
     "defaultWindowOptions": {
       "url": "http://localhost:3001/platform-window",

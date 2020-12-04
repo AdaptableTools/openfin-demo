@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
-type ThemeValues = 'dark' | 'light'
+import { ThemeValues } from "../types"
+import { getCurrentTheme } from "./TitleBar"
+
 
 export const useThemeChangeInProvider = (callback?: (theme: ThemeValues) => void): ThemeValues => {
     const [theme, setTheme] = useState<ThemeValues>('dark')
     useEffect(() => {
-        fin.InterApplicationBus.subscribe({ uuid: "*" }, 'default-window-context-changed', (context) => {
-            const theme = context.theme as ThemeValues
+        fin.InterApplicationBus.subscribe({ uuid: "*" }, 'update-theme', ({ theme }: { theme: ThemeValues }) => {
+            if (getCurrentTheme() === theme) {
+                return
+            }
             setTheme(theme)
             callback?.(theme)
         })

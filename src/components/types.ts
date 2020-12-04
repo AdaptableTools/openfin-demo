@@ -13,3 +13,5 @@ export type CellEditAudit<T extends Price | Position | Trade> = {
     row_data: T;
   };
 };
+
+export type ThemeValues = 'dark' | 'light'

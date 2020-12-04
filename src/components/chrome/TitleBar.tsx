@@ -8,36 +8,36 @@ const DARK_THEME = "dark";
 
 const lightThemeClassName = `${LIGHT_THEME}-theme`;
 
-const getCurrentTheme = async () => {
-  const context =
-    (await fin.Platform.getCurrentSync().getWindowContext()) || {};
+export const getCurrentTheme = () => {
+  const isLight = document.documentElement.classList.contains(lightThemeClassName)
 
-  return context.theme || LIGHT_THEME;
+  return isLight ? LIGHT_THEME : DARK_THEME
 };
 
-const getOtherTheme = async () => {
-  return (await getCurrentTheme()) === DARK_THEME ? LIGHT_THEME : DARK_THEME;
+const getOtherTheme = () => {
+  return getCurrentTheme() === DARK_THEME ? LIGHT_THEME : DARK_THEME;
 };
 
 const toggleTheme = async () => {
-  setTheme(await getOtherTheme());
+  setTheme(getOtherTheme());
 };
 
 const setTheme = async (theme) => {
-  syncTheme(theme);
-  const context =
-    (await fin.Platform.getCurrentSync().getWindowContext()) || {};
 
-  if (context.theme !== theme) {
-    fin.InterApplicationBus.send({ uuid: "*" }, 'default-window-context-changed', context)
-    fin.Platform.getCurrentSync().setWindowContext({ theme });
+  if (theme === getCurrentTheme()) {
+    return false
   }
+
+  syncTheme(theme);
+  fin.Platform.getCurrentSync().setWindowContext({ theme })
+  fin.InterApplicationBus.publish('update-theme', { theme })
+  return true
 };
 
 const syncTheme = (theme: string) => {
   const root = document.documentElement;
 
-  console.log("setting theme!!!", theme);
+  localStorage.setItem('theme', theme)
 
   if (theme === LIGHT_THEME) {
     root.classList.add(lightThemeClassName);
@@ -59,6 +59,13 @@ export const toggleSidebar = () => {
 };
 
 export const TitleBar = () => {
+
+  React.useLayoutEffect(() => {
+    const initialTheme = localStorage.getItem('theme')
+    if (initialTheme) {
+      syncTheme(initialTheme)
+    }
+  }, [])
   useThemeChangeInProvider(syncTheme)
 
   return (
