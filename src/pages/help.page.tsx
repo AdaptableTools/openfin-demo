@@ -64,21 +64,26 @@ const HelpPage: React.FC = () => {
             Every x seconds a new trade is added to the dummy data and displayed
             in the Grid.
           </li>
-          <li>The Trade Status can be set to inactive</li>
+          <li>
+            Editable columns are: Trade Status, Notional (is this correct?)
+          </li>
         </ul>
         <h4>2. Price Blotter</h4>
         <ul>
           <li>
             Displays a made-up list of <i>Instruments</i>, each of which
             contains a Price.
-          </li>{" "}
+          </li>
           <li>
             Every x seconds the Price is updated (and flashes accordingly).
-          </li>{" "}
+          </li>
           <li>
             Each entry also contains a Closing Price, Spread and Bid and Ask
             values
-          </li>{" "}
+          </li>
+          <li>
+            Editable columns are: Price, BidOfferSpread (is this correct?)
+          </li>
         </ul>
         <h4>3. Positions Blotter</h4>
         <ul>
@@ -94,7 +99,8 @@ const HelpPage: React.FC = () => {
             Each time a Trade is added or a Price changes, the Positions Blotter
             will update (via the OpenFin xxx).
           </li>
-        </ul>{" "}
+          <li>No columns are editable </li>
+        </ul>
         <h4>Keeping in Sync</h4>
         <p>
           One essential feature in the Demo is that all 3 Blotters stay in sync.
@@ -129,7 +135,13 @@ const HelpPage: React.FC = () => {
         </p>
         <p>
           The result is that the Alert is displayed as an{" "}
-          <b>OpenFin Notification</b> and appears in the [where?]?
+          <a
+            href="https://www.npmjs.com/package/openfin-notifications"
+            target="_blank"
+          >
+            OpenFin Notification
+          </a>{" "}
+          and appears in the [where?]?
         </p>
         <a id="audit-log"></a>
         <h3>Audit Screens</h3>
@@ -200,8 +212,20 @@ const HelpPage: React.FC = () => {
           >
             AdapTable Functions
           </a>{" "}
-          being used in this demo. These include [NEED TO DO!]:{" "}
-        </p>{" "}
+          being used in this demo application to enahnce the workflow and
+          improve the user experience.
+        </p>
+        <p>
+          These have been configured at design-time through{" "}
+          <a
+            href="https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview"
+            target="_blank"
+          >
+            Predefined Config
+          </a>
+          , but they could be created at run-time instead in the AdapTable UI.
+        </p>
+        <p>Some of the Functions being used are [Need to provide details]:</p>
         <ul>
           <li>Alert</li>
           <li>Conditional Style</li>
