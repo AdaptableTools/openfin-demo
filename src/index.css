@@ -47,7 +47,8 @@ a:hover {
 }
 
 li {
-  margin-bottom: 15px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 a:active {

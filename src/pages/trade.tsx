@@ -66,9 +66,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   predefinedConfig: {
     Dashboard: {
       Revision: 1,
-      Tabs: [{ Name: "Blotter", Toolbars: ["Layout", 'CellSummary', 'Query', 'Filter'] }, {
-        Name: 'Reports', Toolbars: ['OpenFin', 'Export']
-      }],
+      Tabs: [
+        {
+          Name: "Blotter",
+          Toolbars: ["Layout", "CellSummary", "Query", "Filter"],
+        },
+        {
+          Name: "Reports",
+          Toolbars: ["OpenFin", "Export"],
+        },
+      ],
     },
 
     ActionColumn: {
@@ -138,25 +145,33 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           ],
         },
         {
-          Name: 'Counterparties',
-          Columns: ['tradeId', 'instrumentId', 'instrumentName', 'counterparty', 'notional', 'rating', 'status'],
-          RowGroupedColumns: ['counterparty'],
+          Name: "Counterparties",
+          Columns: [
+            "tradeId",
+            "instrumentId",
+            "instrumentName",
+            "counterparty",
+            "notional",
+            "rating",
+            "status",
+          ],
+          RowGroupedColumns: ["counterparty"],
           AggregationColumns: {
-            notional: true
-          }
-        }
+            notional: true,
+          },
+        },
       ],
     },
     Export: {
       Revision: 2,
       Reports: [
         {
-          Name: 'Active Trades',
-          ReportColumnScope: 'AllColumns',
-          ReportRowScope: 'ExpressionRows',
-          Expression: '[status] = "active"'
-        }
-      ]
+          Name: "Active Trades",
+          ReportColumnScope: "AllColumns",
+          ReportRowScope: "ExpressionRows",
+          Expression: '[status] = "active"',
+        },
+      ],
     },
     UserInterface: {
       EditLookUpItems: [
@@ -176,7 +191,7 @@ const App: React.FC = () => {
   const gridOptionsRef = useRef<GridOptions>(null);
 
   useFilters(adaptableApiRef);
-  useAudit('tradeaudits', adaptableApiRef);
+  useAudit("tradeaudits", adaptableApiRef);
 
   const { client } = useChannelData({
     trades: once((trades) => {

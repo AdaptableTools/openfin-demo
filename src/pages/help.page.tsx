@@ -3,7 +3,7 @@ import * as React from "react";
 const HelpPage: React.FC = () => {
   return (
     <>
-      <div style={{ padding: 20, overflow: "auto", width: '100%' }}>
+      <div style={{ padding: 20, overflow: "auto", width: "100%" }}>
         <h2>AdapTable - OpenFin Demo Guide</h2>
         <p>
           <a href="#how-works">How It Works</a>
@@ -33,22 +33,30 @@ const HelpPage: React.FC = () => {
           <a href="https://openfin.co/" target="_blank">
             OpenFin
           </a>{" "}
-          can work together to provide a powerful, cutting-edge, feature-rich
-          application.{" "}
+          combine neatly together to provide powerful, cutting-edge,
+          feature-rich applications.
         </p>
         <p>
           It uses <b>dummy data</b> to mimic the types of screens, workflows and
           advanced use-cases typically found in Financial Services systems.
         </p>
         <p>
-          The application took less than a day to build and uses a small subset
-          of the many, exceptional features found in both AdapTable and OpenFin.
+          The application took less than a day to develop and uses a small
+          subset of the many, exceptional features found in both AdapTable and
+          OpenFin.
         </p>
         <a id="how-works"></a>
         <h3>How it Works</h3>
         <p>
-          The Application displays a pseudo Front Office set-up via 3 main
-          screens - Trade, Price and Positions.
+          The Demo Application - built using AdapTable's{" "}
+          <a
+            href="https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin"
+            target="_blank"
+          >
+            OpenFin Plugin
+          </a>{" "}
+          - displays a pseudo Front Office set-up with 3 Trade, Price and
+          Positions views.
         </p>
         <p>
           Each screen is an OpenFin application which shows 'ticking' data and
@@ -216,23 +224,62 @@ const HelpPage: React.FC = () => {
           >
             AdapTable Functions
           </a>{" "}
-          being used in this demo application to enahnce the workflow and
+          being used in this demo application to enhance the workflow and
           improve the user experience.
         </p>
         <p>
-          These have been configured at design-time through{" "}
+          Note: these have been configured at design-time through{" "}
           <a
             href="https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview"
             target="_blank"
           >
             Predefined Config
           </a>
-          , but they could be created at run-time instead in the AdapTable UI.
+          , but they can, instead, be created at run-time via the AdapTable UI.
         </p>
-        <p>Some of the Functions being used are [Need to provide details]:</p>
+        <p>Some of the Functions being used are:</p>
         <ul>
-          <li>Alert</li>
-          <li>Conditional Style</li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/user-interface/dashboard"
+              target="_blank"
+            >
+              Dashboard
+            </a>
+            <ul>
+              <li>
+                Two Tabs - <i>Blotter</i> and <i>Reports</i> (each with own set
+                of Toolbars) in Blotter View{" "}
+              </li>
+              <li>
+                Position and Price Views each have a single Tab with a different
+                set of Toolbars
+              </li>
+              <li>
+                Position and Price Views are both set to have Dashboard in
+                'Collapsed' mode at startup
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function"
+              target="_blank"
+            >
+              Alert
+            </a>
+            <ul>
+              <li>a</li>
+              <li>b</li>
+            </ul>
+          </li>
+          <li>
+            Conditional Style
+            <ul>
+              <li>a</li>
+              <li>b</li>
+            </ul>
+          </li>
           <li>Calculated Columns</li>
           <li>Format Columns</li>
           <li>Flashing Cell</li>

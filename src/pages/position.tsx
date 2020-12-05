@@ -23,7 +23,10 @@ import { modules } from "../components/modules";
 
 import { useChannelData } from "../components/hooks/useChannelData";
 import { useRef } from "react";
-import { DisplayFormat4Digits, DisplayFormatInteger } from "../data/displayFormat";
+import {
+  DisplayFormat4Digits,
+  DisplayFormatInteger,
+} from "../data/displayFormat";
 import { useFilters } from "../components/hooks/useFilters";
 import { once } from "../components/once";
 import { useThemeSync } from "../components/hooks/useThemeSync";
@@ -67,20 +70,23 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Scope: {
             ColumnIds: ["pnl"],
           },
-          DisplayFormat: { ...DisplayFormatInteger, Options: { ...DisplayFormatInteger.Options, Parentheses: true } },
+          DisplayFormat: {
+            ...DisplayFormatInteger,
+            Options: { ...DisplayFormatInteger.Options, Parentheses: true },
+          },
         },
         {
           Scope: {
-            ColumnIds: ['currentPrice', 'closingPrice']
+            ColumnIds: ["currentPrice", "closingPrice"],
           },
-          DisplayFormat: DisplayFormat4Digits
-        }
+          DisplayFormat: DisplayFormat4Digits,
+        },
       ],
     },
     FlashingCell: {
       Revision: 1,
       FlashingCells: [
-        { ColumnId: "position", IsLive: true, UpColor: GREEN, DownColor: RED }
+        { ColumnId: "position", IsLive: true, UpColor: GREEN, DownColor: RED },
       ],
     },
     ConditionalStyle: {
@@ -88,36 +94,38 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ConditionalStyles: [
         {
           Scope: {
-            ColumnIds: ['pnl']
+            ColumnIds: ["pnl"],
           },
           Style: {
-            ForeColor: 'red'
+            ForeColor: "red",
           },
-          Expression: "[pnl] < 0"
-        }
-      ]
+          Expression: "[pnl] < 0",
+        },
+      ],
     },
     Dashboard: {
       IsCollapsed: true,
-      Tabs: [{ Name: "Position", Toolbars: ["SmartEdit", "OpenFin"] }],
+      Tabs: [
+        { Name: "Position", Toolbars: ["SmartEdit", "Alert", "CellSummary"] },
+      ],
     },
     Alert: {
       Revision: 6,
       AlertDefinitions: [
         {
           Scope: {
-            ColumnIds: ['position']
+            ColumnIds: ["position"],
           },
 
           Predicate: {
-            PredicateId: 'GreaterThan',
-            Inputs: [50000]
+            PredicateId: "GreaterThan",
+            Inputs: [50000],
           },
-          MessageType: 'Warning',
+          MessageType: "Warning",
           AlertProperties: {
-            ShowInOpenFin: true
-          }
-        }
+            ShowInOpenFin: true,
+          },
+        },
       ],
     },
   },
