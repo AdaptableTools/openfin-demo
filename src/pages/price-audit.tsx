@@ -76,7 +76,7 @@ const initialGridOptions: GridOptions = {
   components: {
     AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
   },
-  sideBar: true,
+  sideBar: false,
   suppressMenuHide: true,
   enableRangeSelection: true,
 
