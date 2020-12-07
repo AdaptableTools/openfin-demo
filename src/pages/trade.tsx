@@ -25,7 +25,6 @@ import { useDispatchOnDataChanged } from "../components/hooks/useDispatchOnDataC
 import { useThemeSync } from "../components/hooks/useThemeSync";
 import Head from "../components/Head";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
-import { DateFormat } from "../data/displayFormat";
 import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
@@ -85,7 +84,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       Revision: 1,
       GradientColumns: [
         {
-          BaseValue: 5000000,
+          BaseValue: 4500000,
           ColumnId: "notional",
           NegativeColor: RED,
           PositiveColor: GREEN,

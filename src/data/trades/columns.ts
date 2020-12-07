@@ -22,6 +22,7 @@ export const tradeColumns = [
   },
   {
     field: "counterparty",
+    enableRowGroup: true,
     type: "abColDefString",
   },
   {

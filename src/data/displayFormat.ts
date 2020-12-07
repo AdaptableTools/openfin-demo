@@ -15,9 +15,4 @@ export const DisplayFormatInteger = {
   },
 };
 
-export const DateFormat: AdaptableFormat = {
-  Formatter: "DateFormatter",
-  Options: {
-    Pattern: "dd-MM-yyyy",
-  },
-};
+
