@@ -33,11 +33,11 @@ export const priceColumns: ColDef[] = [
   //   type: "abColDefNumber",
   // },
   {
-    field: "bloombergBid",
+    field: "bbgBid",
     type: "abColDefNumber",
   },
   {
-    field: "bloombergAsk",
+    field: "bbgAsk",
     type: "abColDefNumber",
   },
 ];

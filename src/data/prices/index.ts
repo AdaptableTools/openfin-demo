@@ -22,8 +22,8 @@ export type Price = {
   ask: number;
   closingPrice: number;
   // changeOnDay: number;
-  bloombergBid: number;
-  bloombergAsk: number;
+  bbgBid: number;
+  bbgAsk: number;
 };
 
 const createPrice = (instrument: string) => {
@@ -40,14 +40,14 @@ const createPrice = (instrument: string) => {
     ask: ask,
     closingPrice: closingPrice,
     // changeOnDay: price - closingPrice,
-    bloombergBid: roundTo4Dp(bid - 0.01),
-    bloombergAsk: roundTo4Dp(ask + 0.01),
+    bbgBid: roundTo4Dp(bid - 0.01),
+    bbgAsk: roundTo4Dp(ask + 0.01),
   };
 };
 
 export const tickPrice = (priceObj: Price) => {
-  const num = roundTo1Dp(generateRandomInt(0, 100) / 100)
-  const numberToAdd = generateRandomBool() ? - num : num;
+  const num = roundTo1Dp(generateRandomInt(0, 100) / 100);
+  const numberToAdd = generateRandomBool() ? -num : num;
 
   priceObj.price += numberToAdd;
   priceObj.price = Math.max(priceObj.price, 0);

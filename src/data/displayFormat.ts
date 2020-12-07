@@ -18,6 +18,6 @@ export const DisplayFormatInteger = {
 export const DateFormat: AdaptableFormat = {
   Formatter: "DateFormatter",
   Options: {
-    Pattern: "MM/DD/YYYY",
+    Pattern: "dd-MM-yyyy",
   },
 };
