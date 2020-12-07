@@ -122,7 +122,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 1,
+      Revision: 2,
       FormatColumns: [
         {
           Scope: {
@@ -133,7 +133,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Layout: {
-      Revision: 2,
+      Revision: 3,
       Layouts: [
         {
           Name: "Latest Trades",
@@ -142,7 +142,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "instrumentId",
             "instrumentName",
             "notional",
-            "setStatusCancel",
+          //  "setStatusCancel",
             "status",
             "counterparty",
             "currency",
@@ -189,7 +189,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
-      Revision: 1
+      Revision: 2
       /*
       EditLookUpItems: [
         {
