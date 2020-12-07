@@ -30,6 +30,7 @@ import Head from "../components/Head";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { GREEN, RED } from "../components/colors";
+import { ThemeConfig } from "../components/ThemeConfig";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -72,6 +73,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     // },
   },
   predefinedConfig: {
+    Theme: ThemeConfig,
     ConditionalStyle: {
       ConditionalStyles: [
         {

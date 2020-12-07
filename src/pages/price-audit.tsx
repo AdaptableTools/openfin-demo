@@ -24,6 +24,7 @@ import { useFilters } from "../components/hooks/useFilters";
 import { useThemeSync } from "../components/hooks/useThemeSync";
 import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
+import { ThemeConfig } from "../components/ThemeConfig";
 
 type Item = {
   timestamp: string;
@@ -88,6 +89,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   adaptableId: "Price Audit",
 
   predefinedConfig: {
+    Theme: ThemeConfig,
     Dashboard: {
       Tabs: [],
       IsCollapsed: true,

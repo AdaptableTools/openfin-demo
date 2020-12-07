@@ -19,18 +19,19 @@ const getOtherTheme = () => {
 };
 
 const toggleTheme = async () => {
-  setTheme(getOtherTheme());
+  const theme = getOtherTheme()
+  if (setTheme(theme)) {
+    fin.Platform.getCurrentSync().setWindowContext({ theme })
+    fin.InterApplicationBus.publish('update-theme', { theme })
+  }
 };
 
-const setTheme = async (theme) => {
+const setTheme = (theme) => {
 
   if (theme === getCurrentTheme()) {
     return false
   }
-
   syncTheme(theme);
-  fin.Platform.getCurrentSync().setWindowContext({ theme })
-  fin.InterApplicationBus.publish('update-theme', { theme })
   return true
 };
 
@@ -61,7 +62,7 @@ export const toggleSidebar = () => {
 export const TitleBar = () => {
 
   React.useLayoutEffect(() => {
-    const initialTheme = localStorage.getItem('theme')
+    const initialTheme = localStorage.getItem('theme') || 'dark'
     if (initialTheme) {
       syncTheme(initialTheme)
     }

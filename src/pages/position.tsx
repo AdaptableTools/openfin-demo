@@ -34,6 +34,7 @@ import Head from "../components/Head";
 import type { Position } from "../data/position";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GREEN, RED } from "../components/colors";
+import { ThemeConfig } from "../components/ThemeConfig";
 
 const columnDefs: ColDef[] = positionColumns;
 
@@ -63,6 +64,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   adaptableId: "Position View",
 
   predefinedConfig: {
+    Theme: ThemeConfig,
     FormatColumn: {
       Revision: 3,
       FormatColumns: [

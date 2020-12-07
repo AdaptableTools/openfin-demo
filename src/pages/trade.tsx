@@ -27,6 +27,7 @@ import Head from "../components/Head";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { DateFormat } from "../data/displayFormat";
 import { useAudit } from "../components/hooks/useAudit";
+import { ThemeConfig } from "../components/ThemeConfig";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -64,6 +65,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
   ],
   predefinedConfig: {
+    Theme: ThemeConfig,
     Dashboard: {
       Revision: 1,
       Tabs: [

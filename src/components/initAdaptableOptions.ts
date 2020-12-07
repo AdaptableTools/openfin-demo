@@ -31,7 +31,8 @@ export const initAdaptableOptions = (
 
   const defaults = {
     ...defaultAdaptableOptions,
-    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-4`,
+    // adaptableStateKey: `${Date.now()}-4`,
+    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-6`,
   };
   const common = {};
 

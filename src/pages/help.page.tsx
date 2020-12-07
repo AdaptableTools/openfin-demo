@@ -3,7 +3,7 @@ import * as React from "react";
 const HelpPage: React.FC = () => {
   return (
     <>
-      <div style={{ padding: 20, overflow: "auto", width: "100%" }}>
+      <div style={{ padding: 20, overflow: "auto", width: "100%", background: 'var(--main-background-color)', color: 'var(--body-font-color)' }}>
         <h2>AdapTable - OpenFin Demo Guide</h2>
         <p>
           <a href="#how-works">How It Works</a>

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { toggleSidebar } from "../TitleBar";
-import { useThemeChangeInProvider } from "../useThemeChangeInProvider";
 import "./index.css";
 
 const tabs = [
@@ -56,7 +55,7 @@ const openHelp = () => {
   });
 }
 export const LeftMenu = () => {
-  const theme = useThemeChangeInProvider()
+
   return (
     <div id="left-menu">
       <div style={{
@@ -67,7 +66,8 @@ export const LeftMenu = () => {
       }}>
 
         <a className="brand" href="https://adaptabletools.com">
-          <img src={`https://docs.adaptabletools.com/img/adaptablelogo${theme}theme.png`} />
+          <img className="dark" src={`https://docs.adaptabletools.com/img/adaptablelogodarktheme.png`} />
+          <img className="light" src={`https://docs.adaptabletools.com/img/adaptablelogolighttheme.png`} />
         </a>
 
       </div>

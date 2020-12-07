@@ -25,6 +25,7 @@ import { useThemeSync } from "../components/hooks/useThemeSync";
 import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
 import { Trade } from "../data/trades";
+import { ThemeConfig } from "../components/ThemeConfig";
 
 type Item = {
   timestamp: string;
@@ -78,7 +79,7 @@ const initialGridOptions: GridOptions = {
     floatingFilter: true,
     sortable: true,
   },
-  rowData: null,
+  rowData: [],
   components: {
     AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
   },
@@ -93,6 +94,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   adaptableId: "Trade Audit",
 
   predefinedConfig: {
+    Theme: ThemeConfig,
     Dashboard: {
       Tabs: [],
       IsCollapsed: true,

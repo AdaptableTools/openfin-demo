@@ -1,3 +1,3 @@
 
-export const RED = "#ffc8c8";
-export const GREEN = "#ceffce";
+export const RED = "#ff7b7b";
+export const GREEN = "#57e057";

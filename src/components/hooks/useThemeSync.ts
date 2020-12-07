@@ -43,7 +43,7 @@ export const useThemeSync = (
     if (adaptableApiRef.current) {
       // on initial load, make sure new adaptable tabs pick the correct theme
       fin.Platform.getCurrentSync().getWindowContext().then(context => {
-        const { theme } = context
+        const { theme } = context || {}
 
         if (theme) {
           adaptableApiRef.current?.themeApi.loadTheme(theme);
