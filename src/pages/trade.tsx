@@ -149,8 +149,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "rating",
             "tradeDate",
             "settlementDate",
-            "lastUpdated",
             "lastUpdatedBy",
+            "lastUpdated",
           ],
           ColumnSorts: [
             {
@@ -189,6 +189,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
+      Revision: 1
+      /*
       EditLookUpItems: [
         {
           Scope: {
@@ -197,6 +199,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           LookUpValues: ["active", "inactive"],
         },
       ],
+      */
     },
   },
 });
