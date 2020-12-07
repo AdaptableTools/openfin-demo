@@ -43,6 +43,7 @@ const columns = [
 
   {
     field: "instrumentId",
+    enableRowGroup: true,
     type: "abColDefString",
   },
   {

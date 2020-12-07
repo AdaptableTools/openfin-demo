@@ -190,5 +190,5 @@ export async function makeProvider() {
     prices[priceIndex] = priceObject;
 
     provider.publish("tickprice", priceObject);
-  }, 3000);
+  }, 2000);
 }
