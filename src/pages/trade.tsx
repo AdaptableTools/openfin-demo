@@ -130,7 +130,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           DisplayFormat: {
             Formatter: 'DateFormatter',
             Options:{
-              Pattern: '"dd-MM-yyyy'
+              Pattern: 'dd-MM-yyyy'
             }
           },
         },
