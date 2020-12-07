@@ -17,6 +17,10 @@ const HelpPage: React.FC = () => {
           <a href="#openfin-channels">OpenFin Channels</a>
         </p>
         <p>
+          {" "}
+          <a href="#openfin-notifications">Notifications and Alerts</a>
+        </p>
+        <p>
           <a href="#live-export">Live Export</a>
         </p>
         <p>
@@ -55,12 +59,12 @@ const HelpPage: React.FC = () => {
           >
             OpenFin Plugin
           </a>{" "}
-          - displays a pseudo Front Office set-up with 3 Trade, Price and
-          Positions views.
+          - displays a pseudo Front Office set-up with 3 views: Trade, Price and
+          Positions.
         </p>
         <p>
-          Each screen is an OpenFin application which shows 'ticking' data and
-          which updates based on changes in the other screens:
+          Each screen is an OpenFin application which shows 'ticking' data, and
+          each updates based on data changes in the other screens:
         </p>
         <h4>1. Trade Blotter</h4>
         <ul>
@@ -127,34 +131,9 @@ const HelpPage: React.FC = () => {
           </li>
           <li>
             <b>Changing the Theme</b> in one screen will update the theme in all
-            (also possible in the buttons at top of application)
+            (also possible via the buttons at top of application)
           </li>
         </ul>
-        <h4>Notifications and Alerts</h4>
-        <p>
-          The Positions Blotter has been set up to fire an{" "}
-          <a
-            href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function"
-            target="_blank"
-          >
-            Adaptable Alert
-          </a>{" "}
-          when X happens.
-        </p>
-        <p>
-          The Alert has been configured with the <i>ShowInOpenFin</i> property
-          set to true (only available when running in the OpenFin container).
-        </p>
-        <p>
-          The result is that the Alert is displayed as an{" "}
-          <a
-            href="https://www.npmjs.com/package/openfin-notifications"
-            target="_blank"
-          >
-            OpenFin Notification
-          </a>{" "}
-          and appears in the [where?]?
-        </p>
         <a id="audit-log"></a>
         <h3>Audit Screens</h3>
         <p>
@@ -178,16 +157,41 @@ const HelpPage: React.FC = () => {
           </li>
           <li>
             <b>Price Blotter</b>: Displays a list of all Cell Edits made in the
-            Price Blotter and also Ticking Data changes.
+            Price Blotter but also logs Ticking Data changes.
           </li>
         </ul>
         <a id="openfin-channels"></a> <h3>OpenFin Channels</h3>
         <p>Need a few sentences on how the apps talk to each other</p>
+        <a id="openfin-notifications"></a> <h3>Notifications and Alerts</h3>
+        <p>
+          The Positions Blotter has been set up to fire an{" "}
+          <a
+            href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function"
+            target="_blank"
+          >
+            Adaptable Alert
+          </a>{" "}
+          when X happens.
+        </p>
+        <p>
+          The Alert has been configured with the <i>ShowInOpenFin</i> property
+          set to true (only available when running in the OpenFin container).
+        </p>
+        <p>
+          The result is that the Alert is displayed as an{" "}
+          <a
+            href="https://www.npmjs.com/package/openfin-notifications"
+            target="_blank"
+          >
+            OpenFin Notification
+          </a>{" "}
+          and appears in the [where?]?
+        </p>{" "}
         <a id="live-export"></a>
         <h3>Live Export</h3>
         <p>
-          AdapTable ships with many compelling, extra features, only available
-          when it is running in the OpenFin container.
+          AdapTable ships with compelling, extra features, only available when
+          it is running in the OpenFin container.
         </p>
         <p>
           One of these is Live Export - whereby grid data can be sent from
@@ -297,8 +301,8 @@ const HelpPage: React.FC = () => {
                 values
               </li>
               <li>
-                Position View - 'PnL' Column displays a red font for negative
-                numbers
+                Position View - 'PnL' Column displays a green or red font for
+                positive and negative numbers
               </li>
             </ul>
           </li>
@@ -311,18 +315,18 @@ const HelpPage: React.FC = () => {
             </a>
             <ul>
               <li>
-                Price View - Contains 3 Calculated Columns:
+                Price View - contains 3 Calculated Columns:
                 <ol>
                   <li>
-                    Bid: Created with Expression: '[price] - [bidOfferSpread] /
-                    2'
+                    <b>Bid</b>: Created with Expression: '[price] -
+                    [bidOfferSpread] / 2'
                   </li>
                   <li>
-                    Ask: Created with Expression: '[price] + [bidOfferSpread] /
-                    2'
+                    <b>Ask</b>: Created with Expression: '[price] +
+                    [bidOfferSpread] / 2'
                   </li>
                   <li>
-                    Change on Day: Created with Expression: '[price] -
+                    <b>Change on Day</b>: Created with Expression: '[price] -
                     [closingPrice]'
                   </li>
                 </ol>
@@ -379,9 +383,19 @@ const HelpPage: React.FC = () => {
             </a>
             <ul>
               <li>
-                Price View: 'Bid Offer Spread' has default Nudge value of 0.5;
-                if the Row has InstrumnentId of 'AAPL' a Plus Minus Rule will
-                nudge cell by 1
+                Price View - contains 2 Plus / Minus Rules for the 'Bid Offer
+                Spread' column:
+                <ol>
+                  <li>
+                    Default Nudge value of 0.5 - how cells in Column will
+                    increment / decrement when the '+' or '-' keys are pressed
+                  </li>
+                  <li>
+                    A Custom Plus Minus Rule which specifies that if the{" "}
+                    <i>InstrumentId</i> is 'AAPL', the cell will nudge instead
+                    by 1
+                  </li>
+                </ol>
               </li>
             </ul>
           </li>
