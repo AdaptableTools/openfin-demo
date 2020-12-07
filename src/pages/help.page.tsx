@@ -117,13 +117,13 @@ const HelpPage: React.FC = () => {
         <p>This happens in various ways in the application:</p>
         <ul>
           <li>
-            <b>Set the Filter</b> on an <i>InstrumentId</i> in any Blotter will
-            cause the other Blotters to filter immediately on the same
-            instrument.
-          </li>{" "}
+            <b>Set the Filter</b> on the <i>InstrumentId</i> Column in any
+            Blotter will cause the other Blotters to filter immediately on same
+            instrument
+          </li>
           <li>
-            <b>Clear the Filter</b> on an <i>InstrumentId</i> in any Blotter
-            will clear the Filters for that Column in all screens.
+            <b>Clear the Filter</b> on the <i>InstrumentId</i> Column in any
+            Blotter will clear the Filters for that Column in all screens
           </li>
           <li>
             <b>Changing the Theme</b> in one screen will update the theme in all
@@ -248,15 +248,15 @@ const HelpPage: React.FC = () => {
             </a>
             <ul>
               <li>
-                Two Tabs - <i>Blotter</i> and <i>Reports</i> (each with own set
-                of Toolbars) in Blotter View{" "}
+                Trade View - Two Tabs - <i>Blotter</i> and <i>Reports</i> (each
+                with own set of Toolbars)
               </li>
               <li>
-                Position and Price Views each have a single Tab with a different
-                set of Toolbars
+                Position and Price Views - a single Tab with a different set of
+                Toolbars
               </li>
               <li>
-                Position and Price Views are both set to have Dashboard in
+                Position and Price Views - configued so Dashboard is in
                 'Collapsed' mode at startup
               </li>
             </ul>
@@ -269,26 +269,179 @@ const HelpPage: React.FC = () => {
               Alert
             </a>
             <ul>
-              <li>a</li>
-              <li>b</li>
+              <li>
+                Position View - will fire an Alert when Position Coumn value is
+                greater than 50,000{" "}
+              </li>
+              <li>
+                The Alert is of type 'Warning' and is configured to trigger an
+                OpenFin Notification
+              </li>
             </ul>
           </li>
           <li>
-            Conditional Style
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/conditional-style-function"
+              target="_blank"
+            >
+              Conditional Style
+            </a>
             <ul>
-              <li>a</li>
-              <li>b</li>
+              <li>
+                Trade View - Styles the whole Row where Status Column value is
+                'active'
+              </li>
+              <li>
+                Price View - 2 Styles for 'Change of Day' Column: green
+                background for positive values and red background for negative
+                values
+              </li>
+              <li>
+                Position View - 'PnL' Column displays a red font for negative
+                numbers
+              </li>
             </ul>
           </li>
-          <li>Calculated Columns</li>
-          <li>Format Columns</li>
-          <li>Flashing Cell</li>
-          <li>Plus Minus</li>
-          <li>Layout</li>
-          <li>Dashboard</li>
-          <li>Action Column</li>
-          <li>Export</li>
-          <li>User Interface - Edit lookup</li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function"
+              target="_blank"
+            >
+              Calculated Column
+            </a>
+            <ul>
+              <li>
+                Price View - Contains 3 Calculated Columns:
+                <ol>
+                  <li>
+                    Bid: Created with Expression: '[price] - [bidOfferSpread] /
+                    2'
+                  </li>
+                  <li>
+                    Ask: Created with Expression: '[price] + [bidOfferSpread] /
+                    2'
+                  </li>
+                  <li>
+                    Change on Day: Created with Expression: '[price] -
+                    [closingPrice]'
+                  </li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function"
+              target="_blank"
+            >
+              Format Column
+            </a>
+            <ul>
+              <li>
+                Trade View: All Date Columns (Trade Date, Settlement Date, Last
+                Updated) use a Date Format of 'MM/DD/YYYY'
+              </li>
+              <li>
+                Price View: 'Bid', 'Ask', 'Change On Day', and 'Price' have a
+                Display Format of 4 decimal places and cell aligns right
+              </li>
+              <li>
+                Position View: 'Current Price', 'Closing Price' and 'PnL' have
+                Display Format of 4 decimal places; 'PnL' also has negative
+                numbers in parentheses
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/flashing-cell-function"
+              target="_blank"
+            >
+              Flashing Cell
+            </a>
+            <ul>
+              <li>
+                Price View: 'Bid', 'Ask', and 'Price' all have Flashing Cells
+                set (to Green and Red)
+              </li>
+              <li>
+                Position View: 'Position' has Flashing Cells set (to Green and
+                Red)
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/plus-minus-function"
+              target="_blank"
+            >
+              Plus Minus
+            </a>
+            <ul>
+              <li>
+                Price View: 'Bid Offer Spread' has default Nudge value of 0.5;
+                if the Row has InstrumnentId of 'AAPL' a Plus Minus Rule will
+                nudge cell by 1
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/layout-function"
+              target="_blank"
+            >
+              Layout
+            </a>
+            <ul>
+              <li>
+                Trade View - contains 2 Layouts:
+                <ol>
+                  <li>
+                    'Latest Trades' - shows all Columns ordered by Trade Id in
+                    descending order
+                  </li>
+                  <li>
+                    'Counterparties' - shows subset of Columns grouped by
+                    Counterparty (and with notional aggregated)
+                  </li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/adaptable-functions/export-function"
+              target="_blank"
+            >
+              Export
+            </a>{" "}
+            <ul>
+              <li>
+                Trade View - contains an 'Active Trades' Report; will export All
+                Columns and any Rows where Status is 'Active'
+              </li>
+              <li>
+                This Report is also available in the OpenFin Toolbar and so can
+                be exported to Excel as a "Live Report" (which will update in
+                real time).
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems"
+              target="_blank"
+            >
+              Edit Lookup
+            </a>{" "}
+            <ul>
+              <li>
+                Trade View - has Edit LookUp Items for Status column to enable
+                quick editing
+              </li>
+            </ul>
+          </li>
+          <li>Action Column</li>{" "}
         </ul>
       </div>
     </>

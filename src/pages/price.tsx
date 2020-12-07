@@ -31,7 +31,6 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { GREEN, RED } from "../components/colors";
 
-
 const columnDefs: ColDef[] = priceColumns;
 
 const initialGridOptions: GridOptions = {
@@ -83,8 +82,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             BackColor: GREEN,
             ForeColor: "#000000",
           },
-          Expression: "[changeOnDay] > 0",
-          ExcludeGroupedRows: true,
+          Predicate: {
+            PredicateId: "Positive",
+          },
         },
         {
           Scope: {
@@ -94,8 +94,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             BackColor: RED,
             ForeColor: "#000000",
           },
-          Expression: "[changeOnDay] < 0",
-          ExcludeGroupedRows: true,
+          Predicate: {
+            PredicateId: "Negative",
+          },
         },
       ],
     },
@@ -145,9 +146,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       FormatColumns: [
         {
           Scope: {
-            ColumnIds: ["bid", "ask", "changeOnDay", 'price'],
+            ColumnIds: ["bid", "ask", "changeOnDay", "price"],
           },
-          CellAlignment: 'Right',
+          CellAlignment: "Right",
           DisplayFormat: DisplayFormat4Digits,
         },
       ],
@@ -206,7 +207,7 @@ const App: React.FC = () => {
 
   useFilters(adaptableApiRef);
 
-  useAudit('priceaudits', adaptableApiRef);
+  useAudit("priceaudits", adaptableApiRef);
 
   useThemeSync(adaptableApiRef);
 

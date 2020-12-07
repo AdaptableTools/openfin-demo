@@ -97,9 +97,22 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             ColumnIds: ["pnl"],
           },
           Style: {
+            ForeColor: "green",
+          },
+          Predicate: {
+            PredicateId: "Positive",
+          },
+        },
+        {
+          Scope: {
+            ColumnIds: ["pnl"],
+          },
+          Style: {
             ForeColor: "red",
           },
-          Expression: "[pnl] < 0",
+          Predicate: {
+            PredicateId: "Negative",
+          },
         },
       ],
     },
