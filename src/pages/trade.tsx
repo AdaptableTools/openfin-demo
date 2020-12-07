@@ -28,6 +28,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { DateFormat } from "../data/displayFormat";
 import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
+import { GREEN, RED } from "../components/colors";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -80,6 +81,18 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
 
+    GradientColumn: {
+      Revision: 1,
+      GradientColumns: [
+        {
+          BaseValue: 5000000,
+          ColumnId: "notional",
+          NegativeColor: RED,
+          PositiveColor: GREEN,
+          PositiveValue: 10000000,
+        }
+      ]
+    },
     ActionColumn: {
       Revision: 2,
       ActionColumns: [

@@ -68,7 +68,7 @@ export const getRandomItem = (array: any[], max?: number) => {
 };
 
 export const getNotionals = () => {
-  var notionals = [1000000, 2000000, 5000000, 7500000, 10000000];
+  var notionals = [5_000_000, 6_000_000, 7_000_000, 8_000_000, 9_000_000, 10_000_000];
   return notionals;
 };
 export const getInstrumentIds = () => {
