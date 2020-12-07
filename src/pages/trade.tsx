@@ -122,18 +122,23 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 2,
+      Revision: 3,
       FormatColumns: [
         {
           Scope: {
             ColumnIds: ["tradeDate", "settlementDate", "lastUpdated"],
           },
-          DisplayFormat: DateFormat,
+          DisplayFormat: {
+            Formatter: 'DateFormatter',
+            Options:{
+              Pattern: '"dd-MM-yyyy'
+            }
+          },
         },
       ],
     },
     Layout: {
-      Revision: 3,
+      Revision: 4,
       Layouts: [
         {
           Name: "Latest Trades",
