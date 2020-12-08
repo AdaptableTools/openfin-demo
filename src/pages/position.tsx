@@ -124,7 +124,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Alert: {
-      Revision: 6,
+      Revision: 7,
       AlertDefinitions: [
         {
           Scope: {
@@ -138,6 +138,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           MessageType: "Warning",
           AlertProperties: {
             ShowInOpenFin: true,
+            JumpToCell: true,
+            HighlightCell: true
           },
         },
       ],

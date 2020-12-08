@@ -48,6 +48,8 @@ export const initAdaptableOptions = (
     ...defaults,
     ...adaptableOptions,
     ...common,
-    plugins: [openfin()],
+    plugins: [openfin({
+      notificationTimeout: false
+    })],
   };
 };
