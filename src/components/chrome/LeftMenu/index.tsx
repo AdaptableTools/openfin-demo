@@ -83,7 +83,7 @@ export const LeftMenu = () => {
       </ul>
 
       <button onClick={toggleSidebar}>Hide sidebar</button>
-      <button onClick={clearState}>Clear state</button>
+      <button style={{ marginTop: 10 }} onClick={clearState}>Clear state</button>
     </div>
   );
 };
