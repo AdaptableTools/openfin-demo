@@ -191,4 +191,6 @@ export async function makeProvider() {
 
     provider.publish("tickprice", priceObject);
   }, 2000);
+
+  console.log("PROVIDER DONE")
 }

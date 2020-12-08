@@ -48,6 +48,7 @@ async function init() {
     },
   });
 
+  console.log('creating a provider')
   makeProvider();
 
   setInterval(setLastSnapShot, 250);

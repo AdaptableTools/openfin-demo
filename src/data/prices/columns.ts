@@ -12,6 +12,7 @@ export const priceColumns: ColDef[] = [
   },
   {
     field: "bidOfferSpread",
+    headerName: 'B/O Spread',
     type: "abColDefNumber",
     // cellEditor: 'numericCellEditor',
     editable: true,

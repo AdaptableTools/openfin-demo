@@ -4,7 +4,9 @@ import { useOnThemeChange } from "../components/hooks/useOnThemeChange";
 import { syncTheme } from "../components/syncTheme";
 
 const HelpPage: React.FC = () => {
-  useOnThemeChange(syncTheme)
+  useOnThemeChange((theme) => {
+    syncTheme(theme)
+  })
   return (
     <>
       <Head title="Demo Guide" />
