@@ -16,6 +16,11 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+#buttons-wrapper select,
+#buttons-wrapper option {
+  background: var(--main-background-color);
+  color: var(--body-font-color);
+}
 #theme-button {
   padding: 5px;
   display: flex;

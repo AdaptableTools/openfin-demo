@@ -1,9 +1,9 @@
-import { ColumnFilter } from "@adaptabletools/adaptable/types";
-import { useEffect, useLayoutEffect, useState } from "react";
-import type { Price } from "../../data/prices";
-import type { Trade } from "../../data/trades";
-import type { Position } from "../../data/position";
-import { CellEditAudit } from "../types";
+import { ColumnFilter } from '@adaptabletools/adaptable/types';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import type { Price } from '../../data/prices';
+import type { Trade } from '../../data/trades';
+import type { Position } from '../../data/position';
+import { CellEditAudit } from '../types';
 
 type DispatchChannelData = (what: string, arr?: any) => void;
 
@@ -15,13 +15,15 @@ export type ChannelClient = {
 };
 
 let theClient: ChannelClient = null;
-const clientPromise = fin.InterApplicationBus.Channel.connect("AdapTable");
+export const clientPromise = fin.InterApplicationBus.Channel.connect(
+  'AdapTable'
+);
 
 clientPromise.then((client) => {
   theClient = client;
 });
 
-const useChannelClient = (): ChannelClient | null => {
+export const useChannelClient = (): ChannelClient | null => {
   const [client, setClient] = useState(null);
 
   useLayoutEffect(() => {
@@ -36,7 +38,7 @@ const useChannelClient = (): ChannelClient | null => {
 export const useChannelData = (
   callbacks?: {
     data?: (data: { prices: Price[]; trades: Trade[] }) => void;
-    filters?: (filters: ColumnFilter[]) => void;
+    filters?: (instrumentId: string) => void;
     prices?: (prices: Price[]) => void;
     trades?: (trades: Trade[]) => void;
     positions?: (positions: Position[]) => void;
