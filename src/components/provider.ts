@@ -180,11 +180,20 @@ export async function makeProvider() {
   setInterval(() => {
     addTrade(createTrade());
   }, 9000);
-  addTrade(createTrade());
 
-  setTimeout(() => {
-    addTrade(createTrade());
-  }, 1000);
+  const instrumentIds = getInstrumentIds()
+  for (let i = 0; i < instrumentIds.length; i++) {
+    const instrId = instrumentIds[i]
+
+    addTrade(createTrade({
+      instrumentId: instrId
+    }));
+  }
+
+
+  // setTimeout(() => {
+  //   addTrade(createTrade());
+  // }, 1000);
 
   setInterval(() => {
     const priceIndex = generateRandomInt(0, prices.length - 1);
