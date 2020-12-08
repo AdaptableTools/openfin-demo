@@ -37,7 +37,6 @@ import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 
 const columnDefs: ColDef[] = positionColumns;
-
 const rowData = null;
 
 const gridOptions: GridOptions = {
