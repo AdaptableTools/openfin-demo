@@ -1,5 +1,5 @@
-import { AdaptableOptions } from "@adaptabletools/adaptable/types";
-import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import { AdaptableOptions } from '@adaptabletools/adaptable/types';
+import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
 export const initAdaptableOptions = (
   adaptableOptions: AdaptableOptions
@@ -24,7 +24,7 @@ export const initAdaptableOptions = (
         auditAsEvent: true,
       },
       auditTickingDataUpdates: {
-        auditAsEvent: true
+        auditAsEvent: true,
       },
     },
   };
@@ -32,14 +32,14 @@ export const initAdaptableOptions = (
   const defaults = {
     ...defaultAdaptableOptions,
     // adaptableStateKey: `${Date.now()}-4`,
-    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-6`,
+    adaptableStateKey: `${adaptableOptions.adaptableId || Date.now()}-7`,
   };
   const common = {};
 
   Object.keys(defaults).forEach((key) => {
     const defaultValue = defaults[key];
 
-    if (typeof defaultValue === "object") {
+    if (typeof defaultValue === 'object') {
       common[key] = { ...defaultValue, ...adaptableOptions[key] };
     }
   });
