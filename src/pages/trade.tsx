@@ -240,7 +240,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Head title="Trades" />
+      <Head title="Tradessss" />
       <MainLayout>
         <AdaptableReact
           style={{ flex: "none" }}
