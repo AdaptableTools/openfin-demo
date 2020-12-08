@@ -47,7 +47,6 @@ export const useChannelData = (
     addpriceaudit?: (priceAudit: CellEditAudit<Price>) => void;
     tradeaudits?: (tradeAudits: CellEditAudit<Trade>[]) => void;
     addtradeaudit?: (tradeAudit: CellEditAudit<Trade>) => void;
-    themechange?: (theme: string) => void;
   },
   deps?: any[]
 ): {

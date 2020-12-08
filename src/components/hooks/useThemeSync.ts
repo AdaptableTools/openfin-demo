@@ -9,16 +9,6 @@ import { useOnThemeChange } from "./useOnThemeChange";
 export const useThemeSync = (
   adaptableApiRef: MutableRefObject<AdaptableApi>
 ) => {
-  // const { client } = useChannelData({
-  //   themechange: (theme: string) => {
-  //     const currentTheme = adaptableApiRef.current?.themeApi.getCurrentTheme();
-
-  //     if (currentTheme != theme && theme) {
-
-  //       adaptableApiRef.current?.themeApi.loadTheme(theme);
-  //     }
-  //   },
-  // });
   useEffect(() => {
     const { current: adaptableApi } = adaptableApiRef;
     if (!adaptableApi) {

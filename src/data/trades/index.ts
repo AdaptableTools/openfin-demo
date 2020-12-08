@@ -24,7 +24,7 @@ type DataSourceParams = {
 export const getDataSource = ({ size }: DataSourceParams) => {
   var trades = [];
   for (var i = 1; i <= size; i++) {
-    var trade = createTrade(i);
+    var trade = createTrade();
     trades.push(trade);
   }
   return trades;
@@ -46,18 +46,21 @@ export type Trade = {
   lastUpdatedBy: string;
 };
 
+let tradeIndex = 0
+
 export const createTrade = (
-  index: number,
+
   overrides?: Partial<Trade>
 ): Trade => {
-  const price = getMeaningfulDouble();
+
   const tradeDate = generateRandomDateAndTime(1, 1000);
   const moodyRating = getRandomItem(getMoodysRatings());
   const instrumentId = getRandomItem(getInstrumentIds());
   const sell = generateRandomBool();
   const status = generateRandomBool() ? "active" : "inactive";
+  tradeIndex++
   return {
-    tradeId: index,
+    tradeId: tradeIndex,
     instrumentId: instrumentId,
     instrumentName: getInstrumentName(instrumentId),
     notional: getRandomItem(getNotionals()),
@@ -75,7 +78,7 @@ export const createTrade = (
 };
 
 export const createNewTrade = (index: number) => {
-  return createTrade(index, {
+  return createTrade({
     tradeDate: generateRandomDateAndTime(1, 1000),
     status: "active",
   });

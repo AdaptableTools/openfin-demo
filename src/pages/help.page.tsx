@@ -1,5 +1,5 @@
-import Head from "../components/Head";
 import * as React from "react";
+import Head from "../components/Head";
 import { useOnThemeChange } from "../components/hooks/useOnThemeChange";
 import { syncTheme } from "../components/syncTheme";
 

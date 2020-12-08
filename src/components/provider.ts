@@ -136,11 +136,6 @@ export async function makeProvider() {
     publish("addtradeaudit", tradeAudit);
   });
   provider.register("positions", updatePositions);
-  provider.register("themechange", (theme: string) => {
-    console.log("publish theme change:", theme);
-    publish("themechange", theme);
-  });
-  //   provider.register('addtrade', addTrade);
 
   provider.register(
     "updatetrade",
@@ -175,12 +170,12 @@ export async function makeProvider() {
   updatePositions();
 
   setInterval(() => {
-    addTrade(createTrade(trades.length));
+    addTrade(createTrade());
   }, 9000);
-  addTrade(createTrade(trades.length));
+  addTrade(createTrade());
 
   setTimeout(() => {
-    addTrade(createTrade(trades.length));
+    addTrade(createTrade());
   }, 1000);
 
   setInterval(() => {
