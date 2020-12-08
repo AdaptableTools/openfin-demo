@@ -3,10 +3,7 @@ import * as React from "react";
 import { Icon } from "@adaptabletools/adaptable/src/components/icons";
 import "./index.css";
 import { useThemeChangeInProvider } from "./useThemeChangeInProvider";
-const LIGHT_THEME = "light";
-const DARK_THEME = "dark";
-
-const lightThemeClassName = `${LIGHT_THEME}-theme`;
+import { DARK_THEME, lightThemeClassName, LIGHT_THEME, syncTheme } from "../syncTheme";
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(lightThemeClassName)
@@ -22,7 +19,7 @@ const toggleTheme = async () => {
   const theme = getOtherTheme()
   if (setTheme(theme)) {
     fin.Platform.getCurrentSync().setWindowContext({ theme })
-    fin.InterApplicationBus.publish('update-theme', { theme })
+    fin.InterApplicationBus.publish('update-theme', theme)
   }
 };
 
@@ -33,18 +30,6 @@ const setTheme = (theme) => {
   }
   syncTheme(theme);
   return true
-};
-
-const syncTheme = (theme: string) => {
-  const root = document.documentElement;
-
-  localStorage.setItem('theme', theme)
-
-  if (theme === LIGHT_THEME) {
-    root.classList.add(lightThemeClassName);
-  } else {
-    root.classList.remove(lightThemeClassName);
-  }
 };
 
 const maxOrRestore = async () => {

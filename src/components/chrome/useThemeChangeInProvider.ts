@@ -6,7 +6,7 @@ import { getCurrentTheme } from "./TitleBar"
 export const useThemeChangeInProvider = (callback?: (theme: ThemeValues) => void): ThemeValues => {
     const [theme, setTheme] = useState<ThemeValues>('dark')
     useEffect(() => {
-        fin.InterApplicationBus.subscribe({ uuid: "*" }, 'update-theme', ({ theme }: { theme: ThemeValues }) => {
+        fin.InterApplicationBus.subscribe({ uuid: "*" }, 'update-theme', (theme: ThemeValues) => {
             if (getCurrentTheme() === theme) {
                 return
             }

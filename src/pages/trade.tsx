@@ -129,7 +129,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           },
           DisplayFormat: {
             Formatter: 'DateFormatter',
-            Options:{
+            Options: {
               Pattern: 'dd-MM-yyyy'
             }
           },
@@ -146,7 +146,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "instrumentId",
             "instrumentName",
             "notional",
-          //  "setStatusCancel",
+            //  "setStatusCancel",
             "status",
             "counterparty",
             "currency",
@@ -220,6 +220,10 @@ const App: React.FC = () => {
       gridOptionsRef.current.api?.setRowData(trades);
     }),
     addtrade: (trade) => {
+      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(trade.tradeId)) {
+        return
+      }
+
       adaptableApiRef.current.gridApi.addGridData([trade], {
         runAsync: true,
       });

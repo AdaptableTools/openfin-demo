@@ -163,7 +163,12 @@ const App = () => {
       gridOptionsRef.current.api.setRowData(items);
     }),
     addtradeaudit: (tradeAudit: CellEditAudit<Trade>) => {
-      adaptableApiRef.current.gridApi.addGridData([toItem(tradeAudit)], {
+      const item = toItem(tradeAudit)
+
+      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(item.timestamp)) {
+        return
+      }
+      adaptableApiRef.current.gridApi.addGridData([item], {
         runAsync: true,
       });
     },

@@ -201,6 +201,9 @@ const App: React.FC = () => {
       gridOptionsRef.current.api?.setRowData(prices);
     }),
     tickprice: (priceObject: Price) => {
+      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(priceObject.instrumentId)) {
+        return
+      }
       adaptableApiRef.current?.gridApi.updateGridData([priceObject], {
         runAsync: true,
       });

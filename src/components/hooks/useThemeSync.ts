@@ -4,8 +4,7 @@ import {
   ThemeChangedEventArgs,
 } from "@adaptabletools/adaptable/types";
 import { MutableRefObject, useEffect } from "react";
-import { ThemeValues } from "../types";
-import { useChannelData } from "./useChannelData";
+import { useOnThemeChange } from "./useOnThemeChange";
 
 export const useThemeSync = (
   adaptableApiRef: MutableRefObject<AdaptableApi>
@@ -35,8 +34,7 @@ export const useThemeSync = (
 
         const themeName = (info.theme as AdaptableTheme).Name || info.theme;
 
-        const context = { theme: themeName }
-        fin.InterApplicationBus.publish('update-theme', context)
+        fin.InterApplicationBus.publish('update-theme', themeName)
       }
     );
 
@@ -55,27 +53,17 @@ export const useThemeSync = (
     };
   }, [adaptableApiRef.current]);
 
-  useEffect(function () {
+  useOnThemeChange(theme => {
 
-    const contextChangeHandler = ({ theme }: { theme: ThemeValues }) => {
+    if (!theme) {
+      return
+    }
 
-      if (!theme) {
-        return
-      }
+    if (adaptableApiRef.current?.themeApi.getCurrentTheme() === theme) {
+      return
+    }
 
-      if (adaptableApiRef.current?.themeApi.getCurrentTheme() === theme) {
-        return
-      }
+    adaptableApiRef.current?.themeApi.loadTheme(theme);
 
-      console.log("setting theme", theme);
-
-      adaptableApiRef.current?.themeApi.loadTheme(theme);
-
-    };
-
-    fin.InterApplicationBus.subscribe({ uuid: "*" }, 'update-theme', contextChangeHandler)
-
-
-    return () => { };
-  }, []);
+  })
 };

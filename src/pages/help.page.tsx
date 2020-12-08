@@ -1,8 +1,13 @@
+import Head from "../components/Head";
 import * as React from "react";
+import { useOnThemeChange } from "../components/hooks/useOnThemeChange";
+import { syncTheme } from "../components/syncTheme";
 
 const HelpPage: React.FC = () => {
+  useOnThemeChange(syncTheme)
   return (
     <>
+      <Head title="Demo Guide" />
       <div style={{ padding: 20, overflow: "auto", width: "100%", background: 'var(--main-background-color)', color: 'var(--body-font-color)' }}>
         <h2>AdapTable - OpenFin Demo Guide</h2>
         <p>
