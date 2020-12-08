@@ -26,7 +26,7 @@ const getPositionsArray = ({
   return getPositions(getInstrumentIds(), trades, prices);
 };
 
-let resolveProvider: any = () => {};
+let resolveProvider: any = () => { };
 export const channelProvider = new Promise<any>((resolve) => {
   resolveProvider = resolve;
 });
@@ -122,8 +122,9 @@ export async function makeProvider() {
     priceAudits = priceAudits.concat(priceAudit);
 
     console.log('audits', priceAudits);
-    publish('priceaudits', priceAudits);
     publish('addpriceaudit', priceAudit);
+    publish('priceaudits', priceAudits);
+
   });
   provider.register('tradeaudits', (tradeAudit) => {
     if (!tradeAudit) {
@@ -138,8 +139,9 @@ export async function makeProvider() {
     tradeAudits = tradeAudits.concat(tradeAudit);
 
     console.log('audits', tradeAudits);
-    publish('tradeaudits', tradeAudits);
     publish('addtradeaudit', tradeAudit);
+    publish('tradeaudits', tradeAudits);
+
   });
   provider.register('positions', updatePositions);
 
