@@ -32,14 +32,16 @@ export const useFilters = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
         }
 
         console.log('setting instrument id to', instrumentId)
-        !instrumentId
-          ? adaptableApi.filterApi.clearAllColumnFilter()
-          : adaptableApi.filterApi.setColumnFilter([
+
+        adaptableApi.filterApi.clearColumnFilterByColumn('instrumentId')
+        if (instrumentId) {
+          adaptableApi.filterApi.setColumnFilter([
             {
               ColumnId: 'instrumentId',
               Predicate: { PredicateId: 'Values', Inputs: [instrumentId] },
             },
           ]);
+        }
       }
     );
   }, [adaptableApi]);
