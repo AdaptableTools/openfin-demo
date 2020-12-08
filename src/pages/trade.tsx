@@ -103,6 +103,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
+    Query: {
+      Revision: 7,
+      SharedQueries: [
+        {
+          Name: 'Active US Trades',
+          Expression: '[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")',
+          Uuid: 'active-us-trades'
+        }
+      ]
+    },
     ConditionalStyle: {
       ConditionalStyles: [
         {
