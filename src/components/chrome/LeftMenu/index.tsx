@@ -47,12 +47,10 @@ const addView = (tab: { url: string; title: string; name: string }) => {
   );
 };
 
-const openHelp = () => {
-  fin.Platform.getCurrentSync().createView({
 
-    url: `${window.location.origin}/help`,
-
-  });
+const clearState = () => {
+  localStorage.clear()
+  fin.InterApplicationBus.publish('clear-state');
 }
 export const LeftMenu = () => {
 
@@ -85,6 +83,7 @@ export const LeftMenu = () => {
       </ul>
 
       <button onClick={toggleSidebar}>Hide sidebar</button>
+      <button onClick={clearState}>Clear state</button>
     </div>
   );
 };

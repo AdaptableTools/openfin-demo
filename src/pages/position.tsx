@@ -120,7 +120,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     Dashboard: {
       IsCollapsed: true,
       Tabs: [
-        { Name: "Position", Toolbars: ["SmartEdit", "Alert", "CellSummary"] },
+        { Name: "Position", Toolbars: ['OpenFin', "SmartEdit", "Alert", "CellSummary"] },
       ],
     },
     Alert: {
