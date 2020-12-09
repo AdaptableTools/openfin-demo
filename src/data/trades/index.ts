@@ -46,19 +46,21 @@ export type Trade = {
   lastUpdatedBy: string;
 };
 
-let tradeIndex = 0
+let tradeIndex = 0;
 
-export const createTrade = (
-
-  overrides?: Partial<Trade>
-): Trade => {
-
+export const createTrade = (overrides?: Partial<Trade>): Trade => {
   const tradeDate = generateRandomDateAndTime(1, 1000);
   const moodyRating = getRandomItem(getMoodysRatings());
-  const instrumentId = getRandomItem(getInstrumentIds());
+
   const sell = generateRandomBool();
   const status = generateRandomBool() ? "active" : "inactive";
-  tradeIndex++
+  tradeIndex++;
+
+  let instrumentId = getRandomItem(getInstrumentIds());
+
+  if (overrides && overrides.instrumentId) {
+    instrumentId = overrides.instrumentId;
+  }
   return {
     tradeId: tradeIndex,
     instrumentId: instrumentId,
