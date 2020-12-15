@@ -74,7 +74,7 @@ const initialGridOptions: GridOptions = {
     floatingFilter: true,
     sortable: true,
   },
-  rowData: null,
+  rowData: [],
   components: {
     AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
   },
@@ -158,7 +158,12 @@ const App = () => {
       gridOptionsRef.current.api.setRowData(items);
     }),
     addpriceaudit: (priceAudit: CellEditAudit<Price>) => {
-      adaptableApiRef.current.gridApi.addGridData([toItem(priceAudit)], {
+      const item = toItem(priceAudit)
+
+      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(item.instrumentId)) {
+        return
+      }
+      adaptableApiRef.current.gridApi.addGridData([item], {
         runAsync: true,
       });
     },

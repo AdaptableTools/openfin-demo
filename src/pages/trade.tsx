@@ -91,6 +91,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
+    Query: {
+      Revision: 7,
+      SharedQueries: [
+        {
+          Name: 'Active US Trades',
+          Expression: '[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")',
+          Uuid: 'active-us-trades'
+        }
+      ]
+    },
     ConditionalStyle: {
       ConditionalStyles: [
         {
@@ -116,7 +126,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           },
           DisplayFormat: {
             Formatter: 'DateFormatter',
-            Options:{
+            Options: {
               Pattern: 'dd-MM-yyyy'
             }
           },
@@ -132,7 +142,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "instrumentId",
             "instrumentName",
             "notional",
-          //  "setStatusCancel",
+            //  "setStatusCancel",
             "status",
             "counterparty",
             "currency",
@@ -204,6 +214,10 @@ const App: React.FC = () => {
       gridOptionsRef.current.api?.setRowData(trades);
     }),
     addtrade: (trade) => {
+      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(trade.tradeId)) {
+        return
+      }
+
       adaptableApiRef.current.gridApi.addGridData([trade], {
         runAsync: true,
       });

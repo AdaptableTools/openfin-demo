@@ -31,7 +31,6 @@ import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 
 const columnDefs: ColDef[] = positionColumns;
-
 const rowData = null;
 
 const gridOptions: GridOptions = {
@@ -110,7 +109,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     Dashboard: {
       IsCollapsed: true,
       Tabs: [
-        { Name: "Position", Toolbars: ["SmartEdit", "Alert", "CellSummary"] },
+        { Name: "Position", Toolbars: ['OpenFin', "SmartEdit", "Alert", "CellSummary"] },
       ],
     },
     Alert: {
@@ -127,6 +126,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           MessageType: "Warning",
           AlertProperties: {
             ShowInOpenFin: true,
+            JumpToCell: true,
+            HighlightCell: true
           },
         },
       ],

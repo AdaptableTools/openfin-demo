@@ -1,17 +1,23 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Icon } from "@adaptabletools/adaptable/src/components/icons";
-import "./index.css";
-import { useThemeChangeInProvider } from "./useThemeChangeInProvider";
-const LIGHT_THEME = "light";
-const DARK_THEME = "dark";
-
-const lightThemeClassName = `${LIGHT_THEME}-theme`;
+import { Icon } from '@adaptabletools/adaptable/src/components/icons';
+import './index.css';
+import { useThemeChangeInProvider } from './useThemeChangeInProvider';
+import {
+  DARK_THEME,
+  lightThemeClassName,
+  LIGHT_THEME,
+  syncTheme,
+} from '../syncTheme';
+import { getInstrumentIds } from '../../data/utils';
+import { channelProvider } from '../provider';
 
 export const getCurrentTheme = () => {
-  const isLight = document.documentElement.classList.contains(lightThemeClassName)
+  const isLight = document.documentElement.classList.contains(
+    lightThemeClassName
+  );
 
-  return isLight ? LIGHT_THEME : DARK_THEME
+  return isLight ? LIGHT_THEME : DARK_THEME;
 };
 
 const getOtherTheme = () => {
@@ -19,36 +25,23 @@ const getOtherTheme = () => {
 };
 
 const toggleTheme = async () => {
-  const theme = getOtherTheme()
+  const theme = getOtherTheme();
   if (setTheme(theme)) {
-    fin.Platform.getCurrentSync().setWindowContext({ theme })
-    fin.InterApplicationBus.publish('update-theme', { theme })
+    fin.Platform.getCurrentSync().setWindowContext({ theme });
+    fin.InterApplicationBus.publish('update-theme', theme);
   }
 };
 
 const setTheme = (theme) => {
-
   if (theme === getCurrentTheme()) {
-    return false
+    return false;
   }
   syncTheme(theme);
-  return true
-};
-
-const syncTheme = (theme: string) => {
-  const root = document.documentElement;
-
-  localStorage.setItem('theme', theme)
-
-  if (theme === LIGHT_THEME) {
-    root.classList.add(lightThemeClassName);
-  } else {
-    root.classList.remove(lightThemeClassName);
-  }
+  return true;
 };
 
 const maxOrRestore = async () => {
-  if ((await fin.me.getState()) === "normal") {
+  if ((await fin.me.getState()) === 'normal') {
     return await fin.me.maximize();
   }
 
@@ -56,18 +49,18 @@ const maxOrRestore = async () => {
 };
 
 export const toggleSidebar = () => {
-  document.querySelector("#left-menu").classList.toggle("hidden");
+  document.querySelector('#left-menu').classList.toggle('hidden');
 };
 
+const instruments = getInstrumentIds();
 export const TitleBar = () => {
-
   React.useLayoutEffect(() => {
-    const initialTheme = localStorage.getItem('theme') || 'dark'
+    const initialTheme = localStorage.getItem('theme') || 'dark';
     if (initialTheme) {
-      syncTheme(initialTheme)
+      syncTheme(initialTheme);
     }
-  }, [])
-  useThemeChangeInProvider(syncTheme)
+  }, []);
+  useThemeChangeInProvider(syncTheme);
 
   return (
     <div id="title-bar">
@@ -75,6 +68,25 @@ export const TitleBar = () => {
         <div id="title">AdapTable OpenFin Demo App</div>
       </div>
       <div id="buttons-wrapper">
+        <select
+          style={{ marginRight: 20 }}
+          onChange={(e) => {
+            const instrumentId = e.target.value;
+
+            fin.InterApplicationBus.publish('set-filters', instrumentId);
+          }}
+        >
+          <option key="-" value="">
+            Select instrument to filter
+          </option>
+          {instruments.map((instrumentId) => {
+            return (
+              <option key={instrumentId} value={instrumentId}>
+                {instrumentId}
+              </option>
+            );
+          })}
+        </select>
         <div
           className="button"
           title="Toggle Theme"
@@ -86,16 +98,15 @@ export const TitleBar = () => {
         <div
           className="button"
           style={{
-            backgroundImage: "var(--menu-icon)",
+            backgroundImage: 'var(--menu-icon)',
           }}
           title="Toggle SideBar"
           id="menu-button"
           onClick={toggleSidebar}
         ></div>
-
         <div
           style={{
-            backgroundImage: "var(--minimize-button-url)",
+            backgroundImage: 'var(--minimize-button-url)',
           }}
           className="button"
           title="Minimize Window"
@@ -106,7 +117,7 @@ export const TitleBar = () => {
         ></div>
         <div
           style={{
-            backgroundImage: "var(--expand-button-url)",
+            backgroundImage: 'var(--expand-button-url)',
           }}
           className="button"
           title="Maximize Window"
@@ -117,7 +128,7 @@ export const TitleBar = () => {
         ></div>
         <div
           style={{
-            backgroundImage: "var(--close-button-url)",
+            backgroundImage: 'var(--close-button-url)',
           }}
           onClick={() => fin.me.close().catch(console.error)}
           className="button"

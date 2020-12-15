@@ -477,7 +477,6 @@ export const getCounterparties = () => {
     "JP Morgan",
     "Morgan Stanley",
     "BNP",
-    "Lloyds TSB",
     "MUFJ",
     "Rabobank",
     "Deutsche Bank",

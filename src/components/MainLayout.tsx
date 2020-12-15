@@ -1,5 +1,12 @@
 import * as React from "react";
 
+
+fin.InterApplicationBus.subscribe({ uuid: "*" }, 'clear-state', () => {
+  localStorage.clear()
+  // reload
+  window.location.href = window.location.href
+})
+
 export default ({ children }) => {
   children = React.Children.toArray(children);
 

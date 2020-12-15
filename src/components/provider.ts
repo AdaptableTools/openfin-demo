@@ -1,16 +1,16 @@
-import type { Price } from "../data/prices";
-import type { Position } from "../data/position";
-import { createTrade, Trade } from "../data/trades";
-import { ColumnFilter } from "@adaptabletools/adaptable/types";
+import type { Price } from '../data/prices';
+import type { Position } from '../data/position';
+import { createTrade, Trade } from '../data/trades';
+import { ColumnFilter } from '@adaptabletools/adaptable/types';
 
-import { getDataSource as getPrices, tickPrice } from "../data/prices";
-import { generateRandomInt, getInstrumentIds } from "../data/utils";
-import { getPositions } from "../data/position";
-import type { CellEditAudit } from "./types";
+import { getDataSource as getPrices, tickPrice } from '../data/prices';
+import { generateRandomInt, getInstrumentIds } from '../data/utils';
+import { getPositions } from '../data/position';
+import type { CellEditAudit } from './types';
 
 let prices: Price[] = getPrices();
 let trades: Trade[] = [];
-let filters: ColumnFilter[] = [];
+let filteredInstrumentId: string = null;
 let positions: Position[] = [];
 
 let priceAudits: CellEditAudit<Price>[] = [];
@@ -26,16 +26,27 @@ const getPositionsArray = ({
   return getPositions(getInstrumentIds(), trades, prices);
 };
 
+let resolveProvider: any = () => { };
+export const channelProvider = new Promise<any>((resolve) => {
+  resolveProvider = resolve;
+});
+
+if (process.browser) {
+  (window as any).onInstrumentIdChange = (instrumentId: string) => {
+    console.log({ instrumentId });
+  };
+}
 export async function makeProvider() {
-  const channelName = "AdapTable";
+  const channelName = 'AdapTable';
   const provider = await fin.InterApplicationBus.Channel.create(channelName);
+  resolveProvider(provider);
 
   provider.onConnection((identity, payload) => {
-    console.log("onConnection identity: ", JSON.stringify(identity));
-    console.log("onConnection payload: ", JSON.stringify(payload));
+    console.log('onConnection identity: ', JSON.stringify(identity));
+    console.log('onConnection payload: ', JSON.stringify(payload));
   });
   provider.onDisconnection((identity) => {
-    console.log("onDisconnection identity: ", JSON.stringify(identity));
+    console.log('onDisconnection identity: ', JSON.stringify(identity));
   });
 
   const getData = () => {
@@ -47,19 +58,20 @@ export async function makeProvider() {
 
   const publish = (channelName, data) => {
     try {
-      console.log("publish", channelName);
+      console.log('publish', channelName);
       provider.publish(channelName, data);
     } catch (ex) {
       console.warn(ex);
     }
   };
 
-  provider.register("data", () => getData());
-  provider.register("set-filters", (newFilters: ColumnFilter[]) => {
-    filters = newFilters;
+  provider.register('data', () => getData());
+  provider.register('set-filters', (newInstrumentId: string) => {
+    filteredInstrumentId = newInstrumentId;
 
-    publish("filters", filters);
-    return newFilters;
+    publish('filters', filteredInstrumentId);
+    console.log('instrumentid', filteredInstrumentId);
+    return newInstrumentId;
   });
 
   const updatePositions = () => {
@@ -76,74 +88,65 @@ export async function makeProvider() {
       }
     }
     positions = positionsArray;
-    publish("positions", positionsArray);
-    publish("tickpositions", changes);
+    publish('positions', positionsArray);
+    publish('tickpositions', changes);
   };
 
   const updateTrades = () => {
     updatePositions();
-    publish("trades", trades);
+    publish('trades', trades);
   };
   const updatePrices = () => {
     updatePositions();
-    publish("prices", prices);
+    publish('prices', prices);
   };
 
   const addTrade = (trade: Trade) => {
     trades = trades.concat(trade);
-    publish("addtrade", trade);
+    publish('addtrade', trade);
     updateTrades();
   };
 
-  provider.register("trades", updateTrades);
-  provider.register("prices", updatePrices);
-  provider.register("priceaudits", (priceAudit) => {
+  provider.register('trades', updateTrades);
+  provider.register('prices', updatePrices);
+  provider.register('priceaudits', (priceAudit) => {
     if (!priceAudit) {
-      return
+      return;
     }
-    const trigger = priceAudit.audit_trigger
+    const trigger = priceAudit.audit_trigger;
 
     if (trigger !== 'TickingDataUpdate' && trigger !== 'CellEdit') {
-      return
+      return;
     }
 
     priceAudits = priceAudits.concat(priceAudit);
 
-    console.log("audits", priceAudits);
-    publish(
-      "priceaudits",
-      priceAudits
-    );
-    publish("addpriceaudit", priceAudit);
+    console.log('audits', priceAudits);
+    publish('addpriceaudit', priceAudit);
+    publish('priceaudits', priceAudits);
+
   });
-  provider.register("tradeaudits", (tradeAudit) => {
+  provider.register('tradeaudits', (tradeAudit) => {
     if (!tradeAudit) {
-      return
+      return;
     }
-    const trigger = tradeAudit.audit_trigger
+    const trigger = tradeAudit.audit_trigger;
 
     if (trigger !== 'TickingDataUpdate' && trigger !== 'CellEdit') {
-      return
+      return;
     }
 
     tradeAudits = tradeAudits.concat(tradeAudit);
 
-    console.log("audits", tradeAudits);
-    publish(
-      "tradeaudits",
-      tradeAudits
-    );
-    publish("addtradeaudit", tradeAudit);
+    console.log('audits', tradeAudits);
+    publish('addtradeaudit', tradeAudit);
+    publish('tradeaudits', tradeAudits);
+
   });
-  provider.register("positions", updatePositions);
-  provider.register("themechange", (theme: string) => {
-    console.log("publish theme change:", theme);
-    publish("themechange", theme);
-  });
-  //   provider.register('addtrade', addTrade);
+  provider.register('positions', updatePositions);
 
   provider.register(
-    "updatetrade",
+    'updatetrade',
     (info: { primaryKey: string; columnId: string; newValue: any }) => {
       const id = ((info.primaryKey as any) as number) * 1;
 
@@ -157,7 +160,7 @@ export async function makeProvider() {
   );
 
   provider.register(
-    "updateprice",
+    'updateprice',
     (info: { primaryKey: string; columnId: string; newValue: any }) => {
       const index = prices.findIndex(
         (price) => price.instrumentId == info.primaryKey
@@ -170,18 +173,27 @@ export async function makeProvider() {
     }
   );
 
-  publish("trades", trades);
-  publish("prices", prices);
+  publish('trades', trades);
+  publish('prices', prices);
   updatePositions();
 
   setInterval(() => {
-    addTrade(createTrade(trades.length));
+    addTrade(createTrade());
   }, 9000);
-  addTrade(createTrade(trades.length));
 
-  setTimeout(() => {
-    addTrade(createTrade(trades.length));
-  }, 1000);
+  const instrumentIds = getInstrumentIds()
+  for (let i = 0; i < instrumentIds.length; i++) {
+    const instrId = instrumentIds[i]
+
+    addTrade(createTrade({
+      instrumentId: instrId
+    }));
+  }
+
+
+  // setTimeout(() => {
+  //   addTrade(createTrade());
+  // }, 1000);
 
   setInterval(() => {
     const priceIndex = generateRandomInt(0, prices.length - 1);
@@ -189,6 +201,8 @@ export async function makeProvider() {
 
     prices[priceIndex] = priceObject;
 
-    provider.publish("tickprice", priceObject);
+    provider.publish('tickprice', priceObject);
   }, 2000);
+
+  console.log('PROVIDER DONE');
 }
