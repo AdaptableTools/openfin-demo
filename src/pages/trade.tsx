@@ -1,25 +1,18 @@
 import * as React from "react";
 import { useRef } from "react";
-
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
 } from "@adaptabletools/adaptable-react-aggrid";
-
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
-
 import { AgGridReact } from "@ag-grid-community/react";
-
 import { GridOptions, ColDef } from "@ag-grid-enterprise/all-modules";
-
 import { columnTypes } from "../data/columnTypes";
 import { tradeColumns } from "../data/trades/columns";
 import MainLayout from "../components/MainLayout";
 import { modules } from "../components/modules";
 import { once } from "../components/once";
-
 import { useChannelData } from "../components/hooks/useChannelData";
-
 import { useFilters } from "../components/hooks/useFilters";
 import { useDispatchOnDataChanged } from "../components/hooks/useDispatchOnDataChanged";
 import { useThemeSync } from "../components/hooks/useThemeSync";
@@ -47,14 +40,12 @@ const initialGridOptions: GridOptions = {
   suppressMenuHide: true,
   enableRangeSelection: true,
   singleClickEdit: true,
-
   columnTypes,
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "tradeId",
   adaptableId: "Trade View",
-
   userFunctions: [
     {
       name: "renderCancelButton",
@@ -67,7 +58,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
-      Revision: 1,
       Tabs: [
         {
           Name: "Blotter",
@@ -81,8 +71,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
 
     GradientColumn: {
-      Revision: 1,
-      GradientColumns: [
+       GradientColumns: [
         {
           BaseValue: 4500000,
           ColumnId: "notional",
@@ -93,8 +82,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ]
     },
     ActionColumn: {
-      Revision: 2,
-      ActionColumns: [
+       ActionColumns: [
         {
           ColumnId: "setStatusCancel",
           FriendlyName: "Cancel",
@@ -121,7 +109,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 3,
       FormatColumns: [
         {
           Scope: {
@@ -137,7 +124,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Layout: {
-      Revision: 4,
       Layouts: [
         {
           Name: "Latest Trades",
@@ -182,8 +168,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Export: {
-      Revision: 2,
-      Reports: [
+       Reports: [
         {
           Name: "Active Trades",
           ReportColumnScope: "AllColumns",
@@ -193,7 +178,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
-      Revision: 2
       /*
       EditLookUpItems: [
         {

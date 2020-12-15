@@ -1,26 +1,20 @@
 import * as React from "react";
-
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
 } from "@adaptabletools/adaptable-react-aggrid";
-
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
-
 import { AgGridReact } from "@ag-grid-community/react";
-
 import {
   GridOptions,
   ColDef,
   GridReadyEvent,
   GridApi,
 } from "@ag-grid-enterprise/all-modules";
-
 import { columnTypes } from "../data/columnTypes";
 import { positionColumns } from "../data/position/columns";
 import MainLayout from "../components/MainLayout";
 import { modules } from "../components/modules";
-
 import { useChannelData } from "../components/hooks/useChannelData";
 import { useRef } from "react";
 import {
@@ -55,18 +49,15 @@ const gridOptions: GridOptions = {
   sideBar: true,
   suppressMenuHide: true,
   enableRangeSelection: true,
-
   columnTypes,
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Position View",
-
   predefinedConfig: {
     Theme: ThemeConfig,
     FormatColumn: {
-      Revision: 3,
       FormatColumns: [
         {
           Scope: {
@@ -86,13 +77,11 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FlashingCell: {
-      Revision: 1,
       FlashingCells: [
         { ColumnId: "position", IsLive: true, UpColor: GREEN, DownColor: RED },
       ],
     },
     ConditionalStyle: {
-      Revision: 3,
       ConditionalStyles: [
         {
           Scope: {
@@ -125,8 +114,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Alert: {
-      Revision: 6,
-      AlertDefinitions: [
+       AlertDefinitions: [
         {
           Scope: {
             ColumnIds: ["position"],

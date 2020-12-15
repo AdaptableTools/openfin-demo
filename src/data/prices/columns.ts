@@ -3,6 +3,7 @@ import { ColDef } from "@ag-grid-enterprise/all-modules";
 export const priceColumns: ColDef[] = [
   {
     field: "instrumentId",
+     headerName: "Instrument",
     initialWidth: 130,
     type: "abColDefString",
   },
@@ -12,19 +13,12 @@ export const priceColumns: ColDef[] = [
   },
   {
     field: "bidOfferSpread",
+     headerName: "B/O Spread",
     type: "abColDefNumber",
     // cellEditor: 'numericCellEditor',
     editable: true,
   },
-  // {
-  //   field: 'bid',
-  //   type: 'abColDefNumber',
-  // },
-  // {
-  //   field: 'ask',
-  //   type: 'abColDefNumber',
-  // },
-  {
+    {
     field: "closingPrice",
     type: "abColDefNumber",
   },

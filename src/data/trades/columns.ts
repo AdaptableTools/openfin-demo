@@ -6,11 +6,13 @@ export const tradeColumns = [
   },
   {
     field: "instrumentId",
+     headerName: "Instrument",
     initialWidth: 150,
     type: "abColDefString",
   },
   {
     field: "instrumentName",
+     headerName: "Name",
     initialWidth: 250,
     type: "abColDefString",
   },
@@ -22,11 +24,13 @@ export const tradeColumns = [
   },
   {
     field: "counterparty",
+     headerName: "Cpty",
     enableRowGroup: true,
     type: "abColDefString",
   },
   {
     field: "currency",
+     headerName: "Ccy",
     initialWidth: 150,
     type: "abColDefString",
   },
@@ -49,10 +53,12 @@ export const tradeColumns = [
   },
   {
     field: "lastUpdated",
+     headerName: "Updated",
     type: "abColDefDate",
   },
   {
     field: "lastUpdatedBy",
+     headerName: "Updated By",
     type: "abColDefString",
   },
 ].map((c) => {

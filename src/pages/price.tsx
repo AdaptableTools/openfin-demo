@@ -1,25 +1,17 @@
 import * as React from "react";
-
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
 } from "@adaptabletools/adaptable-react-aggrid";
-
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
-
 import { AgGridReact } from "@ag-grid-community/react";
-
 import { GridOptions, ColDef } from "@ag-grid-enterprise/all-modules";
-
 import { columnTypes } from "../data/columnTypes";
 import { priceColumns } from "../data/prices/columns";
 import MainLayout from "../components/MainLayout";
-
 import { modules } from "../components/modules";
-
 import { useChannelData } from "../components/hooks/useChannelData";
 import { useRef } from "react";
-
 import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
 import { useFilters } from "../components/hooks/useFilters";
@@ -49,7 +41,6 @@ const initialGridOptions: GridOptions = {
   sideBar: true,
   suppressMenuHide: true,
   enableRangeSelection: true,
-
   columnTypes,
 };
 
@@ -103,8 +94,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     CalculatedColumn: {
-      Revision: 1,
-      CalculatedColumns: [
+     CalculatedColumns: [
         {
           ColumnId: "bid",
           FriendlyName: "Bid",
@@ -144,7 +134,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 3,
       FormatColumns: [
         {
           Scope: {
