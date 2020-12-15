@@ -15,18 +15,13 @@ export const priceColumns: ColDef[] = [
     field: "bidOfferSpread",
      headerName: "B/O Spread",
     type: "abColDefNumber",
-    // cellEditor: 'numericCellEditor',
-    editable: true,
+      editable: true,
   },
     {
     field: "closingPrice",
     type: "abColDefNumber",
   },
-  // {
-  //   field: "changeOnDay",
-  //   type: "abColDefNumber",
-  // },
-  {
+   {
     field: "bbgBid",
     type: "abColDefNumber",
   },
