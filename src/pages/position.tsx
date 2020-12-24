@@ -40,6 +40,7 @@ const gridOptions: GridOptions = {
     filter: true,
     floatingFilter: true,
     sortable: true,
+    resizable: true
   },
   rowData: rowData,
   components: {
