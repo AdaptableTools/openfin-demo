@@ -14,7 +14,7 @@ export const initAdaptableOptions = (
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
-      applicationIcon:{
+      applicationIcon: {
         url: 'https://docs.adaptabletools.com/img/favicon_white.png'
       }
     },
@@ -53,7 +53,25 @@ export const initAdaptableOptions = (
     ...common,
     plugins: [openfin({
       notificationTimeout: false,
-      showApplicationIconInNotifications: true
+      showApplicationIconInNotifications: true,
+      onShowNotification: (notification) => {
+        // if ...
+        notification.buttons = [
+          {
+            //Button that sends data to the app
+            "title": "Jump to cell",
+            "type": "button",
+            "cta": true, //makes the button prominent by coloring it blue
+            "onClick": {
+              "task": "jump-to-cell",
+              "customData": {
+                "message": "Example data to send back when this entry is clicked"
+              }
+            }
+          }
+        ]
+      }
+
     })],
   };
 };
