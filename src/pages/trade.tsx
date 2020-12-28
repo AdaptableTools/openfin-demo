@@ -31,6 +31,7 @@ const initialGridOptions: GridOptions = {
     filter: true,
     floatingFilter: true,
     sortable: true,
+    resizable: true
   },
   rowData: null,
   components: {

@@ -14,6 +14,9 @@ export const initAdaptableOptions = (
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
+      applicationIcon:{
+        url: 'https://docs.adaptabletools.com/img/favicon_white.png'
+      }
     },
 
     auditOptions: {
@@ -49,7 +52,8 @@ export const initAdaptableOptions = (
     ...adaptableOptions,
     ...common,
     plugins: [openfin({
-      notificationTimeout: false
+      notificationTimeout: false,
+      showApplicationIconInNotifications: true
     })],
   };
 };

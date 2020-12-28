@@ -23,12 +23,12 @@
     "appjson": "node appdev.js"
   },
   "dependencies": {
-    "@adaptabletools/adaptable": "7.2.17-canary.0",
-    "@adaptabletools/adaptable-plugin-charts": "7.2.17-canary.0",
-    "@adaptabletools/adaptable-plugin-finance": "7.2.17-canary.0",
-    "@adaptabletools/adaptable-plugin-nocode-aggrid": "7.2.17-canary.0",
-    "@adaptabletools/adaptable-plugin-openfin": "7.2.17-canary.0",
-    "@adaptabletools/adaptable-react-aggrid": "7.2.17-canary.0",
+    "@adaptabletools/adaptable": "7.2.19",
+    "@adaptabletools/adaptable-plugin-charts": "7.2.19",
+    "@adaptabletools/adaptable-plugin-finance": "7.2.19",
+    "@adaptabletools/adaptable-plugin-nocode-aggrid": "7.2.19",
+    "@adaptabletools/adaptable-plugin-openfin": "7.2.19",
+    "@adaptabletools/adaptable-react-aggrid": "7.2.19",
     "@ag-grid-community/react": "^24.1.0",
     "@ag-grid-enterprise/all-modules": "^24.1.0",
     "modern-normalize": "^1.0.0",
