@@ -51,8 +51,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   adaptableId: 'Price View',
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
-    //   if (dataChangeInfo.ColumnId === 'bidOfferSpread') {
-    //     const bidOfferSpread = dataChangeInfo.NewValue * 1;
+    //   if (dataChangeInfo.columnId === 'bidOfferSpread') {
+    //     const bidOfferSpread = dataChangeInfo.newValue * 1;
     //     if (isNaN(bidOfferSpread)) {
     //       return Promise.resolve({
     //         NewValue: 1,
@@ -61,7 +61,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     //     }
     //   }
     //   return Promise.resolve({
-    //     NewValue: dataChangeInfo.NewValue * 1,
+    //     NewValue: dataChangeInfo.newValue * 1,
     //   });
     // },
   },

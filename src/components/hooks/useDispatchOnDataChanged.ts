@@ -27,9 +27,9 @@ export const useDispatchOnDataChanged = ({
         } = eventApi.getGridDataChangedInfoFromEventArgs(event);
 
         client.dispatch(dispatchChannelName, {
-          primaryKey: dataChangedInfo.PrimaryKeyValue,
-          columnId: dataChangedInfo.ColumnId,
-          newValue: dataChangedInfo.NewValue,
+          primaryKey: dataChangedInfo.primaryKeyValue,
+          columnId: dataChangedInfo.columnId,
+          newValue: dataChangedInfo.newValue,
         });
       }
     );
