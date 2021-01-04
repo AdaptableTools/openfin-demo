@@ -1,5 +1,6 @@
 import * as React from "react";
 import AdaptableReact, {
+  AdaptableAlert,
   AdaptableApi,
   AdaptableOptions,
 } from "@adaptabletools/adaptable-react-aggrid";
@@ -117,7 +118,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Alert: {
-      Revision: 3,
+      Revision: 4,
       AlertDefinitions: [
         {
           Scope: {
@@ -132,7 +133,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           AlertProperties: {
             ShowInOpenFin: true,
             JumpToCell: false,
-            HighlightCell: true
+            HighlightCell: false
           },
         },
       ],
@@ -155,12 +156,19 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
     onNotificationAction: (event) => {
       if (event.result.task === 'jump-to-cell') {
-        const alert = event.notification.alert;
+        const alert = event.notification.alert as AdaptableAlert;
 
         adaptableApiRef.current.gridApi.jumpToCell(
           alert.DataChangedInfo?.primaryKeyValue,
           alert.DataChangedInfo?.columnId || ''
         );
+
+        adaptableApiRef.current.gridApi.highlightCell({
+          columnId: alert.DataChangedInfo?.columnId || '',
+          primaryKeyValue: alert.DataChangedInfo?.primaryKeyValue,
+          timeout: 2500,
+          color: alert.AlertDefinition.MessageType
+        });
       }
     },
   })],
