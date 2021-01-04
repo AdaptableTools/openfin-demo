@@ -1,5 +1,5 @@
 import { AdaptableOptions } from '@adaptabletools/adaptable/types';
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
+
 
 export const initAdaptableOptions = (
   adaptableOptions: AdaptableOptions
@@ -14,7 +14,7 @@ export const initAdaptableOptions = (
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
-      applicationIcon:{
+      applicationIcon: {
         url: 'https://docs.adaptabletools.com/img/favicon_white.png'
       }
     },
