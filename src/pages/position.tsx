@@ -31,6 +31,8 @@ import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
+
+let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
 const columnDefs: ColDef[] = positionColumns;
 const rowData = null;
 
@@ -115,7 +117,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Alert: {
-       AlertDefinitions: [
+      Revision: 3,
+      AlertDefinitions: [
         {
           Scope: {
             ColumnIds: ["position"],
@@ -128,7 +131,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           MessageType: "Warning",
           AlertProperties: {
             ShowInOpenFin: true,
-            JumpToCell: true,
+            JumpToCell: false,
             HighlightCell: true
           },
         },
@@ -136,37 +139,36 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
   },
   plugins: [openfin({
-      notificationTimeout: false,
-      showApplicationIconInNotifications: true,
-      onShowNotification: (notification) => {
-          notification.buttons = [
-            {
-              title: 'Jump to Cell',
-              type: 'button',
-              cta: true,
-              onClick: {
-                task: 'jump-to-cell'
-              },
-            },
-          ];
+    notificationTimeout: false,
+    showApplicationIconInNotifications: true,
+    onShowNotification: (notification) => {
+      notification.buttons = [
+        {
+          title: 'Jump to Cell',
+          type: 'button',
+          cta: true,
+          onClick: {
+            task: 'jump-to-cell'
+          },
         },
-        onNotificationAction: (event) => {
-          if (event.result.task === 'jump-to-cell') {
-            const alert = event.notification.alert;
-            alert('need to jump to cell if get api ref')
-            alert(alert.DataChangedInfo?.columnId)
-           // adaptableApiRef.gridApi.jumpToCell(
-           //   alert.DataChangedInfo?.primaryKeyValue,
-           //   alert.DataChangedInfo?.columnId || ''
-           // );
-          }
-        },
-    })],
+      ];
+    },
+    onNotificationAction: (event) => {
+      if (event.result.task === 'jump-to-cell') {
+        const alert = event.notification.alert;
+
+        adaptableApiRef.current.gridApi.jumpToCell(
+          alert.DataChangedInfo?.primaryKeyValue,
+          alert.DataChangedInfo?.columnId || ''
+        );
+      }
+    },
+  })],
 });
 
 const App: React.FC = () => {
   const gridApiRef = useRef<GridApi>(null);
-  const adaptableApiRef = useRef<AdaptableApi>(null);
+  adaptableApiRef = useRef<AdaptableApi>(null);
 
   useChannelData({
     positions: once((positions) => {
