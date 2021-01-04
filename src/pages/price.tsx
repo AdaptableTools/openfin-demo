@@ -23,6 +23,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
+import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -181,6 +182,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
   },
+   plugins: [openfin({
+      notificationTimeout: false,
+      showApplicationIconInNotifications: true
+    })],
 });
 
 const App: React.FC = () => {

@@ -1,12 +1,8 @@
 import * as React from "react";
-
 import { useChannelData } from "../components/hooks/useChannelData";
 import { useRef } from "react";
-
 import type { Price } from "../data/prices";
-
 import Head from "../components/Head";
-
 import { CellEditAudit } from "../components/types";
 import MainLayout from "../components/MainLayout";
 import AdaptableReact, {
@@ -18,13 +14,13 @@ import { modules } from "../components/modules";
 import { AgGridReact } from "@ag-grid-community/react";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GridOptions } from "@ag-grid-enterprise/all-modules";
-
 import { columnTypes } from "../data/columnTypes";
 import { useFilters } from "../components/hooks/useFilters";
 import { useThemeSync } from "../components/hooks/useThemeSync";
 import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
 import { ThemeConfig } from "../components/ThemeConfig";
+import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
 type Item = {
   timestamp: string;
@@ -88,7 +84,6 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "timestamp",
   adaptableId: "Price Audit",
-
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
@@ -133,6 +128,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ]
     }
   },
+   plugins: [openfin({
+      notificationTimeout: false,
+      showApplicationIconInNotifications: true
+    })],
 });
 
 const toItem = (priceAudit) => {

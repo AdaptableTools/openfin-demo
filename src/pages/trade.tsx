@@ -21,6 +21,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
+import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -201,6 +202,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       */
     },
   },
+   plugins: [openfin({
+      notificationTimeout: false,
+      showApplicationIconInNotifications: true
+    })],
 });
 
 const App: React.FC = () => {

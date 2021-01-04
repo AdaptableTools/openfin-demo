@@ -51,9 +51,6 @@ export const initAdaptableOptions = (
     ...defaults,
     ...adaptableOptions,
     ...common,
-    plugins: [openfin({
-      notificationTimeout: false,
-      showApplicationIconInNotifications: true
-    })],
+    
   };
 };

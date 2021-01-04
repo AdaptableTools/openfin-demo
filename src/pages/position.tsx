@@ -29,6 +29,7 @@ import type { Position } from "../data/position";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
+import openfin from '@adaptabletools/adaptable-plugin-openfin';
 
 const columnDefs: ColDef[] = positionColumns;
 const rowData = null;
@@ -134,6 +135,33 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
   },
+  plugins: [openfin({
+      notificationTimeout: false,
+      showApplicationIconInNotifications: true,
+      onShowNotification: (notification) => {
+          notification.buttons = [
+            {
+              title: 'Jump to Cell',
+              type: 'button',
+              cta: true,
+              onClick: {
+                task: 'jump-to-cell'
+              },
+            },
+          ];
+        },
+        onNotificationAction: (event) => {
+          if (event.result.task === 'jump-to-cell') {
+            const alert = event.notification.alert;
+            alert('need to jump to cell if get api ref')
+            alert(alert.DataChangedInfo?.columnId)
+           // adaptableApiRef.gridApi.jumpToCell(
+           //   alert.DataChangedInfo?.primaryKeyValue,
+           //   alert.DataChangedInfo?.columnId || ''
+           // );
+          }
+        },
+    })],
 });
 
 const App: React.FC = () => {
