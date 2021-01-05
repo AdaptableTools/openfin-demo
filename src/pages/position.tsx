@@ -145,7 +145,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     onShowNotification: (notification) => {
       notification.buttons = [
         {
-          title: 'Jump to Cell',
+          title: 'Show Me',
           type: 'button',
           cta: true,
           onClick: {
