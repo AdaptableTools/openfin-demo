@@ -143,7 +143,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     onShowNotification: (notification) => {
       notification.buttons = [
         {
-          title: 'Increase',
+          title: 'Increase Limit',
           type: 'button',
           cta: true,
           onClick: {
@@ -187,7 +187,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             let inputs: any[] | undefined = predicate.Inputs;
             if (inputs && inputs.length > 0) {
               let firstInput = inputs[0];
-              let newValue = firstInput + 500;
+              let newValue = firstInput + 1000;
               let newPredicate: AdaptablePredicate = {
                 PredicateId: 'GreaterThan',
                 Inputs: [newValue],
