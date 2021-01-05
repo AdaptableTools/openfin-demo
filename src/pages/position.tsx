@@ -173,7 +173,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           columnId: alert.DataChangedInfo?.columnId || '',
           primaryKeyValue: alert.DataChangedInfo?.primaryKeyValue,
           timeout: 2500,
-          color: alert.AlertDefinition.MessageType
+          highlightType: alert.AlertDefinition.MessageType
         });
       }
       if (event.result.task === 'increase-limit') {
