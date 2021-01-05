@@ -1,8 +1,6 @@
 import * as React from "react";
 import AdaptableReact, {
-  AdaptableAlert,
-  AdaptableApi,
-  AdaptableOptions,
+ 
 } from "@adaptabletools/adaptable-react-aggrid";
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -31,6 +29,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import { AdaptableAlert, AdaptableApi, AdaptableOptions, AdaptablePredicate, AlertDefinition } from "@adaptabletools/adaptable/src/types"; 
 
 
 let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
@@ -118,7 +117,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Alert: {
-      Revision: 4,
       AlertDefinitions: [
         {
           Scope: {
@@ -145,6 +143,14 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     onShowNotification: (notification) => {
       notification.buttons = [
         {
+          title: 'Increase',
+          type: 'button',
+          cta: true,
+          onClick: {
+            task: 'increase-limit'
+          },
+        },
+        {
           title: 'Show Me',
           type: 'button',
           cta: true,
@@ -170,6 +176,29 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           color: alert.AlertDefinition.MessageType
         });
       }
+      if (event.result.task === 'increase-limit') {
+       
+         const alert: AdaptableAlert = event.notification.alert as AdaptableAlert;
+    if(alert){
+         let alertDefinition: AlertDefinition = alert.AlertDefinition;
+        if (alertDefinition) {
+          let predicate = alertDefinition.Predicate;
+          if (predicate) {
+            let inputs: any[] | undefined = predicate.Inputs;
+            if (inputs && inputs.length > 0) {
+              let firstInput = inputs[0];
+              let newValue = firstInput + 500;
+              let newPredicate: AdaptablePredicate = {
+                PredicateId: 'GreaterThan',
+                Inputs: [newValue],
+              };
+              alertDefinition.Predicate = newPredicate;
+              adaptableApiRef.current.alertApi.editAlert(alertDefinition);
+            }
+          }   
+          }
+        }
+     }
     },
   })],
 });
