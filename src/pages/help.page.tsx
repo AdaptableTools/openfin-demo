@@ -5,12 +5,20 @@ import { syncTheme } from "../components/syncTheme";
 
 const HelpPage: React.FC = () => {
   useOnThemeChange((theme) => {
-    syncTheme(theme)
-  })
+    syncTheme(theme);
+  });
   return (
     <>
       <Head title="Demo Guide" />
-      <div style={{ padding: 20, overflow: "auto", width: "100%", background: 'var(--main-background-color)', color: 'var(--body-font-color)' }}>
+      <div
+        style={{
+          padding: 20,
+          overflow: "auto",
+          width: "100%",
+          background: "var(--main-background-color)",
+          color: "var(--body-font-color)",
+        }}
+      >
         <h2>AdapTable - OpenFin Demo Guide</h2>
         <p>
           <a href="#how-works">How It Works</a>
@@ -178,11 +186,12 @@ const HelpPage: React.FC = () => {
           >
             Adaptable Alert
           </a>{" "}
-          when X happens.
+          when any Position is greater than 50,000.
         </p>
         <p>
           The Alert has been configured with the <i>ShowInOpenFin</i> property
-          set to true (only available when running in the OpenFin container).
+          set to true (something only available when running in the OpenFin
+          container).
         </p>
         <p>
           The result is that the Alert is displayed as an{" "}
@@ -192,8 +201,26 @@ const HelpPage: React.FC = () => {
           >
             OpenFin Notification
           </a>{" "}
-          and appears in the [where?]?
+          and appears at the side of the grid when triggered.
         </p>{" "}
+        <p>
+          The Notification has been designed with 2 buttons. In each case we
+          handle the button click event and all the AdapTable API to peform a
+          connected action:
+        </p>
+        <ol>
+          <li>
+            <b>Increase Limit: </b>
+            This will add 1,000 to the amount that the Position must be before
+            it is triggered. (Note how after clicking this button, next time the
+            Alert fires it shows the updated limit as its trigger.)
+          </li>
+          <li>
+            <b>Show Me: </b>
+            This will highlight the Cell that triggered the Alert and also make
+            the grid 'jump' to show that cell if it was not already in view.{" "}
+          </li>
+        </ol>
         <a id="live-export"></a>
         <h3>Live Export</h3>
         <p>
