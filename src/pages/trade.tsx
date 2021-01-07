@@ -21,7 +21,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { MenuInfo } from "@adaptabletools/adaptable/src/types";
 
 const columnDefs: ColDef[] = tradeColumns;
@@ -33,7 +33,7 @@ const initialGridOptions: GridOptions = {
     filter: true,
     floatingFilter: true,
     sortable: true,
-    resizable: true
+    resizable: true,
   },
   rowData: null,
   components: {
@@ -57,40 +57,42 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         return true; //params.rowData.status !== "active";
       },
     },
-  
-      {
-        type: 'UserMenuItemLabelFunction',
-        name: 'broadcastTradeLabel',
-        handler(menuInfo: MenuInfo) {
+
+    {
+      type: "UserMenuItemLabelFunction",
+      name: "broadcastTradeLabel",
+      handler(menuInfo: MenuInfo) {
+        // add the name of the instrument
+        return "hello world";
+        const node = menuInfo.RowNode;
+        if (node && node.data && node.data["instrumentName"]) {
+          return "Broadcast " + node.data["instrumentName"];
+        }
+      },
+    },
+    {
+      type: "UserMenuItemClickedFunction",
+      name: "broadcastTradeClick",
+      handler(menuInfo: MenuInfo) {
+        alert("need to broadcast");
+      },
+    },
+    {
+      type: "UserMenuItemShowPredicate",
+      name: "broadcastTradePredicate",
+      handler(menuInfo) {
+        return true;
+        if (!menuInfo.IsGroupedNode) {
           // add the name of the instrument
           const node = menuInfo.RowNode;
-          if(node && node.data && node.data['instrumentName']){
-          return 'Broadcast '+ node.data['instrumentName'];
+          if (node && node.data && node.data["instrumentName"]) {
+            return true;
+          }
         }
-      
-        },
+        return false;
       },
-          {
-        type: 'UserMenuItemClickedFunction',
-        name: 'broadcastTradeClick',
-        handler(menuInfo: MenuInfo) {
-         alert('need to broadcast')
-        },
-      },
-      {
-        type: 'UserMenuItemShowPredicate',
-        name: 'broadcastTradePredicate',
-        handler(menuInfo) {
-          if(!menuInfo.IsGroupedNode ){
-          // add the name of the instrument
-          const node = menuInfo.RowNode;
-          if(node && node.data && node.data['instrumentName']){
-          return true;
-        }
-      }return false;
-        },
-      },
-    ],
+    },
+  ],
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
@@ -105,20 +107,19 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-
     GradientColumn: {
-       GradientColumns: [
+      GradientColumns: [
         {
           BaseValue: 4500000,
           ColumnId: "notional",
           NegativeColor: RED,
           PositiveColor: GREEN,
           PositiveValue: 10000000,
-        }
-      ]
+        },
+      ],
     },
     ActionColumn: {
-       ActionColumns: [
+      ActionColumns: [
         {
           ColumnId: "setStatusCancel",
           FriendlyName: "Cancel",
@@ -131,11 +132,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       Revision: 7,
       SharedQueries: [
         {
-          Name: 'Active US Trades',
-          Expression: '[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")',
-          Uuid: 'active-us-trades'
-        }
-      ]
+          Name: "Active US Trades",
+          Expression:
+            '[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")',
+          Uuid: "active-us-trades",
+        },
+      ],
     },
     ConditionalStyle: {
       ConditionalStyles: [
@@ -161,10 +163,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             ColumnIds: ["tradeDate", "settlementDate", "lastUpdated"],
           },
           DisplayFormat: {
-            Formatter: 'DateFormatter',
+            Formatter: "DateFormatter",
             Options: {
-              Pattern: 'dd-MM-yyyy'
-            }
+              Pattern: "dd-MM-yyyy",
+            },
           },
         },
       ],
@@ -214,7 +216,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Export: {
-       Reports: [
+      Reports: [
         {
           Name: "Active Trades",
           ReportColumnScope: "AllColumns",
@@ -224,15 +226,15 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
-       ContextMenuItems: [
-      {
-        Label: 'Broadcast Trade',
-        UserMenuItemClickedFunction: 'broadcastTradeClick',
-        UserMenuItemShowPredicate: 'broadcastTradePredicate',
-        UserMenuItemLabelFunction: 'broadcastTradeLabel',
-      },
-
-    ], /*
+      Revision: Date.now(),
+      ContextMenuItems: [
+        {
+          Label: "Broadcast Trade",
+          UserMenuItemClickedFunction: "broadcastTradeClick",
+          UserMenuItemShowPredicate: "broadcastTradePredicate",
+          UserMenuItemLabelFunction: "broadcastTradeLabel",
+        },
+      ] /*
       EditLookUpItems: [
         {
           Scope: {
@@ -241,13 +243,15 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           LookUpValues: ["active", "inactive"],
         },
       ],
-      */
+      */,
     },
   },
-   plugins: [openfin({
+  plugins: [
+    openfin({
       notificationTimeout: false,
-      showApplicationIconInNotifications: true
-    })],
+      showApplicationIconInNotifications: true,
+    }),
+  ],
 });
 
 const App: React.FC = () => {
@@ -262,8 +266,10 @@ const App: React.FC = () => {
       gridOptionsRef.current.api?.setRowData(trades);
     }),
     addtrade: (trade) => {
-      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(trade.tradeId)) {
-        return
+      if (
+        adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(trade.tradeId)
+      ) {
+        return;
       }
 
       adaptableApiRef.current.gridApi.addGridData([trade], {
