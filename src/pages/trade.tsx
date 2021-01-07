@@ -64,13 +64,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       handler(menuInfo: MenuInfo) {
         // add the name of the instrument
         const node = menuInfo.RowNode;
-        if (node && node.data) {
-          if (node.data["instrumentName"]) {
-            return "Broadcast " + node.data["instrumentName"];
-          } else {
-            return "Broadcast cannot find " + node.data["instrumentName"];
-          }
-        }
+        return "Broadcast " + node.data["instrumentId"];
       },
     },
     {
@@ -85,17 +79,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       name: "broadcastTradePredicate",
       handler(menuInfo: MenuInfo) {
         if (!menuInfo.IsGroupedNode) {
-          // add the name of the instrument
           const node = menuInfo.RowNode;
-          if (node && node.data) {
-            if (node.data["instrumentName"]) {
-              return true;
-            } else {
-              return true;
-            }
-          }
+          return (
+            node &&
+            node.data &&
+            node.data["instrumentId"] &&
+            node.data["status"] &&
+            node.data["status"] == "active"
+          );
         }
-        return true;
+        return false;
       },
     },
   ],
