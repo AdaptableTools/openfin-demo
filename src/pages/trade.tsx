@@ -22,6 +22,7 @@ import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import { MenuInfo } from "@adaptabletools/adaptable/src/types";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -56,7 +57,40 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         return true; //params.rowData.status !== "active";
       },
     },
-  ],
+  
+      {
+        type: 'UserMenuItemLabelFunction',
+        name: 'broadcastTradeLabel',
+        handler(menuInfo: MenuInfo) {
+          // add the name of the instrument
+          const node = menuInfo.RowNode;
+          if(node && node.data && node.data['instrumentName']){
+          return 'Broadcast '+ node.data['instrumentName'];
+        }
+      
+        },
+      },
+          {
+        type: 'UserMenuItemClickedFunction',
+        name: 'broadcastTradeClick',
+        handler(menuInfo: MenuInfo) {
+         alert('need to broadcast')
+        },
+      },
+      {
+        type: 'UserMenuItemShowPredicate',
+        name: 'broadcastTradePredicate',
+        handler(menuInfo) {
+          if(!menuInfo.IsGroupedNode ){
+          // add the name of the instrument
+          const node = menuInfo.RowNode;
+          if(node && node.data && node.data['instrumentName']){
+          return true;
+        }
+      }return false;
+        },
+      },
+    ],
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
@@ -190,7 +224,15 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
-      /*
+       ContextMenuItems: [
+      {
+        Label: 'Broadcast Trade',
+        UserMenuItemClickedFunction: 'broadcastTradeClick',
+        UserMenuItemShowPredicate: 'broadcastTradePredicate',
+        UserMenuItemLabelFunction: 'broadcastTradeLabel',
+      },
+
+    ], /*
       EditLookUpItems: [
         {
           Scope: {
