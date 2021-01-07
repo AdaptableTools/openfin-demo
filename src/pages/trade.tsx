@@ -63,10 +63,13 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       name: "broadcastTradeLabel",
       handler(menuInfo: MenuInfo) {
         // add the name of the instrument
-        return "hello world";
         const node = menuInfo.RowNode;
-        if (node && node.data && node.data["instrumentName"]) {
-          return "Broadcast " + node.data["instrumentName"];
+        if (node && node.data) {
+          if (node.data["instrumentName"]) {
+            return "Broadcast " + node.data["instrumentName"];
+          } else {
+            return "Broadcast cannot find " + node.data["instrumentName"];
+          }
         }
       },
     },
@@ -80,16 +83,19 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     {
       type: "UserMenuItemShowPredicate",
       name: "broadcastTradePredicate",
-      handler(menuInfo) {
-        return true;
+      handler(menuInfo: MenuInfo) {
         if (!menuInfo.IsGroupedNode) {
           // add the name of the instrument
           const node = menuInfo.RowNode;
-          if (node && node.data && node.data["instrumentName"]) {
-            return true;
+          if (node && node.data) {
+            if (node.data["instrumentName"]) {
+              return true;
+            } else {
+              return true;
+            }
           }
         }
-        return false;
+        return true;
       },
     },
   ],
