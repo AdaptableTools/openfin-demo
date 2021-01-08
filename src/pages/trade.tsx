@@ -78,16 +78,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           const ticker = node.data["instrumentId"];
           const cusip = node.data["cusip"];
           // see:  https://developers.openfin.co/docs/recipes-fdc3
-          /*
-        fdc3.broadcast({
-          type: fdc3Type,
-          name: instrumentName,
-          id: {
-            ticker: ticker,
-            CUSIP: cusip,
-          },
-        });
-        */
+
+          fdc3.broadcast({
+            type: fdc3Type,
+            name: instrumentName,
+            id: {
+              ticker: ticker,
+              CUSIP: cusip,
+            },
+          });
+
         }
       },
     },

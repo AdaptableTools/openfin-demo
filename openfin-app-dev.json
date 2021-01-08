@@ -7,7 +7,8 @@
     "company": "AdapTable",
     "description": "AdapTable OpenFin Demo App",
     "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
-    "name": "AdapTable OpenFin Demo App"
+    "name": "AdapTable OpenFin Demo App",
+    "fdc3Api": true
   },
   "platform": {
     "providerUrl": "http://localhost:3001/provider",
@@ -38,6 +39,9 @@
     },
     {
       "name": "notifications"
+    },
+    {
+      "name": "fdc3"
     }
   ],
   "snapshot": {
