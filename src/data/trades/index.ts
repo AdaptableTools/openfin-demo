@@ -15,6 +15,7 @@ import {
   addDays,
   getNames,
   generateRandomBool,
+  getCusip,
 } from "../utils";
 
 type DataSourceParams = {
@@ -34,6 +35,7 @@ export type Trade = {
   tradeId: number;
   instrumentId: string;
   instrumentName: string;
+  cusip: string;
   notional: number;
   counterparty: string;
   currency: string;
@@ -65,6 +67,7 @@ export const createTrade = (overrides?: Partial<Trade>): Trade => {
     tradeId: tradeIndex,
     instrumentId: instrumentId,
     instrumentName: getInstrumentName(instrumentId),
+    cusip: getCusip(instrumentId),
     notional: getRandomItem(getNotionals()),
     buySell: sell ? "sell" : "buy",
     counterparty: getRandomItem(getCounterparties()),

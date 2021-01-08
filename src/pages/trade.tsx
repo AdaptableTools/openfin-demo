@@ -71,7 +71,24 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       type: "UserMenuItemClickedFunction",
       name: "broadcastTradeClick",
       handler(menuInfo: MenuInfo) {
-        alert("need to broadcast");
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const fdc3Type = "fdc3.instrument";
+          const instrumentName = node.data["instrumentName"];
+          const ticker = node.data["instrumentId"];
+          const cusip = node.data["cusip"];
+          // see:  https://developers.openfin.co/docs/recipes-fdc3
+          /*
+        fdc3.broadcast({
+          type: fdc3Type,
+          name: instrumentName,
+          id: {
+            ticker: ticker,
+            CUSIP: cusip,
+          },
+        });
+        */
+        }
       },
     },
     {
@@ -225,7 +242,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
-      Revision: Date.now(),
       ContextMenuItems: [
         {
           Label: "Broadcast Trade",

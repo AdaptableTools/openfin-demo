@@ -1,16 +1,16 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { Icon } from '@adaptabletools/adaptable/src/components/icons';
-import './index.css';
-import { useThemeChangeInProvider } from './useThemeChangeInProvider';
+import { Icon } from "@adaptabletools/adaptable/src/components/icons";
+import "./index.css";
+import { useThemeChangeInProvider } from "./useThemeChangeInProvider";
 import {
   DARK_THEME,
   lightThemeClassName,
   LIGHT_THEME,
   syncTheme,
-} from '../syncTheme';
-import { getInstrumentIds } from '../../data/utils';
-import { channelProvider } from '../provider';
+} from "../syncTheme";
+import { getInstrumentIds } from "../../data/utils";
+import { channelProvider } from "../provider";
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
@@ -28,7 +28,7 @@ const toggleTheme = async () => {
   const theme = getOtherTheme();
   if (setTheme(theme)) {
     fin.Platform.getCurrentSync().setWindowContext({ theme });
-    fin.InterApplicationBus.publish('update-theme', theme);
+    fin.InterApplicationBus.publish("update-theme", theme);
   }
 };
 
@@ -41,7 +41,7 @@ const setTheme = (theme) => {
 };
 
 const maxOrRestore = async () => {
-  if ((await fin.me.getState()) === 'normal') {
+  if ((await fin.me.getState()) === "normal") {
     return await fin.me.maximize();
   }
 
@@ -49,13 +49,13 @@ const maxOrRestore = async () => {
 };
 
 export const toggleSidebar = () => {
-  document.querySelector('#left-menu').classList.toggle('hidden');
+  document.querySelector("#left-menu").classList.toggle("hidden");
 };
 
 const instruments = getInstrumentIds();
 export const TitleBar = () => {
   React.useLayoutEffect(() => {
-    const initialTheme = localStorage.getItem('theme') || 'dark';
+    const initialTheme = localStorage.getItem("theme") || "dark";
     if (initialTheme) {
       syncTheme(initialTheme);
     }
@@ -73,11 +73,11 @@ export const TitleBar = () => {
           onChange={(e) => {
             const instrumentId = e.target.value;
 
-            fin.InterApplicationBus.publish('set-filters', instrumentId);
+            fin.InterApplicationBus.publish("set-filters", instrumentId);
           }}
         >
           <option key="-" value="">
-            Select instrument to filter
+            Select Instrument to filter
           </option>
           {instruments.map((instrumentId) => {
             return (
@@ -98,7 +98,7 @@ export const TitleBar = () => {
         <div
           className="button"
           style={{
-            backgroundImage: 'var(--menu-icon)',
+            backgroundImage: "var(--menu-icon)",
           }}
           title="Toggle SideBar"
           id="menu-button"
@@ -106,7 +106,7 @@ export const TitleBar = () => {
         ></div>
         <div
           style={{
-            backgroundImage: 'var(--minimize-button-url)',
+            backgroundImage: "var(--minimize-button-url)",
           }}
           className="button"
           title="Minimize Window"
@@ -117,7 +117,7 @@ export const TitleBar = () => {
         ></div>
         <div
           style={{
-            backgroundImage: 'var(--expand-button-url)',
+            backgroundImage: "var(--expand-button-url)",
           }}
           className="button"
           title="Maximize Window"
@@ -128,7 +128,7 @@ export const TitleBar = () => {
         ></div>
         <div
           style={{
-            backgroundImage: 'var(--close-button-url)',
+            backgroundImage: "var(--close-button-url)",
           }}
           onClick={() => fin.me.close().catch(console.error)}
           className="button"

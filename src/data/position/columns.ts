@@ -3,7 +3,7 @@ import { ColDef } from "@ag-grid-enterprise/all-modules";
 export const positionColumns: ColDef[] = [
   {
     field: "instrumentId",
-     headerName: "Instrument",
+    headerName: "Instrument",
     initialWidth: 130,
     type: "abColDefString",
   },
@@ -13,7 +13,7 @@ export const positionColumns: ColDef[] = [
   },
   {
     field: "currentPrice",
-     headerName: "Price",
+    headerName: "Price",
     type: "abColDefNumber",
   },
   {

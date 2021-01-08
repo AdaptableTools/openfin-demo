@@ -13,7 +13,7 @@ export const roundTo4Dp = (val) => {
   return Math.round(val * 10000) / 10000;
 };
 export const roundTo1Dp = (val) => {
-  return Math.round(val * 10) / 10
+  return Math.round(val * 10) / 10;
 };
 
 // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
@@ -68,23 +68,47 @@ export const getRandomItem = (array: any[], max?: number) => {
 };
 
 export const getNotionals = () => {
-  var notionals = [5_000_000, 6_000_000, 7_000_000, 8_000_000, 9_000_000, 10_000_000];
+  var notionals = [
+    5_000_000,
+    6_000_000,
+    7_000_000,
+    8_000_000,
+    9_000_000,
+    10_000_000,
+  ];
   return notionals;
 };
 export const getInstrumentIds = () => {
   var instruments = [
     "AAPL",
     "ABBV",
-    "ABT",
     "ACN",
+    "AMZN",
+    "BA",
+    "BAC",
+    "CSCO",
+    "DOW",
+    "FB",
+    "GM",
+    "GOOG",
+    "INTC",
+    "MSFT",
+    "NKE",
+    "ORCL",
+    "PEP",
+    "PFE",
+    "SBUX",
+    "TGT",
+    "USB",
+    "WFC",
+    "WMT",
+
+    "ABT",
     "AGN",
     "AIG",
     "ALL",
     "AMGN",
-    "AMZN",
     "AXP",
-    "BA",
-    "BAC",
     "BIIB",
     "BK",
     "BLK",
@@ -98,33 +122,27 @@ export const getInstrumentIds = () => {
     "COF",
     "COP",
     "COST",
-    "CSCO",
     "CVS",
     "CVX",
     "DD",
     "DHR",
     "DIS",
-    "DOW",
     "DUK",
     "EMR",
     "EXC",
     "F",
-    "FB",
     "FDX",
     "FOX",
     "FOXA",
     "GD",
     "GE",
     "GILD",
-    "GM",
-    "GOOG",
     "GOOGL",
     "GS",
     "HAL",
     "HD",
     "HON",
     "IBM",
-    "INTC",
     "JNJ",
     "JPM",
     "KHC",
@@ -143,40 +161,30 @@ export const getInstrumentIds = () => {
     "MON",
     "MRK",
     "MS",
-    "MSFT",
     "NEE",
-    "NKE",
-    "ORCL",
     "OXY",
     "PCLN",
-    "PEP",
-    "PFE",
     "PG",
     "PM",
     "PYPL",
     "QCOM",
     "RTN",
-    "SBUX",
     "SLB",
     "SO",
     "SPG",
     "T",
-    "TGT",
     "TWX",
     "TXN",
     "UNH",
     "UNP",
     "UPS",
-    "USB",
     "UTX",
     "V",
     "VZ",
     "WBA",
-    "WFC",
-    "WMT",
     "XOM",
   ];
-  instruments.length = 20;
+  instruments.length = 22;
   return instruments;
 };
 export const getBidOfferSpreads = () => {
@@ -464,6 +472,55 @@ export const getInstrumentName = (instrumentId) => {
       return "Wal-Mart";
     case "XOM":
       return "Exxon Mobil Corp";
+  }
+};
+
+export const getCusip = (instrumentId) => {
+  switch (instrumentId) {
+    case "AAPL":
+      return "037833100";
+    case "ABBV":
+      return "00287Y109";
+    case "ACN":
+      return "G1151C101";
+    case "AMZN":
+      return "023135106";
+    case "BA":
+      return "097023105";
+    case "BAC":
+      return "060505104";
+    case "CSCO":
+      return "17275R102";
+    case "DOW":
+      return "260557103";
+    case "FB":
+      return "30303M102";
+    case "GM":
+      return "37045V100";
+    case "GOOG":
+      return "02079K107";
+    case "INTC":
+      return "458140100";
+    case "MSFT":
+      return "594918104";
+    case "NKE":
+      return "654106103";
+    case "ORCL":
+      return "68389X105";
+    case "PEP":
+      return "713448108";
+    case "PFE":
+      return "717081103";
+    case "SBUX":
+      return "855244109";
+    case "TGT":
+      return "87612E106";
+    case "USB":
+      return "902973304";
+    case "WFC":
+      return "949746101";
+    case "WMT":
+      return "931142103";
   }
 };
 
