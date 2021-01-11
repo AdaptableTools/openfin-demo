@@ -1,7 +1,5 @@
 import * as React from "react";
-import AdaptableReact, {
- 
-} from "@adaptabletools/adaptable-react-aggrid";
+import AdaptableReact from "@adaptabletools/adaptable-react-aggrid";
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
 import { AgGridReact } from "@ag-grid-community/react";
 import {
@@ -28,9 +26,15 @@ import type { Position } from "../data/position";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
-import { AdaptableAlert, AdaptableApi, AdaptableOptions, AdaptablePredicate, AlertDefinition } from "@adaptabletools/adaptable/src/types"; 
-
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import {
+  AdaptableAlert,
+  AdaptableApi,
+  AdaptableOptions,
+  AdaptablePredicate,
+  AlertDefinition,
+  OpenFinPluginOptions,
+} from "@adaptabletools/adaptable/src/types";
 
 let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
 const columnDefs: ColDef[] = positionColumns;
@@ -43,7 +47,7 @@ const gridOptions: GridOptions = {
     filter: true,
     floatingFilter: true,
     sortable: true,
-    resizable: true
+    resizable: true,
   },
   rowData: rowData,
   components: {
@@ -53,6 +57,70 @@ const gridOptions: GridOptions = {
   suppressMenuHide: true,
   enableRangeSelection: true,
   columnTypes,
+};
+
+const openfinPluginOptions: OpenFinPluginOptions = {
+  notificationTimeout: false,
+  showApplicationIconInNotifications: true,
+  onShowNotification: (notification) => {
+    notification.buttons = [
+      {
+        title: "Increase Limit",
+        type: "button",
+        cta: true,
+        onClick: {
+          task: "increase-limit",
+        },
+      },
+      {
+        title: "Show Me",
+        type: "button",
+        cta: true,
+        onClick: {
+          task: "jump-to-cell",
+        },
+      },
+    ];
+  },
+  onNotificationAction: (event) => {
+    if (event.result.task === "jump-to-cell") {
+      const alert = event.notification.alert as AdaptableAlert;
+
+      adaptableApiRef.current.gridApi.jumpToCell(
+        alert.DataChangedInfo?.primaryKeyValue,
+        alert.DataChangedInfo?.columnId || ""
+      );
+
+      adaptableApiRef.current.gridApi.highlightCell({
+        columnId: alert.DataChangedInfo?.columnId || "",
+        primaryKeyValue: alert.DataChangedInfo?.primaryKeyValue,
+        timeout: 2500,
+        highlightType: alert.AlertDefinition.MessageType,
+      });
+    }
+    if (event.result.task === "increase-limit") {
+      const alert: AdaptableAlert = event.notification.alert as AdaptableAlert;
+      if (alert) {
+        let alertDefinition: AlertDefinition = alert.AlertDefinition;
+        if (alertDefinition) {
+          let predicate = alertDefinition.Predicate;
+          if (predicate) {
+            let inputs: any[] | undefined = predicate.Inputs;
+            if (inputs && inputs.length > 0) {
+              let firstInput = inputs[0];
+              let newValue = firstInput + 1000;
+              let newPredicate: AdaptablePredicate = {
+                PredicateId: "GreaterThan",
+                Inputs: [newValue],
+              };
+              alertDefinition.Predicate = newPredicate;
+              adaptableApiRef.current.alertApi.editAlert(alertDefinition);
+            }
+          }
+        }
+      }
+    }
+  },
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
@@ -113,7 +181,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     Dashboard: {
       IsCollapsed: true,
       Tabs: [
-        { Name: "Position", Toolbars: ['OpenFin', "SmartEdit", "Alert", "CellSummary"] },
+        {
+          Name: "Position",
+          Toolbars: ["OpenFin", "SmartEdit", "Alert", "CellSummary"],
+        },
       ],
     },
     Alert: {
@@ -131,76 +202,13 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           AlertProperties: {
             ShowInOpenFin: true,
             JumpToCell: false,
-            HighlightCell: false
+            HighlightCell: false,
           },
         },
       ],
     },
   },
-  plugins: [openfin({
-    notificationTimeout: false,
-    showApplicationIconInNotifications: true,
-    onShowNotification: (notification) => {
-      notification.buttons = [
-        {
-          title: 'Increase Limit',
-          type: 'button',
-          cta: true,
-          onClick: {
-            task: 'increase-limit'
-          },
-        },
-        {
-          title: 'Show Me',
-          type: 'button',
-          cta: true,
-          onClick: {
-            task: 'jump-to-cell'
-          },
-        },
-      ];
-    },
-    onNotificationAction: (event) => {
-      if (event.result.task === 'jump-to-cell') {
-        const alert = event.notification.alert as AdaptableAlert;
-
-        adaptableApiRef.current.gridApi.jumpToCell(
-          alert.DataChangedInfo?.primaryKeyValue,
-          alert.DataChangedInfo?.columnId || ''
-        );
-
-        adaptableApiRef.current.gridApi.highlightCell({
-          columnId: alert.DataChangedInfo?.columnId || '',
-          primaryKeyValue: alert.DataChangedInfo?.primaryKeyValue,
-          timeout: 2500,
-          highlightType: alert.AlertDefinition.MessageType
-        });
-      }
-      if (event.result.task === 'increase-limit') {
-       
-         const alert: AdaptableAlert = event.notification.alert as AdaptableAlert;
-    if(alert){
-         let alertDefinition: AlertDefinition = alert.AlertDefinition;
-        if (alertDefinition) {
-          let predicate = alertDefinition.Predicate;
-          if (predicate) {
-            let inputs: any[] | undefined = predicate.Inputs;
-            if (inputs && inputs.length > 0) {
-              let firstInput = inputs[0];
-              let newValue = firstInput + 1000;
-              let newPredicate: AdaptablePredicate = {
-                PredicateId: 'GreaterThan',
-                Inputs: [newValue],
-              };
-              alertDefinition.Predicate = newPredicate;
-              adaptableApiRef.current.alertApi.editAlert(alertDefinition);
-            }
-          }   
-          }
-        }
-     }
-    },
-  })],
+  plugins: [openfin(openfinPluginOptions)],
 });
 
 const App: React.FC = () => {
