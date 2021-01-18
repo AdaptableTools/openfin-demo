@@ -23,6 +23,7 @@ import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { MenuInfo } from "@adaptabletools/adaptable/src/types";
+import { broadcast } from "openfin-fdc3"
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -79,7 +80,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           const cusip = node.data["cusip"];
           // see:  https://developers.openfin.co/docs/recipes-fdc3
 
-          fdc3.broadcast({
+          broadcast({
             type: fdc3Type,
             name: instrumentName,
             id: {

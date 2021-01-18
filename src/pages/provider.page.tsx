@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { makeProvider } from '../components/provider';
 
-const STORAGE_KEY = 'adaptable-layout-14';
+const STORAGE_KEY = 'adaptable-layout-15';
 async function setLastSnapShot() {
   const platform = fin.Platform.getCurrentSync();
   const snapshot = await platform.getSnapshot();

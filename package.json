@@ -34,6 +34,7 @@
     "modern-normalize": "^1.0.0",
     "next": "10.0.1",
     "normalize.css": "^8.0.1",
+    "openfin-fdc3": "^0.2.3",
     "openfin-notifications": "^0.12.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
