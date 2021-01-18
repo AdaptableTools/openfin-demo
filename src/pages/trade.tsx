@@ -27,6 +27,7 @@ import { broadcast } from "openfin-fdc3"
 
 const columnDefs: ColDef[] = tradeColumns;
 
+console.log({ broadcast }, ' broadcast')
 const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
