@@ -9,8 +9,9 @@ import {
   LIGHT_THEME,
   syncTheme,
 } from "../syncTheme";
-import { getInstrumentIds } from "../../data/utils";
+import { getCusip, getInstrumentIds, getInstrumentName } from "../../data/utils";
 import { channelProvider } from "../provider";
+import { broadcast } from "openfin-fdc3"
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
@@ -72,8 +73,18 @@ export const TitleBar = () => {
           style={{ marginRight: 20 }}
           onChange={(e) => {
             const instrumentId = e.target.value;
-
+            const instrumentName = getInstrumentName(instrumentId);
+            const cusip = getCusip(instrumentId);
             fin.InterApplicationBus.publish("set-filters", instrumentId);
+
+          broadcast({
+            type:  "fdc3.instrument",
+            name: instrumentName,
+            id: {
+              ticker: instrumentId,
+              CUSIP: cusip,
+            },
+          });
           }}
         >
           <option key="-" value="">

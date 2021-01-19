@@ -24,6 +24,7 @@ import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { MenuInfo } from "@adaptabletools/adaptable/src/types";
 import { broadcast } from "openfin-fdc3"
+import { apiResolver } from "next/dist/next-server/server/api-utils";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -60,49 +61,27 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       },
     },
 
-    {
-      type: "UserMenuItemLabelFunction",
-      name: "broadcastTradeLabel",
-      handler(menuInfo: MenuInfo) {
-        // add the name of the instrument
-        const node = menuInfo.RowNode;
-        return "Broadcast " + node.data["instrumentId"];
-      },
-    },
+   
     {
       type: "UserMenuItemClickedFunction",
-      name: "broadcastTradeClick",
+      name: "cancelActiveTradeClick",
       handler(menuInfo: MenuInfo) {
         const node = menuInfo.RowNode;
         if (node && node.data) {
-          const fdc3Type = "fdc3.instrument";
-          const instrumentName = node.data["instrumentName"];
-          const ticker = node.data["instrumentId"];
-          const cusip = node.data["cusip"];
-          // see:  https://developers.openfin.co/docs/recipes-fdc3
-
-          broadcast({
-            type: fdc3Type,
-            name: instrumentName,
-            id: {
-              ticker: ticker,
-              CUSIP: cusip,
-            },
-          });
-
+          const tradeId = node.data["tradeId"];
+          menuInfo.AdaptableApi.gridApi.setCellValue('status', 'inactive', tradeId, true)
         }
       },
     },
     {
-      type: "UserMenuItemShowPredicate",
-      name: "broadcastTradePredicate",
+      type: "UserMenuItemShowPredicate",''
+      name: "cancelActiveTradePredicate",
       handler(menuInfo: MenuInfo) {
         if (!menuInfo.IsGroupedNode) {
           const node = menuInfo.RowNode;
           return (
             node &&
             node.data &&
-            node.data["instrumentId"] &&
             node.data["status"] &&
             node.data["status"] == "active"
           );
@@ -247,9 +226,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ContextMenuItems: [
         {
           Label: "Broadcast Trade",
-          UserMenuItemClickedFunction: "broadcastTradeClick",
-          UserMenuItemShowPredicate: "broadcastTradePredicate",
-          UserMenuItemLabelFunction: "broadcastTradeLabel",
+          UserMenuItemClickedFunction: "cancelActiveTradeClick",
+          UserMenuItemShowPredicate: "cancelActiveTradePredicate",
+         
         },
       ] /*
       EditLookUpItems: [
