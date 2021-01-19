@@ -60,71 +60,114 @@ export const toggleSidebar = () => {
 
 const instruments = getInstrumentIds();
 
-const ChannelItem = ({ id, selected, visualIdentity, onClick }: { selected?: boolean, id: string, visualIdentity?: SystemChannel['visualIdentity'], onClick?: (id: string) => void }) => {
-  const background = visualIdentity?.color ?? 'white'
-  return <div key={id} onClick={() => onClick?.(id)} style={{ width: 24, height: 24, cursor: 'pointer', fontSize: 0, borderRadius: '50%', border: selected ? '2px solid tomato' : '2px solid transparent', lineHeight: 0, marginRight: 10 }}>
-    <div style={{ border: '1px solid black', borderRadius: '50%', fontSize: 0, width: 20, height: 20, background }}></div>
-  </div>
-}
+const ChannelItem = ({
+  id,
+  selected,
+  visualIdentity,
+  onClick,
+}: {
+  selected?: boolean;
+  id: string;
+  visualIdentity?: SystemChannel["visualIdentity"];
+  onClick?: (id: string) => void;
+}) => {
+  const background = visualIdentity?.color ?? "white";
+  return (
+    <div
+      key={id}
+      onClick={() => onClick?.(id)}
+      style={{
+        width: 24,
+        height: 24,
+        cursor: "pointer",
+        fontSize: 0,
+        borderRadius: "50%",
+        border: selected ? "2px solid tomato" : "2px solid transparent",
+        lineHeight: 0,
+        marginRight: 10,
+      }}
+    >
+      <div
+        style={{
+          border: "1px solid black",
+          borderRadius: "50%",
+          fontSize: 0,
+          width: 20,
+          height: 20,
+          background,
+        }}
+      ></div>
+    </div>
+  );
+};
 
-let defaultBroadcastFn: SystemChannel['broadcast'] | null = null
+let defaultBroadcastFn: SystemChannel["broadcast"] | null = null;
 export const TitleBar = () => {
-  const [instrumentId, setInstrumentId] = useState("default")
-  const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(null)
-  const [systemChannels, setSystemChannels] = useState<Record<string, SystemChannel>>(null)
-
+  const [instrumentId, setInstrumentId] = useState("default");
+  const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(
+    null
+  );
+  const [systemChannels, setSystemChannels] = useState<
+    Record<string, SystemChannel>
+  >(null);
 
   React.useLayoutEffect(() => {
-    const { addContextListener, broadcast, getSystemChannels } = require('openfin-fdc3')
-    defaultBroadcastFn = broadcast
+    const {
+      addContextListener,
+      broadcast,
+      getSystemChannels,
+    } = require("openfin-fdc3");
+    defaultBroadcastFn = broadcast;
 
     const initialTheme = localStorage.getItem("theme") || "dark";
     if (initialTheme) {
       syncTheme(initialTheme);
     }
 
-    getSystemChannels().then(channels => {
-
-      setSystemChannels(channels.reduce((acc, channel: SystemChannel) => {
-        acc[channel.id] = channel
-        return acc
-      }, {} as Record<string, SystemChannel>))
-    })
-
-
+    getSystemChannels().then((channels) => {
+      setSystemChannels(
+        channels.reduce((acc, channel: SystemChannel) => {
+          acc[channel.id] = channel;
+          return acc;
+        }, {} as Record<string, SystemChannel>)
+      );
+    });
 
     addContextListener((context: any) => {
-
-      const instrumentId = context.instrumentCode
+      const instrumentId = context.instrumentCode;
       if (getInstrumentName(instrumentId)) {
-        setInstrumentId(instrumentId)
+        setInstrumentId(instrumentId);
       }
-    })
+    });
   }, []);
 
-  const getCurrentBroadcastFn = (): SystemChannel['broadcast'] => {
-    const theChannel = systemChannels?.[currentSystemChannelId]
+  const getCurrentBroadcastFn = (): SystemChannel["broadcast"] => {
+    const theChannel = systemChannels?.[currentSystemChannelId];
     if (theChannel) {
       return (message: Context) => {
         return theChannel.broadcast(message);
-      }
+      };
     } else {
-      return defaultBroadcastFn
+      return defaultBroadcastFn;
     }
-  }
+  };
 
   useThemeChangeInProvider(syncTheme);
 
   React.useEffect(() => {
     fin.InterApplicationBus.publish("set-filters", instrumentId);
-    const name = getInstrumentName(instrumentId)
+    const name = getInstrumentName(instrumentId);
     if (name) {
-
-      const broadcast = getCurrentBroadcastFn()
+      const broadcast = getCurrentBroadcastFn();
       if (!broadcast) {
-        return
+        return;
       }
-      console.log('broadcasting', instrumentId, 'to channel', currentSystemChannelId)
+      console.log(
+        "broadcasting:",
+        instrumentId,
+        "to channel",
+        currentSystemChannelId
+      );
       // broadcast FDC3 message for the given instrumnet (with cusip and name info)
       broadcast({
         type: "fdc3.instrument",
@@ -135,22 +178,38 @@ export const TitleBar = () => {
         },
       });
     }
-  }, [currentSystemChannelId, instrumentId])
+  }, [currentSystemChannelId, instrumentId]);
 
   const renderChannelPicker = () => {
     if (!systemChannels) {
-      return null
+      return null;
     }
-    return <div id="picker" style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
-      <div style={{ marginRight: 10 }}>Select channel: </div>
-      <ChannelItem id="default" selected={currentSystemChannelId === 'default'} onClick={setCurrentSystemChannelId} />
-      {Object.keys(systemChannels).map(id => {
-        const channel = systemChannels[id]
+    return (
+      <div
+        id="picker"
+        style={{ display: "flex", flexFlow: "row", alignItems: "center" }}
+      >
+        <div style={{ marginRight: 10 }}>Select channel: </div>
+        <ChannelItem
+          id="default"
+          selected={currentSystemChannelId === "default"}
+          onClick={setCurrentSystemChannelId}
+        />
+        {Object.keys(systemChannels).map((id) => {
+          const channel = systemChannels[id];
 
-        return <ChannelItem id={id} visualIdentity={channel.visualIdentity} selected={currentSystemChannelId === id} onClick={setCurrentSystemChannelId} />
-      })}
-    </div>
-  }
+          return (
+            <ChannelItem
+              id={id}
+              visualIdentity={channel.visualIdentity}
+              selected={currentSystemChannelId === id}
+              onClick={setCurrentSystemChannelId}
+            />
+          );
+        })}
+      </div>
+    );
+  };
   return (
     <div id="title-bar">
       <div className="title-bar-draggable">
@@ -163,7 +222,7 @@ export const TitleBar = () => {
           style={{ marginRight: 20 }}
           onChange={(e) => {
             const instrumentId = e.target.value;
-            setInstrumentId(instrumentId)
+            setInstrumentId(instrumentId);
           }}
         >
           <option key="-" value="">
