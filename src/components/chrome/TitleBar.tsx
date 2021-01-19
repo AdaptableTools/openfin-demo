@@ -16,8 +16,7 @@ import {
 } from "../../data/utils";
 
 import { useState } from "react";
-import { broadcast, Context, SystemChannel } from "openfin-fdc3";
-
+import type { Context, SystemChannel } from "openfin-fdc3";
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
