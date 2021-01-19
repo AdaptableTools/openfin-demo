@@ -75,15 +75,15 @@ export const TitleBar = () => {
           style={{ marginRight: 20 }}
           onChange={(e) => {
             const instrumentId = e.target.value;
-            if (instrumentId) {
-              // set internal message to filter on the instrument
-              fin.InterApplicationBus.publish("set-filters", instrumentId);
-
+            // set internal message to filter on the instrument
+            fin.InterApplicationBus.publish("set-filters", instrumentId);
+            const name = getInstrumentName(instrumentId)
+            if (name) {
               const { broadcast } = require("openfin-fdc3");
               // broadcast FDC3 message for the given instrumnet (with cusip and name info)
               broadcast({
                 type: "fdc3.instrument",
-                name: getInstrumentName(instrumentId),
+                name,
                 id: {
                   ticker: instrumentId,
                   CUSIP: getCusip(instrumentId),
