@@ -23,11 +23,9 @@ import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { MenuInfo } from "@adaptabletools/adaptable/src/types";
-import { broadcast } from "openfin-fdc3";
 
 const columnDefs: ColDef[] = tradeColumns;
 
-console.log({ broadcast }, " broadcast");
 const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {

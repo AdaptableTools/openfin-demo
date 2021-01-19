@@ -14,8 +14,6 @@ import {
   getInstrumentIds,
   getInstrumentName,
 } from "../../data/utils";
-import { channelProvider } from "../provider";
-import { broadcast } from "openfin-fdc3";
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
@@ -81,6 +79,7 @@ export const TitleBar = () => {
               // set internal message to filter on the instrument
               fin.InterApplicationBus.publish("set-filters", instrumentId);
 
+              const { broadcast } = require("openfin-fdc3");
               // broadcast FDC3 message for the given instrumnet (with cusip and name info)
               broadcast({
                 type: "fdc3.instrument",
