@@ -14,6 +14,8 @@ import {
   getInstrumentIds,
   getInstrumentName,
 } from "../../data/utils";
+import type { Context } from "openfin/_v2/fdc3/main";
+import { useState } from "react";
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
@@ -57,14 +59,43 @@ export const toggleSidebar = () => {
 
 const instruments = getInstrumentIds();
 export const TitleBar = () => {
+  const [instrumentId, doSetInstrumentId] = useState("-")
   React.useLayoutEffect(() => {
     const initialTheme = localStorage.getItem("theme") || "dark";
     if (initialTheme) {
       syncTheme(initialTheme);
     }
+
+    const { addContextListener } = require('openfin-fdc3')
+
+    addContextListener((context: any) => {
+      console.log('received context', context)
+      const instrumentId = context.instrumentCode
+      if (getInstrumentName(instrumentId)) {
+        setInstrumentId(instrumentId)
+      }
+    })
   }, []);
   useThemeChangeInProvider(syncTheme);
 
+  const setInstrumentId = React.useCallback((instrumentId: string) => {
+    doSetInstrumentId(instrumentId)
+    // set internal message to filter on the instrument
+    fin.InterApplicationBus.publish("set-filters", instrumentId);
+    const name = getInstrumentName(instrumentId)
+    if (name) {
+      const { broadcast } = require("openfin-fdc3");
+      // broadcast FDC3 message for the given instrumnet (with cusip and name info)
+      broadcast({
+        type: "fdc3.instrument",
+        name,
+        id: {
+          ticker: instrumentId,
+          CUSIP: getCusip(instrumentId),
+        },
+      });
+    }
+  }, [])
   return (
     <div id="title-bar">
       <div className="title-bar-draggable">
@@ -72,24 +103,11 @@ export const TitleBar = () => {
       </div>
       <div id="buttons-wrapper">
         <select
+          value={instrumentId}
           style={{ marginRight: 20 }}
           onChange={(e) => {
             const instrumentId = e.target.value;
-            // set internal message to filter on the instrument
-            fin.InterApplicationBus.publish("set-filters", instrumentId);
-            const name = getInstrumentName(instrumentId)
-            if (name) {
-              const { broadcast } = require("openfin-fdc3");
-              // broadcast FDC3 message for the given instrumnet (with cusip and name info)
-              broadcast({
-                type: "fdc3.instrument",
-                name,
-                id: {
-                  ticker: instrumentId,
-                  CUSIP: getCusip(instrumentId),
-                },
-              });
-            }
+            setInstrumentId(instrumentId)
           }}
         >
           <option key="-" value="">
