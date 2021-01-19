@@ -16,7 +16,7 @@ import {
 } from "../../data/utils";
 
 import { useState } from "react";
-import { SystemChannel } from "openfin-fdc3";
+import { broadcast, Context, SystemChannel } from "openfin-fdc3";
 
 
 export const getCurrentTheme = () => {
@@ -101,8 +101,17 @@ export const TitleBar = () => {
     })
   }, []);
 
-  const getCurrentBroadcastFn = (): SystemChannel['broadcast'] | null => {
-    return systemChannels?.[currentSystemChannelId]?.broadcast ?? defaultBroadcastFn!
+  const getCurrentBroadcastFn = (): SystemChannel['broadcast'] => {
+    const theChannel = systemChannels?.[currentSystemChannelId]
+    if (theChannel) {
+      return (message: Context) => {
+        return theChannel.broadcast(message);
+      }
+    } else {
+      return (message: Context) => {
+        return broadcast(message)
+      }
+    }
   }
 
   useThemeChangeInProvider(syncTheme);
