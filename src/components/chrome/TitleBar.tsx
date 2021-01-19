@@ -92,6 +92,8 @@ export const TitleBar = () => {
       }, {} as Record<string, SystemChannel>))
     })
 
+
+
     addContextListener((context: any) => {
 
       const instrumentId = context.instrumentCode
