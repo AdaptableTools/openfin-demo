@@ -24,7 +24,6 @@ import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { MenuInfo } from "@adaptabletools/adaptable/src/types";
 import { broadcast } from "openfin-fdc3";
-import { apiResolver } from "next/dist/next-server/server/api-utils";
 
 const columnDefs: ColDef[] = tradeColumns;
 
