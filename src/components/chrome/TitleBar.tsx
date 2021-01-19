@@ -70,20 +70,9 @@ const ChannelItem = ({ id, selected, visualIdentity, onClick }: { selected?: boo
 
 let defaultBroadcastFn: SystemChannel['broadcast'] | null = null
 export const TitleBar = () => {
-  const [instrumentId, doSetInstrumentId] = useState("default")
-  const [currentSystemChannelId, doSetCurrentSystemChannelId] = useState<any>(null)
+  const [instrumentId, setInstrumentId] = useState("default")
+  const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(null)
   const [systemChannels, setSystemChannels] = useState<Record<string, SystemChannel>>(null)
-
-  const setCurrentSystemChannelId = (systemChannelId) => {
-    doSetCurrentSystemChannelId(systemChannelId)
-    setTimeout(() => {
-      if (instrumentId) {
-        // do set instrumentId again in order to republish to the new channel
-        setInstrumentId(instrumentId)
-      }
-    }, 20)
-
-  }
 
 
   React.useLayoutEffect(() => {
@@ -118,9 +107,7 @@ export const TitleBar = () => {
 
   useThemeChangeInProvider(syncTheme);
 
-  const setInstrumentId = (instrumentId: string) => {
-    doSetInstrumentId(instrumentId)
-    // set internal message to filter on the instrument
+  React.useEffect(() => {
     fin.InterApplicationBus.publish("set-filters", instrumentId);
     const name = getInstrumentName(instrumentId)
     if (name) {
@@ -139,7 +126,7 @@ export const TitleBar = () => {
         },
       });
     }
-  }
+  }, [currentSystemChannelId, instrumentId])
 
   const renderChannelPicker = () => {
     if (!systemChannels) {
