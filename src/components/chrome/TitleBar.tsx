@@ -111,11 +111,12 @@ export const TitleBar = () => {
     fin.InterApplicationBus.publish("set-filters", instrumentId);
     const name = getInstrumentName(instrumentId)
     if (name) {
-      // const { broadcast } = require("openfin-fdc3");
+
       const broadcast = getCurrentBroadcastFn()
       if (!broadcast) {
         return
       }
+      console.log('broadcasting', instrumentId, 'to channel', currentSystemChannelId)
       // broadcast FDC3 message for the given instrumnet (with cusip and name info)
       broadcast({
         type: "fdc3.instrument",
