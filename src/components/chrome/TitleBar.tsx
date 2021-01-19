@@ -109,9 +109,7 @@ export const TitleBar = () => {
         return theChannel.broadcast(message);
       }
     } else {
-      return (message: Context) => {
-        return broadcast(message)
-      }
+      return defaultBroadcastFn
     }
   }
 
