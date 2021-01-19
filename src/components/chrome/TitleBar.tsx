@@ -75,11 +75,14 @@ export const TitleBar = () => {
   const [systemChannels, setSystemChannels] = useState<Record<string, SystemChannel>>(null)
 
   const setCurrentSystemChannelId = (systemChannelId) => {
-    if (instrumentId) {
-      // do set instrumentId again in order to republish to the new channel
-      setInstrumentId(instrumentId)
-    }
     doSetCurrentSystemChannelId(systemChannelId)
+    setTimeout(() => {
+      if (instrumentId) {
+        // do set instrumentId again in order to republish to the new channel
+        setInstrumentId(instrumentId)
+      }
+    }, 20)
+
   }
 
 
