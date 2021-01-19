@@ -15,7 +15,9 @@ import {
   getInstrumentName,
 } from "../../data/utils";
 import type { Context } from "openfin/_v2/fdc3/main";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { SystemChannel } from "openfin-fdc3";
+
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
@@ -58,33 +60,68 @@ export const toggleSidebar = () => {
 };
 
 const instruments = getInstrumentIds();
+
+const ChannelItem = ({ id, selected, visualIdentity, onClick }: { selected?: boolean, id: string, visualIdentity?: SystemChannel['visualIdentity'], onClick?: (id: string) => void }) => {
+  const background = visualIdentity?.color ?? 'white'
+  return <div key={id} onClick={() => onClick?.(id)} style={{ cursor: 'pointer' }}>
+    <div style={{ border: selected ? '2px solid tomato' : '2px solid transparent', borderRadius: '50%', marginRight: 10, fontSize: 0, width: 20, height: 20, background }}></div>
+  </div>
+}
+
+let defaultBroadcastFn: SystemChannel['broadcast'] | null = null
 export const TitleBar = () => {
-  const [instrumentId, doSetInstrumentId] = useState("-")
+  const [instrumentId, doSetInstrumentId] = useState("default")
+  const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(null)
+  const [systemChannels, setSystemChannels] = useState<Record<string, SystemChannel>>(null)
+
+
+
   React.useLayoutEffect(() => {
+    const { addContextListener, broadcast, getSystemChannels } = require('openfin-fdc3')
+    defaultBroadcastFn = broadcast
+
     const initialTheme = localStorage.getItem("theme") || "dark";
     if (initialTheme) {
       syncTheme(initialTheme);
     }
 
-    const { addContextListener } = require('openfin-fdc3')
+
+
+
+    getSystemChannels().then(channels => {
+
+      setSystemChannels(channels.reduce((acc, channel: SystemChannel) => {
+        acc[channel.id] = channel
+        return acc
+      }, {} as Record<string, SystemChannel>))
+    })
 
     addContextListener((context: any) => {
-      console.log('received context', context)
+
       const instrumentId = context.instrumentCode
       if (getInstrumentName(instrumentId)) {
         setInstrumentId(instrumentId)
       }
     })
   }, []);
+
+  const getCurrentBroadcastFn = (): SystemChannel['broadcast'] | null => {
+    return systemChannels?.[currentSystemChannelId]?.broadcast ?? defaultBroadcastFn!
+  }
+
   useThemeChangeInProvider(syncTheme);
 
-  const setInstrumentId = React.useCallback((instrumentId: string) => {
+  const setInstrumentId = (instrumentId: string) => {
     doSetInstrumentId(instrumentId)
     // set internal message to filter on the instrument
     fin.InterApplicationBus.publish("set-filters", instrumentId);
     const name = getInstrumentName(instrumentId)
     if (name) {
-      const { broadcast } = require("openfin-fdc3");
+      // const { broadcast } = require("openfin-fdc3");
+      const broadcast = getCurrentBroadcastFn()
+      if (!broadcast) {
+        return
+      }
       // broadcast FDC3 message for the given instrumnet (with cusip and name info)
       broadcast({
         type: "fdc3.instrument",
@@ -95,13 +132,28 @@ export const TitleBar = () => {
         },
       });
     }
-  }, [])
+  }
+
+  const renderChannelPicker = () => {
+    if (!systemChannels) {
+      return null
+    }
+    return <div id="picker" style={{ display: 'flex', flexFlow: 'row' }}>
+      <ChannelItem id="default" selected={currentSystemChannelId === 'default'} onClick={setCurrentSystemChannelId} />
+      {Object.keys(systemChannels).map(id => {
+        const channel = systemChannels[id]
+
+        return <ChannelItem id={id} visualIdentity={channel.visualIdentity} selected={currentSystemChannelId === id} onClick={setCurrentSystemChannelId} />
+      })}
+    </div>
+  }
   return (
     <div id="title-bar">
       <div className="title-bar-draggable">
         <div id="title">AdapTable OpenFin Demo App</div>
       </div>
       <div id="buttons-wrapper">
+        {renderChannelPicker()}
         <select
           value={instrumentId}
           style={{ marginRight: 20 }}
