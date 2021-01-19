@@ -21,7 +21,7 @@ import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
 import { Trade } from "../data/trades";
 import { ThemeConfig } from "../components/ThemeConfig";
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
 
 type Item = {
   timestamp: string;
@@ -96,17 +96,27 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
     Layout: {
       Revision: 1,
-      CurrentLayout: 'Latest',
+      CurrentLayout: "Latest",
       Layouts: [
         {
-          Name: 'Latest',
-          Columns: ['timestamp', 'instrumentId', 'oldValue', 'newValue', 'column', 'username', 'trigger'],
-          ColumnSorts: [{
-            ColumnId: 'timestamp',
-            SortOrder: 'Desc'
-          }]
-        }
-      ]
+          Name: "Latest",
+          Columns: [
+            "timestamp",
+            "instrumentId",
+            "oldValue",
+            "newValue",
+            "column",
+            "username",
+            "trigger",
+          ],
+          ColumnSorts: [
+            {
+              ColumnId: "timestamp",
+              SortOrder: "Desc",
+            },
+          ],
+        },
+      ],
     },
     FormatColumn: {
       Revision: 2,
@@ -115,27 +125,29 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Scope: {
             ColumnIds: ["newValue", "oldValue"],
           },
-          CellAlignment: 'Right',
+          CellAlignment: "Right",
           DisplayFormat: DisplayFormat4Digits,
         },
         {
           Scope: {
-            ColumnIds: ['timestamp']
+            ColumnIds: ["timestamp"],
           },
           DisplayFormat: {
-            Formatter: 'DateFormatter',
+            Formatter: "DateFormatter",
             Options: {
-              Pattern: 'MM/dd/yyyy HH:mm:ss'
-            }
-          }
-        }
-      ]
-    }
+              Pattern: "MM/dd/yyyy HH:mm:ss",
+            },
+          },
+        },
+      ],
+    },
   },
-   plugins: [openfin({
+  plugins: [
+    openfin({
       notificationTimeout: false,
-      showApplicationIconInNotifications: true
-    })],
+      showAppIconInNotifications: true,
+    }),
+  ],
 });
 
 const toItem = (tradeAudit) => {
@@ -146,10 +158,10 @@ const toItem = (tradeAudit) => {
     instrumentId: tradeAudit.data_change_details.row_data.instrumentId,
     username: tradeAudit.username,
     column: tradeAudit.data_change_details.column_id,
-    trigger: tradeAudit.audit_trigger
+    trigger: tradeAudit.audit_trigger,
   } as Item;
 
-  return item
+  return item;
 };
 
 const App = () => {
@@ -162,10 +174,12 @@ const App = () => {
       gridOptionsRef.current.api.setRowData(items);
     }),
     addtradeaudit: (tradeAudit: CellEditAudit<Trade>) => {
-      const item = toItem(tradeAudit)
+      const item = toItem(tradeAudit);
 
-      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(item.timestamp)) {
-        return
+      if (
+        adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(item.timestamp)
+      ) {
+        return;
       }
       adaptableApiRef.current.gridApi.addGridData([item], {
         runAsync: true,

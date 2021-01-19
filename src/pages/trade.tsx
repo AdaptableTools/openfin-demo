@@ -245,7 +245,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   plugins: [
     openfin({
       notificationTimeout: false,
-      showApplicationIconInNotifications: true,
+      showAppIconInNotifications: true,
     }),
   ],
 });

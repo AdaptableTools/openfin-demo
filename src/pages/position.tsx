@@ -61,7 +61,7 @@ const gridOptions: GridOptions = {
 
 const openfinPluginOptions: OpenFinPluginOptions = {
   notificationTimeout: false,
-  showApplicationIconInNotifications: true,
+  showAppIconInNotifications: true,
   onShowNotification: (notification) => {
     notification.buttons = [
       {

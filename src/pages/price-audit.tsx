@@ -20,7 +20,7 @@ import { useThemeSync } from "../components/hooks/useThemeSync";
 import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
 import { ThemeConfig } from "../components/ThemeConfig";
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
 
 type Item = {
   timestamp: string;
@@ -92,17 +92,26 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
     Layout: {
       Revision: 1,
-      CurrentLayout: 'Latest',
+      CurrentLayout: "Latest",
       Layouts: [
         {
-          Name: 'Latest',
-          Columns: ['timestamp', 'instrumentId', 'oldValue', 'newValue', 'username', 'trigger'],
-          ColumnSorts: [{
-            ColumnId: 'timestamp',
-            SortOrder: 'Desc'
-          }]
-        }
-      ]
+          Name: "Latest",
+          Columns: [
+            "timestamp",
+            "instrumentId",
+            "oldValue",
+            "newValue",
+            "username",
+            "trigger",
+          ],
+          ColumnSorts: [
+            {
+              ColumnId: "timestamp",
+              SortOrder: "Desc",
+            },
+          ],
+        },
+      ],
     },
     FormatColumn: {
       Revision: 2,
@@ -111,27 +120,29 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Scope: {
             ColumnIds: ["newValue", "oldValue"],
           },
-          CellAlignment: 'Right',
+          CellAlignment: "Right",
           DisplayFormat: DisplayFormat4Digits,
         },
         {
           Scope: {
-            ColumnIds: ['timestamp']
+            ColumnIds: ["timestamp"],
           },
           DisplayFormat: {
-            Formatter: 'DateFormatter',
+            Formatter: "DateFormatter",
             Options: {
-              Pattern: 'MM/dd/yyyy HH:mm:ss'
-            }
-          }
-        }
-      ]
-    }
+              Pattern: "MM/dd/yyyy HH:mm:ss",
+            },
+          },
+        },
+      ],
+    },
   },
-   plugins: [openfin({
+  plugins: [
+    openfin({
       notificationTimeout: false,
-      showApplicationIconInNotifications: true
-    })],
+      showAppIconInNotifications: true,
+    }),
+  ],
 });
 
 const toItem = (priceAudit) => {
@@ -141,10 +152,10 @@ const toItem = (priceAudit) => {
     newValue: priceAudit.data_change_details.new_value * 1,
     instrumentId: priceAudit.data_change_details.row_data.instrumentId,
     username: priceAudit.username,
-    trigger: priceAudit.audit_trigger
+    trigger: priceAudit.audit_trigger,
   } as Item;
 
-  return item
+  return item;
 };
 
 const App = () => {
@@ -157,10 +168,14 @@ const App = () => {
       gridOptionsRef.current.api.setRowData(items);
     }),
     addpriceaudit: (priceAudit: CellEditAudit<Price>) => {
-      const item = toItem(priceAudit)
+      const item = toItem(priceAudit);
 
-      if (adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(item.instrumentId)) {
-        return
+      if (
+        adaptableApiRef.current.gridApi.getRowNodeForPrimaryKey(
+          item.instrumentId
+        )
+      ) {
+        return;
       }
       adaptableApiRef.current.gridApi.addGridData([item], {
         runAsync: true,
