@@ -23,7 +23,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
-import openfin from '@adaptabletools/adaptable-plugin-openfin';
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -34,7 +34,7 @@ const initialGridOptions: GridOptions = {
     filter: true,
     floatingFilter: true,
     sortable: true,
-    resizable: true
+    resizable: true,
   },
   rowData: null,
   components: {
@@ -47,8 +47,8 @@ const initialGridOptions: GridOptions = {
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
-  primaryKey: 'instrumentId',
-  adaptableId: 'Price View',
+  primaryKey: "instrumentId",
+  adaptableId: "Price View",
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
     //   if (dataChangeInfo.columnId === 'bidOfferSpread') {
@@ -71,58 +71,58 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ConditionalStyles: [
         {
           Scope: {
-            ColumnIds: ['changeOnDay'],
+            ColumnIds: ["changeOnDay"],
           },
           Style: {
             BackColor: GREEN,
-            ForeColor: '#000000',
+            ForeColor: "#000000",
           },
           Predicate: {
-            PredicateId: 'Positive',
+            PredicateId: "Positive",
           },
         },
         {
           Scope: {
-            ColumnIds: ['changeOnDay'],
+            ColumnIds: ["changeOnDay"],
           },
           Style: {
             BackColor: RED,
-            ForeColor: '#000000',
+            ForeColor: "#000000",
           },
           Predicate: {
-            PredicateId: 'Negative',
+            PredicateId: "Negative",
           },
         },
       ],
     },
     CalculatedColumn: {
-     CalculatedColumns: [
+      CalculatedColumns: [
         {
-          ColumnId: 'bid',
-          FriendlyName: 'Bid',
-          ColumnExpression: '[price] - [bidOfferSpread] / 2',
+          ColumnId: "bid",
+          FriendlyName: "Bid",
+          ColumnExpression: "[price] - [bidOfferSpread] / 2",
         },
         {
-          ColumnId: 'ask',
-          FriendlyName: 'Ask',
-          ColumnExpression: '[price] + [bidOfferSpread] / 2',
+          ColumnId: "ask",
+          FriendlyName: "Ask",
+          ColumnExpression: "[price] + [bidOfferSpread] / 2",
         },
         {
-          ColumnId: 'changeOnDay',
-          FriendlyName: 'Change on Day',
-          ColumnExpression: '[price] - [closingPrice]',
+          ColumnId: "changeOnDay",
+          FriendlyName: "Change on Day",
+          ColumnExpression: "[price] - [closingPrice]",
         },
       ],
     },
     PlusMinus: {
       PlusMinusRules: [
         {
-          ColumnId: 'bidOfferSpread',
+          ColumnId: "bidOfferSpread",
           NudgeValue: 0.5,
           IsDefaultNudge: true,
         },
         {
-          ColumnId: 'bidOfferSpread',
+          ColumnId: "bidOfferSpread",
           NudgeValue: 1,
           IsDefaultNudge: false,
           Expression: '[instrumentId]= "AAPL"',
@@ -139,9 +139,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       FormatColumns: [
         {
           Scope: {
-            ColumnIds: ['bid', 'ask', 'changeOnDay', 'price'],
+            ColumnIds: ["bid", "ask", "changeOnDay", "price"],
           },
-          CellAlignment: 'Right',
+          CellAlignment: "Right",
           DisplayFormat: DisplayFormat4Digits,
         },
       ],
@@ -149,43 +149,45 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     Dashboard: {
       Tabs: [
         {
-          Name: 'Price',
-          Toolbars: ['SmartEdit', 'OpenFin'],
+          Name: "Price",
+          Toolbars: ["SmartEdit", "OpenFin"],
         },
       ],
       IsCollapsed: true,
     },
     Layout: {
-      CurrentLayout: 'Price',
+      CurrentLayout: "Price",
       Layouts: [
         {
-          Name: 'Price',
+          Name: "Price",
           Columns: [
-            'instrumentId',
-            'price',
-            'bidOfferSpread',
-            'bid',
-            'ask',
-            'closingPrice',
-            'changeOnDay',
-            'bbgBid',
-            'bbgAsk',
+            "instrumentId",
+            "price",
+            "bidOfferSpread",
+            "bid",
+            "ask",
+            "closingPrice",
+            "changeOnDay",
+            "bbgBid",
+            "bbgAsk",
           ],
         },
       ],
     },
     FlashingCell: {
       FlashingCells: [
-        { ColumnId: 'price', IsLive: true, UpColor: GREEN, DownColor: RED },
-        { ColumnId: 'bid', IsLive: true, UpColor: GREEN, DownColor: RED },
-        { ColumnId: 'ask', IsLive: true, UpColor: GREEN, DownColor: RED },
+        { ColumnId: "price", IsLive: true, UpColor: GREEN, DownColor: RED },
+        { ColumnId: "bid", IsLive: true, UpColor: GREEN, DownColor: RED },
+        { ColumnId: "ask", IsLive: true, UpColor: GREEN, DownColor: RED },
       ],
     },
   },
-   plugins: [openfin({
+  plugins: [
+    openfin({
       notificationTimeout: false,
-      showApplicationIconInNotifications: true
-    })],
+      showAppIconInNotifications: true,
+    }),
+  ],
 });
 
 const App: React.FC = () => {
@@ -204,13 +206,13 @@ const App: React.FC = () => {
 
   useFilters(adaptableApiRef);
 
-  useAudit('priceaudits', adaptableApiRef);
+  useAudit("priceaudits", adaptableApiRef);
 
   useThemeSync(adaptableApiRef);
 
   useDispatchOnDataChanged({
     client,
-    dispatchChannelName: 'updateprice',
+    dispatchChannelName: "updateprice",
     adaptableApiRef,
   });
 
@@ -219,7 +221,7 @@ const App: React.FC = () => {
       <Head title="Prices" />
       <MainLayout>
         <AdaptableReact
-          style={{ flex: 'none' }}
+          style={{ flex: "none" }}
           gridOptions={initialGridOptions}
           adaptableOptions={adaptableOptions}
           modules={modules}
