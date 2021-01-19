@@ -9,9 +9,13 @@ import {
   LIGHT_THEME,
   syncTheme,
 } from "../syncTheme";
-import { getCusip, getInstrumentIds, getInstrumentName } from "../../data/utils";
+import {
+  getCusip,
+  getInstrumentIds,
+  getInstrumentName,
+} from "../../data/utils";
 import { channelProvider } from "../provider";
-import { broadcast } from "openfin-fdc3"
+import { broadcast } from "openfin-fdc3";
 
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
@@ -73,18 +77,20 @@ export const TitleBar = () => {
           style={{ marginRight: 20 }}
           onChange={(e) => {
             const instrumentId = e.target.value;
-            const instrumentName = getInstrumentName(instrumentId);
-            const cusip = getCusip(instrumentId);
-            fin.InterApplicationBus.publish("set-filters", instrumentId);
+            if (instrumentId) {
+              // set internal message to filter on the instrument
+              fin.InterApplicationBus.publish("set-filters", instrumentId);
 
-          broadcast({
-            type:  "fdc3.instrument",
-            name: instrumentName,
-            id: {
-              ticker: instrumentId,
-              CUSIP: cusip,
-            },
-          });
+              // broadcast FDC3 message for the given instrumnet (with cusip and name info)
+              broadcast({
+                type: "fdc3.instrument",
+                name: getInstrumentName(instrumentId),
+                id: {
+                  ticker: instrumentId,
+                  CUSIP: getCusip(instrumentId),
+                },
+              });
+            }
           }}
         >
           <option key="-" value="">

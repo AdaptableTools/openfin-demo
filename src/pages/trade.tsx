@@ -23,12 +23,12 @@ import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { MenuInfo } from "@adaptabletools/adaptable/src/types";
-import { broadcast } from "openfin-fdc3"
+import { broadcast } from "openfin-fdc3";
 import { apiResolver } from "next/dist/next-server/server/api-utils";
 
 const columnDefs: ColDef[] = tradeColumns;
 
-console.log({ broadcast }, ' broadcast')
+console.log({ broadcast }, " broadcast");
 const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
@@ -61,7 +61,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       },
     },
 
-   
     {
       type: "UserMenuItemClickedFunction",
       name: "cancelActiveTradeClick",
@@ -69,12 +68,17 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         const node = menuInfo.RowNode;
         if (node && node.data) {
           const tradeId = node.data["tradeId"];
-          menuInfo.AdaptableApi.gridApi.setCellValue('status', 'inactive', tradeId, true)
+          menuInfo.AdaptableApi.gridApi.setCellValue(
+            "status",
+            "inactive",
+            tradeId,
+            true
+          );
         }
       },
     },
     {
-      type: "UserMenuItemShowPredicate",''
+      type: "UserMenuItemShowPredicate",
       name: "cancelActiveTradePredicate",
       handler(menuInfo: MenuInfo) {
         if (!menuInfo.IsGroupedNode) {
@@ -228,7 +232,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Label: "Broadcast Trade",
           UserMenuItemClickedFunction: "cancelActiveTradeClick",
           UserMenuItemShowPredicate: "cancelActiveTradePredicate",
-         
         },
       ] /*
       EditLookUpItems: [
