@@ -63,8 +63,8 @@ const instruments = getInstrumentIds();
 
 const ChannelItem = ({ id, selected, visualIdentity, onClick }: { selected?: boolean, id: string, visualIdentity?: SystemChannel['visualIdentity'], onClick?: (id: string) => void }) => {
   const background = visualIdentity?.color ?? 'white'
-  return <div key={id} onClick={() => onClick?.(id)} style={{ cursor: 'pointer' }}>
-    <div style={{ border: selected ? '2px solid tomato' : '2px solid transparent', borderRadius: '50%', marginRight: 10, fontSize: 0, width: 20, height: 20, background }}></div>
+  return <div key={id} onClick={() => onClick?.(id)} style={{ width: 24, height: 24, cursor: 'pointer', fontSize: 0, borderRadius: '50%', border: selected ? '2px solid tomato' : '2px solid transparent', lineHeight: 0, marginRight: 10 }}>
+    <div style={{ border: '1px solid black', borderRadius: '50%', fontSize: 0, width: 20, height: 20, background }}></div>
   </div>
 }
 
