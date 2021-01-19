@@ -14,8 +14,8 @@ import {
   getInstrumentIds,
   getInstrumentName,
 } from "../../data/utils";
-import type { Context } from "openfin/_v2/fdc3/main";
-import { useRef, useState } from "react";
+
+import { useState } from "react";
 import { SystemChannel } from "openfin-fdc3";
 
 
@@ -85,9 +85,6 @@ export const TitleBar = () => {
       syncTheme(initialTheme);
     }
 
-
-
-
     getSystemChannels().then(channels => {
 
       setSystemChannels(channels.reduce((acc, channel: SystemChannel) => {
@@ -138,7 +135,8 @@ export const TitleBar = () => {
     if (!systemChannels) {
       return null
     }
-    return <div id="picker" style={{ display: 'flex', flexFlow: 'row' }}>
+    return <div id="picker" style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
+      <div style={{ marginRight: 10 }}>Select channel: </div>
       <ChannelItem id="default" selected={currentSystemChannelId === 'default'} onClick={setCurrentSystemChannelId} />
       {Object.keys(systemChannels).map(id => {
         const channel = systemChannels[id]
