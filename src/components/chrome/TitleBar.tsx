@@ -103,9 +103,9 @@ const ChannelItem = ({
 
 let defaultBroadcastFn: SystemChannel["broadcast"] | null = null;
 export const TitleBar = () => {
-  const [instrumentId, setInstrumentId] = useState("default");
+  const [instrumentId, setInstrumentId] = useState("");
   const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(
-    null
+    'default'
   );
   const [systemChannels, setSystemChannels] = useState<
     Record<string, SystemChannel>
