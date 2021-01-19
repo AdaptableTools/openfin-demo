@@ -71,9 +71,15 @@ const ChannelItem = ({ id, selected, visualIdentity, onClick }: { selected?: boo
 let defaultBroadcastFn: SystemChannel['broadcast'] | null = null
 export const TitleBar = () => {
   const [instrumentId, doSetInstrumentId] = useState("default")
-  const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(null)
+  const [currentSystemChannelId, doSetCurrentSystemChannelId] = useState<any>(null)
   const [systemChannels, setSystemChannels] = useState<Record<string, SystemChannel>>(null)
 
+  const setCurrentSystemChannelId = () => {
+    if (instrumentId) {
+      // do set instrumentId again in order to republish to the new channel
+      setInstrumentId(instrumentId)
+    }
+  }
 
 
   React.useLayoutEffect(() => {
