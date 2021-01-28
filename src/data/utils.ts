@@ -98,7 +98,7 @@ export const getInstrumentIds = () => {
     "PEP",
     "PFE",
     "SBUX",
-    "TGT",
+    "TSLA",
     "USB",
     "WFC",
     "WMT",
@@ -173,6 +173,7 @@ export const getInstrumentIds = () => {
     "SO",
     "SPG",
     "T",
+    "TGT",
     "TWX",
     "TXN",
     "UNH",
@@ -444,6 +445,8 @@ export const getInstrumentName = (instrumentId) => {
       return "Simon Property Group, Inc.";
     case "T":
       return "AT&T Inc";
+    case "TSLA":
+      return "Tesla Inc.";
     case "TGT":
       return "Target Corp.";
     case "TWX":
@@ -513,6 +516,8 @@ export const getCusip = (instrumentId) => {
       return "717081103";
     case "SBUX":
       return "855244109";
+    case "TSLA":
+      return "88160R101";
     case "TGT":
       return "87612E106";
     case "USB":
