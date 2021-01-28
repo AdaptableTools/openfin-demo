@@ -226,7 +226,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     UserInterface: {
       ContextMenuItems: [
         {
-          Label: "Broadcast Trade",
+          Label: "Cancel Trade",
           UserMenuItemClickedFunction: "cancelActiveTradeClick",
           UserMenuItemShowPredicate: "cancelActiveTradePredicate",
         },
