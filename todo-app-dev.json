@@ -1,0 +1,10 @@
+{
+    "appAssets": [
+        {
+            "src": "https://openfin.github.io/odp/native/Excel.zip",
+            "target": "focus-log.xlsx",
+            "alias": "excel",
+            "version": "0.5.0"
+        }
+    ],
+}

@@ -67,7 +67,7 @@ const openfinPluginOptions: OpenFinPluginOptions = {
       {
         title: "Increase Limit",
         type: "button",
-        cta: true,
+        // cta: true,
         onClick: {
           task: "increase-limit",
         },
