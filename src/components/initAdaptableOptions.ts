@@ -1,5 +1,4 @@
-import { AdaptableOptions } from '@adaptabletools/adaptable/types';
-
+import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 
 export const initAdaptableOptions = (
   adaptableOptions: AdaptableOptions
@@ -9,16 +8,16 @@ export const initAdaptableOptions = (
       autoSizeColumnsInLayout: true,
     },
 
-    userName: 'Demo User',
+    userName: "Demo User",
 
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
       applicationIcon: {
-        url: 'https://docs.adaptabletools.com/img/favicon_white.png'
-      }
+        url: "https://docs.adaptabletools.com/img/favicon_white.png",
+      },
     },
-filterOptions:{quickFilterTrigger: 'click' },
+    filterOptions: { quickFilterTrigger: "click" },
     auditOptions: {
       auditCellEdits: {
         auditAsEvent: true,
@@ -42,7 +41,7 @@ filterOptions:{quickFilterTrigger: 'click' },
   Object.keys(defaults).forEach((key) => {
     const defaultValue = defaults[key];
 
-    if (typeof defaultValue === 'object') {
+    if (typeof defaultValue === "object") {
       common[key] = { ...defaultValue, ...adaptableOptions[key] };
     }
   });
@@ -51,6 +50,5 @@ filterOptions:{quickFilterTrigger: 'click' },
     ...defaults,
     ...adaptableOptions,
     ...common,
-    
   };
 };
