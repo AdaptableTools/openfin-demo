@@ -22,10 +22,11 @@ import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import { MenuInfo } from "@adaptabletools/adaptable/src/types";
+import { DataChangedInfo, MenuInfo, OpenFinApi, ValidationFailedEventArgs } from "@adaptabletools/adaptable/src/types";
 
 const columnDefs: ColDef[] = tradeColumns;
 
+let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
 const initialGridOptions: GridOptions = {
   columnDefs: columnDefs,
   defaultColDef: {
@@ -115,6 +116,18 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           PositiveValue: 10000000,
         },
       ],
+    },
+    CellValidation: {
+      CellValidations: [
+        {
+          Scope: {
+            ColumnIds: ['notional']
+          },
+          Predicate: {
+            PredicateId: 'Negative'
+          }
+        }
+      ]
     },
     ActionColumn: {
       ActionColumns: [
@@ -246,12 +259,17 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     openfin({
       notificationTimeout: false,
       showAppIconInNotifications: true,
+      /*
+
+      onExcelValidationFailed: (dataChangedInfo, failedValidationRules) => {
+
+      }*/
     }),
   ],
 });
 
 const App: React.FC = () => {
-  const adaptableApiRef = useRef<AdaptableApi>(null);
+  adaptableApiRef = useRef<AdaptableApi>(null);
   const gridOptionsRef = useRef<GridOptions>(null);
 
   useFilters(adaptableApiRef);

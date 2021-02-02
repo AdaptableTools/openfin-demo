@@ -16,6 +16,9 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+#buttons-wrapper select {
+  width: 160px;
+}
 #buttons-wrapper select,
 #buttons-wrapper option {
   background: var(--main-background-color);
