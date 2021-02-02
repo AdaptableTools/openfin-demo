@@ -259,6 +259,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     openfin({
       notificationTimeout: false,
       showAppIconInNotifications: true,
+      onValidationFailureInExcel: 'show-undo-notification'
       /*
 
       onExcelValidationFailed: (dataChangedInfo, failedValidationRules) => {
