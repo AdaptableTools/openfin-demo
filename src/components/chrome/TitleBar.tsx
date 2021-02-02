@@ -189,7 +189,7 @@ export const TitleBar = () => {
         id="picker"
         style={{ display: "flex", flexFlow: "row", alignItems: "center" }}
       >
-        <div style={{ marginRight: 10 }}>Select channel: </div>
+        <div style={{ marginRight: 10 }}>Channels: </div>
         <ChannelItem
           id="default"
           selected={currentSystemChannelId === "default"}
@@ -213,20 +213,20 @@ export const TitleBar = () => {
   return (
     <div id="title-bar">
       <div className="title-bar-draggable">
-        <div id="title">AdapTable OpenFin Demo App</div>
+        <div id="title">AdapTable OpenFin Demo</div>
       </div>
       <div id="buttons-wrapper">
         {renderChannelPicker()}
         <select
           value={instrumentId}
-          style={{ marginRight: 20 }}
+          style={{ marginRight: 10 }}
           onChange={(e) => {
             const instrumentId = e.target.value;
             setInstrumentId(instrumentId);
           }}
         >
           <option key="-" value="">
-            Select Instrument to filter
+            Select Instrument
           </option>
           {instruments.map((instrumentId) => {
             return (
