@@ -260,12 +260,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       notificationTimeout: false,
       showAppIconInNotifications: true,
       onValidationFailureInExcel: 'show-undo-notification'
-      /*
-
-      onExcelValidationFailed: (dataChangedInfo, failedValidationRules) => {
-
-      }*/
-    }),
+      }),
   ],
 });
 
