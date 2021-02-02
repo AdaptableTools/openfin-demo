@@ -58,18 +58,11 @@ export const createTrade = (overrides?: Partial<Trade>): Trade => {
   const status = generateRandomBool() ? "active" : "inactive";
   tradeIndex++;
 
-  let instrumentId = getRandomItem(getInstrumentIds());let notional = getRandomItem(getNotionals());
-if (instrumentId =
-    "GM"
-    || instrumentId ==
-    "NKE"
-     || instrumentId ==
-    "USB"
-){
-  notional = notional * 10;
-}
-
-
+  let instrumentId = getRandomItem(getInstrumentIds());
+  let notional = getRandomItem(getNotionals());
+  if ((instrumentId = "GM" || instrumentId == "NKE" || instrumentId == "USB")) {
+    notional = notional * 10;
+  }
 
   if (overrides && overrides.instrumentId) {
     instrumentId = overrides.instrumentId;
