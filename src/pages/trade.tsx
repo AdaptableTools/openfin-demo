@@ -22,7 +22,7 @@ import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import { DataChangedInfo, MenuInfo, OpenFinApi, ValidationFailedEventArgs } from "@adaptabletools/adaptable/src/types";
+import { DataChangedInfo, MenuInfo, OpenFinApi } from "@adaptabletools/adaptable/src/types";
 
 const columnDefs: ColDef[] = tradeColumns;
 

@@ -196,7 +196,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 
           Predicate: {
             PredicateId: "GreaterThan",
-            Inputs: [500000],
+            Inputs: [700000],
           },
           MessageType: "Warning",
           AlertProperties: {
