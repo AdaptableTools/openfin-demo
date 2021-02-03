@@ -180,6 +180,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
     Dashboard: {
       IsCollapsed: true,
+      VisibleButtons: ["GridInfo", "Layout", "ConditionalStyle"],
       Tabs: [
         {
           Name: "Position",
