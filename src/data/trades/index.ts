@@ -60,7 +60,7 @@ export const createTrade = (overrides?: Partial<Trade>): Trade => {
 
   let instrumentId = getRandomItem(getInstrumentIds());
   let notional = getRandomItem(getNotionals());
-  if ((instrumentId = "GM" || instrumentId == "NKE" || instrumentId == "USB")) {
+  if (instrumentId == "GM" || instrumentId == "NKE" || instrumentId == "USB") {
     notional = notional * 10;
   }
 
