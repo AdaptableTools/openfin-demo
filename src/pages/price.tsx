@@ -147,6 +147,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Dashboard: {
+      VisibleButtons: ["GridInfo", "Layout", "ConditionalStyle"],
       Tabs: [
         {
           Name: "Price",

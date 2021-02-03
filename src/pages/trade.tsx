@@ -22,7 +22,11 @@ import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import { DataChangedInfo, MenuInfo, OpenFinApi } from "@adaptabletools/adaptable/src/types";
+import {
+  DataChangedInfo,
+  MenuInfo,
+  OpenFinApi,
+} from "@adaptabletools/adaptable/src/types";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -95,6 +99,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
+      VisibleButtons: [
+        "GridInfo",
+        "CellValidation",
+        "Layout",
+        "ConditionalStyle",
+      ],
       Tabs: [
         {
           Name: "Blotter",
@@ -121,13 +131,13 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       CellValidations: [
         {
           Scope: {
-            ColumnIds: ['notional']
+            ColumnIds: ["notional"],
           },
           Predicate: {
-            PredicateId: 'Negative'
-          }
-        }
-      ]
+            PredicateId: "Negative",
+          },
+        },
+      ],
     },
     ActionColumn: {
       ActionColumns: [
@@ -259,8 +269,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     openfin({
       notificationTimeout: false,
       showAppIconInNotifications: true,
-      onValidationFailureInExcel: 'show-undo-notification'
-      }),
+      onValidationFailureInExcel: "show-undo-notification",
+    }),
   ],
 });
 
