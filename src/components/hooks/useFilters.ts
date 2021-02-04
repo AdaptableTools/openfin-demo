@@ -57,7 +57,9 @@ export const useFilters = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
         });
       };
 
-      view.addEventListener("target-changed", onViewTargetChanged);
+      console.log("current view", view);
+      console.log("does it have addListener???", !!view.addListener);
+      view.addListener("target-changed", onViewTargetChanged);
     } else {
       fin.InterApplicationBus.subscribe(
         { uuid: "*" },
