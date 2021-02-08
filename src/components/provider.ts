@@ -177,7 +177,7 @@ export async function makeProvider() {
 
   setInterval(() => {
     addTrade(createTrade());
-  }, 15000);
+  }, 10_000);
 
   const instrumentIds = getInstrumentIds();
   for (let i = 0; i < instrumentIds.length; i++) {
