@@ -28,6 +28,7 @@ import {
   OpenFinApi,
 } from "@adaptabletools/adaptable/src/types";
 import { getInstrumentName } from "../data/utils";
+import { setInstrumentId } from "../components/setInstrumentId";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -114,7 +115,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         const node = menuInfo.RowNode;
         if (node && node.data) {
           const instrumentId = node.data["instrumentId"];
-          alert("need to broadcast: " + instrumentId);
+          setInstrumentId(instrumentId)
         }
       },
     },
@@ -281,13 +282,13 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
+      Revision: 1,
       ContextMenuItems: [
         {
           Label: "Cancel Trade",
           UserMenuItemClickedFunction: "cancelActiveTradeClick",
           UserMenuItemShowPredicate: "cancelActiveTradePredicate",
         },
-        ,
         {
           Label: "Broadcast",
           UserMenuItemLabelFunction: "UserMenuItemLabelFunction",

@@ -192,6 +192,10 @@ export const TitleBar = () => {
     }
   }, [currentSystemChannelId, instrumentId]);
 
+  React.useEffect(()     =>   {
+    fin.InterApplicationBus.subscribe({ uuid: '*' }, 'set-instrumentid', setInstrumentId);
+  },[])
+
   const renderChannelPicker = () => {
     if (!systemChannels) {
       return null;
