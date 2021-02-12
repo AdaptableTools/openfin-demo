@@ -27,6 +27,7 @@ import {
   MenuInfo,
   OpenFinApi,
 } from "@adaptabletools/adaptable/src/types";
+import { getInstrumentName } from "../data/utils";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -93,6 +94,49 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           );
         }
         return false;
+      },
+    },
+    {
+      type: "UserMenuItemClickedFunction",
+      name: "broadcastInstrumentClick",
+      handler(menuInfo: MenuInfo) {
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const instrumentId = node.data["instrumentId"];
+          const name = getInstrumentName(instrumentId);
+          if (name) {
+            const broadcast = getCurrentBroadcastFn();
+            if (!broadcast) {
+              return;
+            }
+            console.log(
+              "broadcasting:",
+              instrumentId,
+              "to channel",
+              currentSystemChannelId
+            );
+            // broadcast FDC3 message for the given instrumnet (with cusip and name info)
+            broadcast({
+              type: "fdc3.instrument",
+              name,
+              id: {
+                ticker: instrumentId,
+                CUSIP: getCusip(instrumentId),
+              },
+            });
+          }
+        }
+      },
+    },
+    {
+      type: "UserMenuItemShowPredicate",
+      name: "broadcastInstrumentPredicate",
+      handler(menuInfo: MenuInfo) {
+        return (
+          !menuInfo.IsGroupedNode &&
+          menuInfo.IsSingleSelectedColumn &&
+          menuInfo.Column.ColumnId == "instrumentId"
+        );
       },
     },
   ],
@@ -252,6 +296,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Label: "Cancel Trade",
           UserMenuItemClickedFunction: "cancelActiveTradeClick",
           UserMenuItemShowPredicate: "cancelActiveTradePredicate",
+        },
+        ,
+        {
+          Label: "Broadcast Instrument",
+          UserMenuItemClickedFunction: "broadcastInstrumentClick",
+          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
       ] /*
       EditLookUpItems: [
