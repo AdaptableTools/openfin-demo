@@ -27,6 +27,7 @@ import {
   MenuInfo,
   OpenFinApi,
 } from "@adaptabletools/adaptable/src/types";
+import { getInstrumentName } from "../data/utils";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -93,6 +94,17 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           );
         }
         return false;
+      },
+    },
+    {
+      type: "UserMenuItemLabelFunction",
+      name: "broadcastInstrumentLabel",
+      handler(menuInfo: MenuInfo) {
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const instrumentId = node.data["instrumentId"];
+          return getInstrumentName(instrumentId);
+        }
       },
     },
     {
@@ -277,7 +289,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
         ,
         {
-          Label: "Broadcast Instrument",
+          Label: "Broadcast",
+          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
           UserMenuItemClickedFunction: "broadcastInstrumentClick",
           UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
