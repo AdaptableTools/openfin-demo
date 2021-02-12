@@ -27,7 +27,6 @@ import {
   MenuInfo,
   OpenFinApi,
 } from "@adaptabletools/adaptable/src/types";
-import { getInstrumentName } from "../data/utils";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -103,28 +102,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         const node = menuInfo.RowNode;
         if (node && node.data) {
           const instrumentId = node.data["instrumentId"];
-          const name = getInstrumentName(instrumentId);
-          if (name) {
-            const broadcast = getCurrentBroadcastFn();
-            if (!broadcast) {
-              return;
-            }
-            console.log(
-              "broadcasting:",
-              instrumentId,
-              "to channel",
-              currentSystemChannelId
-            );
-            // broadcast FDC3 message for the given instrumnet (with cusip and name info)
-            broadcast({
-              type: "fdc3.instrument",
-              name,
-              id: {
-                ticker: instrumentId,
-                CUSIP: getCusip(instrumentId),
-              },
-            });
-          }
+          alert("need to broadcast: " + instrumentId);
         }
       },
     },
