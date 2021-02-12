@@ -19,7 +19,7 @@
     "start": "next start",
     "start-openfin": "openfin --launch --config ./openfin-app.json",
     "dev-openfin": "openfin --launch --config ./openfin-app-dev.json",
-    "build": "next build && next export && npm run appjson",
+    "build": "next build && next export && npm run appjson && cp pack-settings.json out && cp _headers out",
     "appjson": "node appdev.js"
   },
   "dependencies": {

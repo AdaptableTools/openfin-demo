@@ -59,6 +59,15 @@ const gridOptions: GridOptions = {
   columnTypes,
 };
 
+let notificationsPaused = false
+fin.InterApplicationBus.subscribe(
+      { uuid: "*" },
+      "toggle-notifications",
+      ({pausedNotifications}) => {
+        notificationsPaused = pausedNotifications
+      }
+    );
+
 const openfinPluginOptions: OpenFinPluginOptions = {
   notificationTimeout: false,
   showAppIconInNotifications: true,
@@ -81,6 +90,10 @@ const openfinPluginOptions: OpenFinPluginOptions = {
         },
       },
     ];
+
+    if (notificationsPaused) {
+      return false
+    }
   },
   onNotificationAction: (event) => {
     if (event.result.task === "jump-to-cell") {
@@ -197,7 +210,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 
           Predicate: {
             PredicateId: "GreaterThan",
-            Inputs: [5000000],
+            Inputs: [800_000],
           },
           MessageType: "Warning",
           AlertProperties: {

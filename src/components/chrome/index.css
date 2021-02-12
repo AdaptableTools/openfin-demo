@@ -12,6 +12,9 @@
   vertical-align: middle;
   height: 100%;
   width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-size: 14px;
   background-position: center;
   background-repeat: no-repeat;

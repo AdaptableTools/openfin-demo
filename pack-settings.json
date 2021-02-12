@@ -1,69 +1,69 @@
 {
-    "name": "adaptable-openfin-demo-pack",
-    "friendlyName": "AdapTable OpenFin DemoPack",
-    "description": "AdapTable OpenFin Demo App",
-    "enabled": true,
-    "init": "https://openfin-demo.adaptabletools.com/pack-init",
-    "views": [
-        {
-            "id": "price-pack",
-            "friendlyName": "Price View",
-            "external": true,
-            "internal": true,
-            "height": 500,
-            "width": 450,
-            "url": "https://openfin-demo.adaptabletools.com/price?pack",
-            "preload": []
-        },
-        {
-            "id": "price-audit-pack",
-            "friendlyName": "Price Audit View",
-            "external": true,
-            "internal": true,
-            "height": 500,
-            "width": 450,
-            "url": "https://openfin-demo.adaptabletools.com/price-audit?pack",
-            "preload": []
-        },
-        {
-            "id": "trade-pack",
-            "friendlyName": "Trade View",
-            "external": true,
-            "internal": true,
-            "height": 500,
-            "width": 450,
-            "url": "https://openfin-demo.adaptabletools.com/trade?pack",
-            "preload": []
-        },
-        {
-            "id": "trade-audit-pack",
-            "friendlyName": "Trade Audit View",
-            "external": true,
-            "internal": true,
-            "height": 500,
-            "width": 450,
-            "url": "https://openfin-demo.adaptabletools.com/trade-audit?pack",
-            "preload": []
-        },
-        {
-            "id": "position-pack",
-            "friendlyName": "Position View",
-            "external": true,
-            "internal": true,
-            "height": 500,
-            "width": 450,
-            "url": "https://openfin-demo.adaptabletools.com/position?pack",
-            "preload": []
-        },
-        {
-            "id": "help-pack",
-            "friendlyName": "Help",
-            "external": true,
-            "internal": true,
-            "height": 500,
-            "width": 450,
-            "url": "https://openfin-demo.adaptabletools.com/help?pack",
-            "preload": []
-        }
-    ]
+  "name": "adaptable-openfin-demo-pack",
+  "friendlyName": "AdapTable",
+  "description": "AdapTable OpenFin Demo App",
+  "enabled": true,
+  "init": "https://openfin-demo.adaptabletools.com/pack-init",
+  "views": [
+    {
+      "id": "price-pack",
+      "friendlyName": "Price View",
+      "external": true,
+      "internal": true,
+      "height": 500,
+      "width": 1035,
+      "url": "https://openfin-demo.adaptabletools.com/price?pack",
+      "preload": []
+    },
+    {
+      "id": "price-audit-pack",
+      "friendlyName": "Price Audit View",
+      "external": true,
+      "internal": true,
+      "height": 500,
+      "width": 735,
+      "url": "https://openfin-demo.adaptabletools.com/price-audit?pack",
+      "preload": []
+    },
+    {
+      "id": "trade-pack",
+      "friendlyName": "Trade View",
+      "external": true,
+      "internal": true,
+      "height": 500,
+      "width": 1025,
+      "url": "https://openfin-demo.adaptabletools.com/trade?pack",
+      "preload": []
+    },
+    {
+      "id": "trade-audit-pack",
+      "friendlyName": "Trade Audit View",
+      "external": true,
+      "internal": true,
+      "height": 500,
+      "width": 1025,
+      "url": "https://openfin-demo.adaptabletools.com/trade-audit?pack",
+      "preload": []
+    },
+    {
+      "id": "position-pack",
+      "friendlyName": "Position View",
+      "external": true,
+      "internal": true,
+      "height": 500,
+      "width": 630,
+      "url": "https://openfin-demo.adaptabletools.com/position?pack",
+      "preload": []
+    },
+    {
+      "id": "help-pack",
+      "friendlyName": "Help",
+      "external": true,
+      "internal": true,
+      "height": 500,
+      "width": 450,
+      "url": "https://openfin-demo.adaptabletools.com/help?pack",
+      "preload": []
+    }
+  ]
 }
