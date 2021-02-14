@@ -33,8 +33,11 @@ import {
   AdaptableOptions,
   AdaptablePredicate,
   AlertDefinition,
+  MenuInfo,
   OpenFinPluginOptions,
 } from "@adaptabletools/adaptable/src/types";
+import { setInstrumentId } from "../components/setInstrumentId";
+import { getInstrumentName } from "../data/utils";
 
 let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
 const columnDefs: ColDef[] = positionColumns;
@@ -59,14 +62,14 @@ const gridOptions: GridOptions = {
   columnTypes,
 };
 
-let notificationsPaused = false
+let notificationsPaused = false;
 fin.InterApplicationBus.subscribe(
-      { uuid: "*" },
-      "toggle-notifications",
-      ({pausedNotifications}) => {
-        notificationsPaused = pausedNotifications
-      }
-    );
+  { uuid: "*" },
+  "toggle-notifications",
+  ({ pausedNotifications }) => {
+    notificationsPaused = pausedNotifications;
+  }
+);
 
 const openfinPluginOptions: OpenFinPluginOptions = {
   notificationTimeout: false,
@@ -92,7 +95,7 @@ const openfinPluginOptions: OpenFinPluginOptions = {
     ];
 
     if (notificationsPaused) {
-      return false
+      return false;
     }
   },
   onNotificationAction: (event) => {
@@ -139,6 +142,41 @@ const openfinPluginOptions: OpenFinPluginOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Position View",
+  userFunctions: [
+    {
+      type: "UserMenuItemLabelFunction",
+      name: "broadcastInstrumentLabel",
+      handler(menuInfo: MenuInfo) {
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const instrumentId = node.data["instrumentId"];
+          return "Broadcast " + getInstrumentName(instrumentId);
+        }
+      },
+    },
+    {
+      type: "UserMenuItemClickedFunction",
+      name: "broadcastInstrumentClick",
+      handler(menuInfo: MenuInfo) {
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const instrumentId = node.data["instrumentId"];
+          setInstrumentId(instrumentId);
+        }
+      },
+    },
+    {
+      type: "UserMenuItemShowPredicate",
+      name: "broadcastInstrumentPredicate",
+      handler(menuInfo: MenuInfo) {
+        return (
+          !menuInfo.IsGroupedNode &&
+          menuInfo.IsSingleSelectedColumn &&
+          menuInfo.Column.ColumnId == "instrumentId"
+        );
+      },
+    },
+  ],
   predefinedConfig: {
     Theme: ThemeConfig,
     FormatColumn: {
@@ -210,7 +248,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 
           Predicate: {
             PredicateId: "GreaterThan",
-            Inputs: [800_000],
+            Inputs: [200_000],
           },
           MessageType: "Warning",
           AlertProperties: {
@@ -218,6 +256,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             JumpToCell: false,
             HighlightCell: false,
           },
+        },
+      ],
+    },
+    UserInterface: {
+      ContextMenuItems: [
+        {
+          Label: "Broadcast",
+          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
+          UserMenuItemClickedFunction: "broadcastInstrumentClick",
+          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
       ],
     },

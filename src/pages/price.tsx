@@ -2,6 +2,7 @@ import * as React from "react";
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
+  MenuInfo,
 } from "@adaptabletools/adaptable-react-aggrid";
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -24,6 +25,8 @@ import { useAudit } from "../components/hooks/useAudit";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import { getInstrumentName } from "../data/utils";
+import { setInstrumentId } from "../components/setInstrumentId";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -49,6 +52,41 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Price View",
+  userFunctions: [
+    {
+      type: "UserMenuItemLabelFunction",
+      name: "broadcastInstrumentLabel",
+      handler(menuInfo: MenuInfo) {
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const instrumentId = node.data["instrumentId"];
+          return "Broadcast " + getInstrumentName(instrumentId);
+        }
+      },
+    },
+    {
+      type: "UserMenuItemClickedFunction",
+      name: "broadcastInstrumentClick",
+      handler(menuInfo: MenuInfo) {
+        const node = menuInfo.RowNode;
+        if (node && node.data) {
+          const instrumentId = node.data["instrumentId"];
+          setInstrumentId(instrumentId);
+        }
+      },
+    },
+    {
+      type: "UserMenuItemShowPredicate",
+      name: "broadcastInstrumentPredicate",
+      handler(menuInfo: MenuInfo) {
+        return (
+          !menuInfo.IsGroupedNode &&
+          menuInfo.IsSingleSelectedColumn &&
+          menuInfo.Column.ColumnId == "instrumentId"
+        );
+      },
+    },
+  ],
   editOptions: {
     // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
     //   if (dataChangeInfo.columnId === 'bidOfferSpread') {
@@ -172,6 +210,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "bbgBid",
             "bbgAsk",
           ],
+        },
+      ],
+    },
+    UserInterface: {
+      ContextMenuItems: [
+        {
+          Label: "Broadcast",
+          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
+          UserMenuItemClickedFunction: "broadcastInstrumentClick",
+          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
       ],
     },

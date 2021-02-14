@@ -95,7 +95,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       IsCollapsed: true,
     },
     Layout: {
-      Revision: 1,
       CurrentLayout: "Latest",
       Layouts: [
         {
@@ -119,7 +118,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     FormatColumn: {
-      Revision: 2,
       FormatColumns: [
         {
           Scope: {

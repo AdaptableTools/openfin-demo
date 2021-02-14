@@ -104,7 +104,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         const node = menuInfo.RowNode;
         if (node && node.data) {
           const instrumentId = node.data["instrumentId"];
-          return getInstrumentName(instrumentId);
+          return "Broadcast " + getInstrumentName(instrumentId);
         }
       },
     },
@@ -115,7 +115,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         const node = menuInfo.RowNode;
         if (node && node.data) {
           const instrumentId = node.data["instrumentId"];
-          setInstrumentId(instrumentId)
+          setInstrumentId(instrumentId);
         }
       },
     },
@@ -185,7 +185,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Query: {
-      Revision: 7,
       SharedQueries: [
         {
           Name: "Active US Trades",
@@ -282,7 +281,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     UserInterface: {
-      Revision: 1,
       ContextMenuItems: [
         {
           Label: "Cancel Trade",
