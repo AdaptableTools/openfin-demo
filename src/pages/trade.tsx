@@ -293,7 +293,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           UserMenuItemClickedFunction: "broadcastInstrumentClick",
           UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
-      ] /*
+      ],
       EditLookUpItems: [
         {
           Scope: {
@@ -302,7 +302,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           LookUpValues: ["active", "inactive"],
         },
       ],
-      */,
     },
   },
   plugins: [
