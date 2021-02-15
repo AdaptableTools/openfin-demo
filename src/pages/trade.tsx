@@ -298,7 +298,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
         {
           Label: "Broadcast",
-          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
+          UserMenuItemLabelFunction: "broadcastInstrumentLabel",
           UserMenuItemClickedFunction: "broadcastInstrumentClick",
           UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
@@ -306,7 +306,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ColumnMenuItems: [
         {
           Label: "Broadcast",
-          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
+          UserMenuItemLabelFunction: "broadcastInstrumentLabel",
           UserMenuItemClickedFunction: "broadcastInstrumentClick",
           UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
