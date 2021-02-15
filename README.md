@@ -1,14 +1,14 @@
 # OpenFin AdapTable demo
 
 
-
+To Do
 
 
 
 
 ## Installation
 
-NOTE: In order to be able to run `npm install`, you need to be logged into our private NPM registry - follow the instructions in the [Adaptable Angular Wrapper Documentation](https://docs.adaptabletools.com/docs/angular-wrapper/angular-wrapper-installation)
+NOTE: In order to be able to run `npm install`, you need first to be logged into our private NPM registry - follow the instructions in the [Adaptable Documentation](https://docs.adaptabletools.com/docs/getting-started/installationn)
 
 > If you do not have an Adpatable Login please contact support@adaptabletools.com
 
@@ -55,8 +55,6 @@ To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com
 ## Help
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Documentation](https://docs.adaptabletools.com).
-
-For help on the Angular CLI use `ng help` or consult the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## More Information
 
