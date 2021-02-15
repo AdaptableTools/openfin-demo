@@ -55,7 +55,8 @@ export const createTrade = (overrides?: Partial<Trade>): Trade => {
   const moodyRating = getRandomItem(getMoodysRatings());
 
   const sell = generateRandomBool();
-  const status = generateRandomBool() ? "active" : "inactive";
+  const status =
+    tradeIndex > 25 ? "active" : generateRandomBool() ? "active" : "inactive";
   tradeIndex++;
 
   let instrumentId = getRandomItem(getInstrumentIds());
