@@ -302,6 +302,14 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
       ],
+      ColumnMenuItems: [
+        {
+          Label: "Broadcast",
+          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
+          UserMenuItemClickedFunction: "broadcastInstrumentClick",
+          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
+        },
+      ],
       EditLookUpItems: [
         {
           Scope: {
