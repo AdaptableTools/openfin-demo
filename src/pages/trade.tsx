@@ -297,7 +297,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Label: "Broadcast",
           UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
           UserMenuItemClickedFunction: "broadcastInstrumentClick",
-          UserMenuItemShowPredicate: "broadcastInstrumentContextPredicate",
+          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
         },
       ],
       ColumnMenuItems: [
