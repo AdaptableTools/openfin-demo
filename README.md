@@ -4,8 +4,6 @@
 <img src="./demo.jpg"  >
 
 
-
-
 ## Installation
 
 NOTE: In order to be able to run `npm install`, you need first to be logged into our private NPM registry - follow the instructions in the [Adaptable Documentation](https://docs.adaptabletools.com/docs/getting-started/installationn)
