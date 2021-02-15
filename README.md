@@ -1,8 +1,8 @@
 # OpenFin AdapTable demo
 
-## Running the app live
+## Running in production
 
-If you want to run the live app, just run the command below on a Windows machine
+If you want to run the live app just run the command below on a Windows machine
 
 ```sh
 $ npx openfin-cli --launch --config https://openfin-demo.adaptabletools.com/openfin-app.json
