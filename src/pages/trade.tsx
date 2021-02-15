@@ -23,6 +23,8 @@ import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import {
+  ActionColumnClickedEventArgs,
+  ActionColumnRenderParams,
   DataChangedInfo,
   MenuInfo,
   OpenFinApi,
@@ -60,8 +62,13 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     {
       name: "renderCancelButton",
       type: "ActionColumnShouldRenderPredicate",
-      handler: (params) => {
-        return true; //params.rowData.status !== "active";
+      handler: (params: ActionColumnRenderParams) => {
+        return (
+          params.rowNode &&
+          params.rowNode.data &&
+          params.rowNode.data["status"] &&
+          params.rowNode.data["status"] == "active"
+        );
       },
     },
 
@@ -235,8 +242,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "instrumentId",
             "instrumentName",
             "notional",
-            //  "setStatusCancel",
             "status",
+            "setStatusCancel",
             "counterparty",
             "currency",
             "rating",
@@ -357,6 +364,13 @@ const App: React.FC = () => {
           onAdaptableReady={({ adaptableApi, vendorGrid }) => {
             adaptableApiRef.current = adaptableApi;
             gridOptionsRef.current = vendorGrid;
+
+            adaptableApi.eventApi.on(
+              "ActionColumnClicked",
+              (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
+                alert("clicked");
+              }
+            );
           }}
         />
 
