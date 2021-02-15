@@ -24,6 +24,7 @@ import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import {
   ActionColumnClickedEventArgs,
+  ActionColumnClickedInfo,
   ActionColumnRenderParams,
   DataChangedInfo,
   MenuInfo,
@@ -368,7 +369,15 @@ const App: React.FC = () => {
             adaptableApi.eventApi.on(
               "ActionColumnClicked",
               (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
-                alert("clicked");
+                let info: ActionColumnClickedInfo = adaptableApi.eventApi.getActionColumnClickedInfoFromEventArgs(
+                  actionColumnEventArgs
+                );
+                adaptableApi.gridApi.setCellValue(
+                  "status",
+                  "inactive",
+                  info.primaryKeyValue,
+                  true
+                );
               }
             );
           }}
