@@ -112,8 +112,11 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         const node = menuInfo.RowNode;
         if (node && node.data) {
           const instrumentId = node.data["instrumentId"];
-          return "Broadcast " + getInstrumentName(instrumentId);
+          const instrumentName = getInstrumentName(instrumentId);
+          console.log(instrumentName);
+          return "Broadcast " + instrumentName;
         }
+        return "Broadcast";
       },
     },
     {
