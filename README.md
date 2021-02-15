@@ -1,48 +1,20 @@
 # OpenFin AdapTable demo
 
-## Running in production
 
-If you want to run the live app just run the command below on a Windows machine
 
-```sh
-$ npx openfin-cli --launch --config https://openfin-demo.adaptabletools.com/openfin-app.json
-```
 
-This will launch the OpenFin runtime and open the AdapTable demo for you.
+
+
+
+## Installation
+
+NOTE: In order to be able to run `npm install`, you need to be logged into our private NPM registry - follow the instructions in the [Adaptable Angular Wrapper Documentation](https://docs.adaptabletools.com/docs/angular-wrapper/angular-wrapper-installation)
+
+> If you do not have an Adpatable Login please contact support@adaptabletools.com
+
+Run `npm install` (or `yarn`), depending on what tool you're using.
 
 ### Running in dev
-
-For running in development, you need to have access to the AdapTable private npm registry [https://registry.adaptabletools.com](https://registry.adaptabletools.com).
-
-To gain access to this registry please follow these steps:
-
-1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) who will provide you with your unique credentials.
-
-2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
-
-   `npm config set @adaptabletools:registry https://registry.adaptabletools.com`
-
-   if you're using yarn
-
-   `yarn config set @adaptabletools:registry https://registry.adaptabletools.com`
-
-3. Login to the AdapTable private registry:
-
-   `npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools`
-
-4. Enter the credentials that were provided to you by the AdapTable support team:
-
-- login name
-- email
-- password
-
-5. Check you are logged-in correctly by using whoami:
-
-   `npm whoami --registry=https://registry.adaptabletools.com`
-
-This should display the username you received as the current login on the private registry
-
-After all the above, make sure you run `npm install` and then you can run the following 2 commands:
 
 ```sh
 $  npm run dev
@@ -53,3 +25,43 @@ and
 ```sh
 $  npm run dev-openfin
 ```
+
+## Running in production
+
+If you want to run the live app just run the command below on a Windows machine
+
+```sh
+$ npx openfin-cli --launch --config https://openfin-demo.adaptabletools.com/openfin-app.json
+```
+
+This will launch the OpenFin runtime and open the AdapTable demo for you.
+
+
+
+
+## Licences
+A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
+
+Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
+
+We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
+
+Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
+ 
+## Demo
+
+To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+
+## Help
+
+Developers can learn how to access AdapTable programmatically at [AdapTable Documentation](https://docs.adaptabletools.com).
+
+For help on the Angular CLI use `ng help` or consult the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## More Information
+
+General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
+ 
+## Support
+
+For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a Support Ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
