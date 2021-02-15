@@ -170,9 +170,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       name: "broadcastInstrumentPredicate",
       handler(menuInfo: MenuInfo) {
         return (
-          !menuInfo.IsGroupedNode &&
-          menuInfo.IsSingleSelectedColumn &&
-          menuInfo.Column.ColumnId == "instrumentId"
+          !menuInfo.IsGroupedNode && menuInfo.Column.ColumnId == "instrumentId"
         );
       },
     },
@@ -261,6 +259,14 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     },
     UserInterface: {
       ContextMenuItems: [
+        {
+          Label: "Broadcast",
+          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
+          UserMenuItemClickedFunction: "broadcastInstrumentClick",
+          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
+        },
+      ],
+      ColumnMenuItems: [
         {
           Label: "Broadcast",
           UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
