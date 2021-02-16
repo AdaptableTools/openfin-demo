@@ -14,13 +14,13 @@ The demo took less than a day to develop and uses a small subset of the many, ex
 
 ## How it Works
        
-The Demo Application - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: Trade, Price and Positions.
+The demo - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: Trade, Price & Positions.
 
-It also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.
+Each blotter is an OpenFin application which shows 'ticking' data, and each updates based on ticking data upates and data changes made in the other screens.
+
+The demo also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.
         
-Each screen is an OpenFin application which shows 'ticking' data, and each updates based on ticking data upates and data changes made in the other screens.
-
-> These are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.
+> All 5 screens are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.
 
 ### Blotters 
 The 3 blotters in the demo application are:
@@ -45,17 +45,19 @@ The 3 blotters in the demo application are:
 ### Application Bar
 At the top of the demo are a series of useful buttons and dropdowns which help to manage and sync the various the windows.  It includes:
 
-- **Instrument Picker**: Selecting an Instrument from the dropdown will ****????.  This will cause each of the 3 blotters to filter to that Instrument and also????
-  
-- **Channel Chooser** - allows the user to pick a channel on which FDC3 messages will be broadcast
+- **Channel Chooser** - allows the user to pick the (coloured) [OpenFin Channel](https://developers.openfin.co/docs/channels) on which FDC3 messages will be broadcast
 
-- **Theme Button** - will toggle the [Adaptable Theme](https://docs.adaptabletools.com/docs/adaptable-functions/theme-function) in all the Blotters between white and dark themes.
+- **Instrument Picker**: Selecting an Instrument from the dropdown does 2 things:
+  1. broadcasts an [FDC3](https://fdc3.finos.org/) message on the current channel providing details of the selected instrument; this allows 3rd party applications running in OpenFin to react accordingly
+  2. sends a message via the [OpenFin IAB](https://developers.openfin.co/docs/introduction) (inter-application bus) Message Bus; this is intercepted by each of the 3 blotters which then filter to show only rows with that Instrument 
+
+- **Theme Button** - toggles the [Adaptable Theme](https://docs.adaptabletools.com/docs/adaptable-functions/theme-function) in all the Blotters between white and dark themes.
 
     > The same effect can be achieved by changing the theme in any of the individual Blotters
 
-- **Pause/Display Button** to manage OpenFin Notifications
+- **Pause/Display Button** manages whether OpenFin Notifications wil appear
 
-- **Hide/Show Butto**n to toggle Sidebar visibility
+- **Hide/Show Butto** toggles Sidebar visibility
 
 ### Audit Screens
 The Demo leverages the powerful [AdapTable Audit Log](https://docs.adaptabletools.com/docs/key-topics/audit-log) to provide a live 'view' of all data changes. 
