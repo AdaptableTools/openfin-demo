@@ -4,19 +4,19 @@
 
 ## Overview
 
-This demo application illustrates how [Adaptable](https://adaptabletools.com) and [OpenFin](https://openfin.co/) combine neatly together to provide powerful, cutting-edge, feature-rich applications.
+This demo application illustrates how [Adaptable](https://adaptabletools.com) and [OpenFin](https://openfin.co/) combine neatly together to offer powerful, cutting-edge, functionality that can be used to create feature-rich financial applications.
       
 It uses **dummy data** to mimic the types of screens, workflows and advanced use-cases typically found in Financial Services systems.
 
-> The demo application is not designed to be used 'off the shelf' but as an example of the functionality contained in AdapTable and OpenFin, and how they can work together to produce cutting edge excel-managemennt, notification and other benefits.
+> The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communicatino and many other benefits.
         
-The demo took less than a day to develop and uses a small subset of the many, exceptional features found in both AdapTable and OpenFin.
+The demo took less than a day to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.
 
 ## How it Works
        
-The demo - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: Trade, Price & Positions.
+The demo - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: *Trade*, *Price* & *Positions*.
 
-Each blotter is an OpenFin application which shows 'ticking' data, and each updates based on ticking data upates and data changes made in the other screens.
+Each blotter is an OpenFin application which shows 'ticking' data, and each updates in real time as a result of external ticking data updates and data changes made in the other screens.
 
 The demo also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.
         
@@ -26,15 +26,15 @@ The demo also includes 2 Audit windows - Trade and Price - which show all the gr
 The 3 blotters in the demo application are:
 
 **1. Trade Blotter**
-- Displays a collection of fictitous Trades (25 at startup), each of which has an *InstrumentId* and a Status (of active or inactive)
+- Displays a collection of fictitous Trades (25 at startup), each of which has an *InstrumentId* and a *Status* (of active or inactive)
 - Every 10 seconds a new trade is added to the dummy data and displayed in the Grid
-- Editable columns are: Trade Status, Notional (is this correct?)
+- Editable columns are: *Status* and *Notional*
 
 **2. Price Blotter**
 - Displays a made-up list of *Instruments*, each of which contains a Price
-- Every x seconds the Price is updated (and flashes accordingly)
-- Each entry also contains a Closing Price, Spread and Bid and Ask
-- Editable columns are: Price, BidOfferSpread (is this correct?)
+- Every few seconds the Price is updated (and flashes accordingly)
+- Each row also contains a *Closing Price*, *Spread* and *Bid* and *Ask*
+- Editable columns are: *Price*, *BidOfferSpread* 
 
 **3. Positions Blotter**
 - Displays the position for each *InstrumentId* based on data from the Trade and Price screens
@@ -43,26 +43,26 @@ The 3 blotters in the demo application are:
 - No columns are editable
 
 ### Application Bar
-At the top of the demo are a series of useful buttons and dropdowns which help to manage and sync the various the windows.  It includes:
+At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows.  It includes:
 
 - **Channel Chooser** - allows the user to pick the (coloured) [OpenFin Channel](https://developers.openfin.co/docs/channels) on which FDC3 messages will be broadcast
 
 - **Instrument Picker**: Selecting an Instrument from the dropdown does 2 things:
   1. broadcasts an [FDC3](https://fdc3.finos.org/) message on the current channel providing details of the selected instrument; this allows 3rd party applications running in OpenFin to react accordingly
-  2. sends a message via the [OpenFin IAB](https://developers.openfin.co/docs/introduction) (inter-application bus) Message Bus; this is intercepted by each of the 3 blotters which then filter to show only rows with that Instrument 
+  2. sends a message via the [OpenFin IAB](https://developers.openfin.co/docs/introduction) (Inter-Application Message Bus); this is intercepted by each of the 3 blotters which then filter to show only rows containing that Instrument 
 
 - **Theme Button** - toggles the [Adaptable Theme](https://docs.adaptabletools.com/docs/adaptable-functions/theme-function) in all the Blotters between white and dark themes.
 
     > The same effect can be achieved by changing the theme in any of the individual Blotters
 
-- **Pause/Display Button** manages whether OpenFin Notifications wil appear
+- **Pause/Display Button** - sets whether OpenFin Notifications wil appear
 
-- **Hide/Show Butto** toggles Sidebar visibility
+- **Hide/Show Butto** - toggles Sidebar visibility
 
 ### Audit Screens
 The Demo leverages the powerful [AdapTable Audit Log](https://docs.adaptabletools.com/docs/key-topics/audit-log) to provide a live 'view' of all data changes. 
  
-There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs the data directly to a new window:
+There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs the data directly to an AdapTable instance:
 - **Trade Audit**: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when
 - **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes
 
@@ -72,16 +72,16 @@ A sidebar is displayed on the left of the application giving access to all the s
 > This can be hidden / displayed via a button in the Application Toolbar
 
 ## Notifications and Alerts
-The Positions Blotter has been set up to fire an [Adaptable Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) when any Position is greater than 50,000.
+The Positions Blotter has been set up to fire an [Adaptable Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) when any Position is greater than 70,000.
 
 The Alert has been configured with the *ShowInOpenFin* property set to true (something only available when running in the OpenFin container).
 
-The result is that the Alert is displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appears at the side of the grid when triggered.
+The result is that, when triggered, the Alert is displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appears at the side of the grid.
 
-The Notification has been designed with 2 action buttons. In each case we handle the button click event and access the AdapTable API to peform a relevant task:
-- **Increase Limit**: This will add 1,000 to the amount that the Position must be before it is triggered. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)
+The Notification has been designed with 2 [action buttons](https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html). In each case the demo app handles the button click event and accesses the AdapTable API to peform a relevant task:
+- **Increase Limit**: adds 1,000 to the Position amount that, when exceeded, triggeres the Alert. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)
 
-- **Show Me**: This will highlight the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.
+- **Show Me**: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.
 
 ## Live Export
 AdapTable ships with many compelling, extra features, only available when it is running in the OpenFin container.
@@ -97,6 +97,8 @@ One of these is 2-way Live Export - whereby grid data can be sent from AdapTable
   > When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit
 
 This is activated by selecting a report from the **OpenFin Toolbar** in the Trades [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) and running Live Update (the play buttton).
+
+> Note: you must have Excel open **before** you run Live Export
        
 ## AdapTable Features
 
