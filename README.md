@@ -110,6 +110,14 @@ The AdapTable [Dashboard](https://docs.adaptabletools.com/docs/user-interface/da
 - *Position View* & *Price View* - a single Tab with a different set of Toolbars
 - *Position View* & *Price View* - configued so Dashboard is in 'Collapsed' mode at startup
 
+### Layout
+There are a number of Layouts configured for the demo:
+- *Trades View* contains 2 [Layouts](https://docs.adaptabletools.com/docs/adaptable-functions/layout-function) :
+  1. *Latest Trades* - shows all Columns ordered by *TradeId* in descending order
+  2. *Counterparties* - shows a subset of Columns grouped by *Counterparty* (and with *Notional* aggregated)
+
+- *Price View* contains a single Layout called Price - this includes all 3 [Calculated Columns](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) created for that view.
+
 ### Alert
 An [Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) (of type 'Warning') has been configured in *Position View* to fire when Position Coumn value > 70,000 - will trigger an OpenFin Notification
 
@@ -121,9 +129,9 @@ The following [Conditional Styles](https://docs.adaptabletools.com/docs/adaptabl
 
 ### Calculated Column
 3 [Calculated Columns](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) have been configured in *Price View*:
-  - **Bid**: Created with Expression: '[price] - [bidOfferSpread] / 2'
-  - **Ask**: Created with Expression: '[price] + [bidOfferSpread] / 2' 
-  - **Change on Day**: Created with Expression: '[price] - [closingPrice]'
+  - **Bid**: Created with Expression: ```'[price] - [bidOfferSpread] / 2'```
+  - **Ask**: Created with Expression: ```'[price] + [bidOfferSpread] / 2' ```
+  - **Change on Day**: Created with Expression: ```'[price] - [closingPrice]'```
                   
 ### Format Column
 All the views have [Format Columns](https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function) configured:
@@ -144,13 +152,7 @@ These [Flashing Cell](https://docs.adaptabletools.com/docs/adaptable-functions/f
   - Default Nudge value of 0.5 - how cells in Column will increment / decrement when the '+' or '-' keys are pressed
   - A Custom Plus Minus Rule which specifies that if the *InstrumentId* is 'AAPL', the cell will nudge instead by 1
   
-### Layout
-There are a number of Layouts configured for the demo:
-- *Trades View *contains 2 [Layouts](https://docs.adaptabletools.com/docs/adaptable-functions/layout-function) :
-  1. *Latest Trades* - shows all Columns ordered by *TradeId* in descending order
-  2. *Counterparties* - shows a subset of Columns grouped by *Counterparty* (and with *Notional* aggregated)
 
-- *Price View* contains a single Layout called Price - this includes all 3 [Calculated Columns](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) created for that view.
 
 ### Export
 *Trades View* contains an 'Active Trades' Report for [Export](https://docs.adaptabletools.com/docs/adaptable-functions/export-function) which;
