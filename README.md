@@ -40,24 +40,25 @@ The 3 blotters are:
 
 ## Application Bar
 At the top of the demo are a series of useful buttons and dropdowns which help to manage and sync the various the windows.  It includes:
-- Instrument Picker: Selecting an Instrument from the dropdown will ****????.  This will cause each of the 3 blotters to filter to that Instrument and also????
-  
-- Channel Chooser - allows the user to pick a channel on which FDC3 messages will be broadcast
 
-- Theme Button - will toggle the [Adaptable Theme](https://docs.adaptabletools.com/docs/adaptable-functions/theme-function) in all the Blotters between white and dark themes.
+- **Instrument Picker**: Selecting an Instrument from the dropdown will ****????.  This will cause each of the 3 blotters to filter to that Instrument and also????
+  
+- **Channel Chooser** - allows the user to pick a channel on which FDC3 messages will be broadcast
+
+- **Theme Button** - will toggle the [Adaptable Theme](https://docs.adaptabletools.com/docs/adaptable-functions/theme-function) in all the Blotters between white and dark themes.
 
     > The same effect can be achieved by changing the theme in any of the individual Blotters
 
-- Button to toggle pausing / displaying OpenFin notifications
+- **Pause/Display Button** to manage OpenFin Notifications
 
-- Button to hide / show the Sidebar
+- **Hide/Show Butto**n to toggle Sidebar visibility
 
 ## Audit Screens
 The Demo leverages the powerful [AdapTable Audit Log](https://docs.adaptabletools.com/docs/key-topics/audit-log) to provide a live 'view' of all data changes. 
  
-There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs to a new window:
+There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs the data directly to a new window:
 - **Trade Audit**: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when
-- **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter but also logs Ticking Data changes
+- **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes
 
 ##  Sidebar 
 A sidebar is displayed on the left of the application giving access to all the screens available in the demo
@@ -97,60 +98,63 @@ There are numerous [AdapTable Functions](https://docs.adaptabletools.com/docs/ad
 > These have been configured at design-time through [Predefined Config](https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview), but they can, instead, be created at run-time via the AdapTable UI (or programmatically through the Adaptable API).
 
 Some of the Functions being used are: 
-### [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) 
-Set up as follows:
+### Dashboard
+The AdapTable [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) has been set up as follows in the various blotters:
 - Trade View - Two Tabs - *Blotter* and *Reports* (each with own set of Toolbars)
 - Position and Price Views - a single Tab with a different set of Toolbars
 - Position and Price Views - configued so Dashboard is in 'Collapsed' mode at startup
 
-### [Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) 
-An Alert (of type 'Warning') has been configured in Position View to fire when Position Coumn value > 50,000 - will trigger an OpenFin Notification
+### Alert
+An [Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) (of type 'Warning') has been configured in Position View to fire when Position Coumn value > 50,000 - will trigger an OpenFin Notification
 
-### [Conditional Style](https://docs.adaptabletools.com/docs/adaptable-functions/conditional-style-function) 
-The following Conditional Styles have been set up:
+### Conditional Style
+The following [Conditional Styles](https://docs.adaptabletools.com/docs/adaptable-functions/conditional-style-function) have been set up:
   - Trade View - Styles the whole Row light yellow where 'Status' column value is 'active'
   - Price View - 2 Styles for 'Change of Day' column: green background for positive values and red background for negative values
   - Position View - 'PnL' column displays a green or red font for positive and negative numbers
 
-### [Calculated Column](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) 
-3 set up in Price View:
+### Calculated Column
+3 [Calculated Columns](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) have been configured in Price View:
   - **Bid**: Created with Expression: '[price] - [bidOfferSpread] / 2'
   - **Ask**: Created with Expression: '[price] + [bidOfferSpread] / 2' 
   - **Change on Day**: Created with Expression: '[price] - [closingPrice]'
                   
-### [Format Column](https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function) 
-configured as follows:
+### Format Column
+All the views have [Format Columns](https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function) configured:
 - Trade View: All Date Columns (Trade Date, Settlement Date, LastUpdated) use a Date Format of 'MM/DD/YYYY'
 - Price View: 'Bid', 'Ask', 'Change On Day', and 'Price' have a Display Format of 4 decimal places and cell aligns right
 - Position View: 'Current Price', 'Closing Price' and 'PnL' have Display Format of 4 decimal places; 'PnL' also has negative numbers in parentheses
               
-### [Flashing Cell](https://docs.adaptabletools.com/docs/adaptable-functions/flashing-cell-function) 
-set up as follows:
+### Flashing Cell
+These [Flashing Cell](https://docs.adaptabletools.com/docs/adaptable-functions/flashing-cell-function) columns have been configured:
   - Price View: 'Bid', 'Ask', and 'Price' all have Flashing Cells set (to Green and Red)
   - Position View: 'Position' has Flashing Cells set (to Green and Red)
 
-### [Plus Minus](https://docs.adaptabletools.com/docs/adaptable-functions/plus-minus-function) - 
-Price View contains 2 Plus / Minus Rules for the 'Bid Offer Spread' column:
+### Plus Minus
+Price View contains 2 [Plus / Minus Rules](https://docs.adaptabletools.com/docs/adaptable-functions/plus-minus-function) for the 'Bid Offer Spread' column:
   - Default Nudge value of 0.5 - how cells in Column will increment / decrement when the '+' or '-' keys are pressed
   - A Custom Plus Minus Rule which specifies that if the *InstrumentId* is 'AAPL', the cell will nudge instead by 1
   
-### [Layout](https://docs.adaptabletools.com/docs/adaptable-functions/layout-function) 
-Trade View contains 2 Layouts:
+### Layout
+Trade View contains 2 [Layouts](https://docs.adaptabletools.com/docs/adaptable-functions/layout-function) :
   - 'Latest Trades' - shows all Columns ordered by Trade Id in descending order
   - 'Counterparties' - shows subset of Columns grouped by Counterparty (and with notional aggregated)
 
-### [Export](https://docs.adaptabletools.com/docs/adaptable-functions/export-function) 
-Trade View contains an 'Active Trades' Report which;
-  - exports All Columns and any Rows where Status is 'Active'
-  - is also available in the OpenFin Toolbar and so can be exported to Excel as a "Live Report (which will update in real time).
+### Export
+Trade View contains an 'Active Trades' Report for [Export](https://docs.adaptabletools.com/docs/adaptable-functions/export-function) which;
+  - includes All Columns and any Rows where Status is 'Active'
+  - is also available in the OpenFin Toolbar and so can be exported to Excel as a "Live Report (which will update in real time)
 
-### [Edit Lookup](https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems) 
-An EditLookUp Item has been added to 'Status' column in Trade View to enable quick editing
+### Cell Validation
+A [Cell Validation Rule](https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function) has been added to the *Trades* view that the 'Notional' column cannot be negative.
+
+### EditLookUp 
+An [Edit Lookup](https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems) Item has been added to 'Status' column in Trade View to enable quick editing
               
-### [Action Column](https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function)
-An Action Column has been added to the Trade View which displays a 'Cancel' button in any row where Status is 'active'.  When clicked it changes the Status to 'inactive'.
+### Action Column
+An [Action Column](https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function) has been added to the Trade View which displays a 'Cancel' button in any row where Status is 'active'.  When clicked it changes the Status to 'inactive'.
 
-### [User Menu Items](https://demo.adaptabletools.com/menus)
+### User Menu Items 
 All 3 views have 2 menu items which when clicked will broadcast the Instrument via an FDC3 message:
 - 'Broadcast [Instrument Name]' [Context Menu](https://docs.adaptabletools.com/docs/user-interface/context-menu) Item which appears only when right-clicking in a cell in Instrument
 - 'Broadcast' [Column Menu](https://docs.adaptabletools.com/docs/user-interface/column-menu/) Item which appears only in Instrument Column Menu
