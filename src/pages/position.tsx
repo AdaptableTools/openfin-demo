@@ -246,13 +246,11 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
 
           Predicate: {
             PredicateId: "GreaterThan",
-            Inputs: [200_000],
+            Inputs: [70_000],
           },
           MessageType: "Warning",
           AlertProperties: {
             ShowInOpenFin: true,
-            JumpToCell: false,
-            HighlightCell: false,
           },
         },
       ],

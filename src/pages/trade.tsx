@@ -72,7 +72,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         );
       },
     },
-
     {
       type: "UserMenuItemClickedFunction",
       name: "cancelActiveTradeClick",

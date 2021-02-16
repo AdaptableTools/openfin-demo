@@ -30,7 +30,7 @@ The 3 blotters in the demo application are:
 - Every 10 seconds a new trade is added to the dummy data and displayed in the Grid
 - Editable columns are: Trade Status, Notional (is this correct?)
 
-**1. Price Blotter**
+**2. Price Blotter**
 - Displays a made-up list of *Instruments*, each of which contains a Price
 - Every x seconds the Price is updated (and flashes accordingly)
 - Each entry also contains a Closing Price, Spread and Bid and Ask
@@ -96,28 +96,28 @@ One of these is 2-way Live Export - whereby grid data can be sent from AdapTable
   
   > When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit
 
-This can be achieved by selecting a report from the **OpenFin Toolbar** in the Trades [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) and running Live Update (the triangular buttton).
+This is activated by selecting a report from the **OpenFin Toolbar** in the Trades [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) and running Live Update (the play buttton).
        
 ## AdapTable Features
 
 There are numerous [AdapTable Functions](https://docs.adaptabletools.com/docs/adaptable-functions/adaptable-functions-overview) being used in this demo to enhance the workflow and improve the user experience.
-> These have been configured at design-time through [Predefined Config](https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview), but they can, instead, be created at run-time via the AdapTable UI (or programmatically through the Adaptable API).
+> For this demo, these have been configured as JSON at design-time through [Predefined Config](https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview), but they can, instead, be created at run-time via the AdapTable UI (or programmatically through the [Adaptable API](https://docs.adaptabletools.com/docs/adaptable-api/adaptable-api-overview)).
 
-Some of the Functions being used are: 
+The AdapTable Functions being used in this demo include: 
 ### Dashboard
 The AdapTable [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) has been set up as follows in the various blotters:
-- Trade View - Two Tabs - *Blotter* and *Reports* (each with own set of Toolbars)
+- Trade View - has 2 Tabs - *Blotter* and *Reports* (each with own set of Toolbars)
 - Position and Price Views - a single Tab with a different set of Toolbars
 - Position and Price Views - configued so Dashboard is in 'Collapsed' mode at startup
 
 ### Alert
-An [Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) (of type 'Warning') has been configured in Position View to fire when Position Coumn value > 50,000 - will trigger an OpenFin Notification
+An [Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) (of type 'Warning') has been configured in Position View to fire when Position Coumn value > 70,000 - will trigger an OpenFin Notification
 
 ### Conditional Style
 The following [Conditional Styles](https://docs.adaptabletools.com/docs/adaptable-functions/conditional-style-function) have been set up:
-  - Trade View - Styles the whole Row light yellow where 'Status' column value is 'active'
+  - Trade View - Styles the whole Row light yellow where *Status* column value is 'active'
   - Price View - 2 Styles for 'Change of Day' column: green background for positive values and red background for negative values
-  - Position View - 'PnL' column displays a green or red font for positive and negative numbers
+  - Position View - 'PnL' column displays a green / red font for positive / negative numbers
 
 ### Calculated Column
 3 [Calculated Columns](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) have been configured in Price View:
@@ -128,9 +128,12 @@ The following [Conditional Styles](https://docs.adaptabletools.com/docs/adaptabl
 ### Format Column
 All the views have [Format Columns](https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function) configured:
 - Trade View: All Date Columns (Trade Date, Settlement Date, LastUpdated) use a Date Format of 'MM/DD/YYYY'
-- Price View: 'Bid', 'Ask', 'Change On Day', and 'Price' have a Display Format of 4 decimal places and cell aligns right
-- Position View: 'Current Price', 'Closing Price' and 'PnL' have Display Format of 4 decimal places; 'PnL' also has negative numbers in parentheses
-              
+- Price View: 'Bid', 'Ask', 'Change On Day', 'Price' have Display Format of 4 dp and right cell alignment
+- Position View: 'Current Price', 'Closing Price' have Display Format of 4 dp; 'PnL' has negative numbers in parentheses
+
+### Gradient Column
+The *Notional* column in Trade View has a [Gradient Column](https://docs.adaptabletools.com/docs/adaptable-functions/gradient-column-function) applied using a light green background.
+
 ### Flashing Cell
 These [Flashing Cell](https://docs.adaptabletools.com/docs/adaptable-functions/flashing-cell-function) columns have been configured:
   - Price View: 'Bid', 'Ask', and 'Price' all have Flashing Cells set (to Green and Red)
@@ -142,12 +145,15 @@ Price View contains 2 [Plus / Minus Rules](https://docs.adaptabletools.com/docs/
   - A Custom Plus Minus Rule which specifies that if the *InstrumentId* is 'AAPL', the cell will nudge instead by 1
   
 ### Layout
-Trade View contains 2 [Layouts](https://docs.adaptabletools.com/docs/adaptable-functions/layout-function) :
-  - 'Latest Trades' - shows all Columns ordered by Trade Id in descending order
-  - 'Counterparties' - shows subset of Columns grouped by Counterparty (and with notional aggregated)
+There are a number of Layouts configured for the demo:
+- Trade View contains 2 [Layouts](https://docs.adaptabletools.com/docs/adaptable-functions/layout-function) :
+  1. 'Latest Trades' - shows all Columns ordered by *TradeId* in descending order
+  2. 'Counterparties' - shows subset of Columns grouped by *Counterparty* (and with *Notional* aggregated)
+
+- Price View contains a single Layout called Price - this includes all 3 [Calculated Columns](https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function) created for that view.
 
 ### Export
-Trade View contains an 'Active Trades' Report for [Export](https://docs.adaptabletools.com/docs/adaptable-functions/export-function) which;
+Trades View contains an 'Active Trades' Report for [Export](https://docs.adaptabletools.com/docs/adaptable-functions/export-function) which;
   - includes All Columns and any Rows where Status is 'Active'
   - is also available in the OpenFin Toolbar and so can be exported to Excel as a "Live Report (which will update in real time)
 
@@ -155,15 +161,23 @@ Trade View contains an 'Active Trades' Report for [Export](https://docs.adaptabl
 A [Cell Validation Rule](https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function) has been added to the *Trades* view that the 'Notional' column cannot be negative.
 
 ### EditLookUp 
-An [Edit Lookup](https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems) Item has been added to 'Status' column in Trade View to enable quick editing
+An [Edit Lookup](https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems) Item has been added to *Status* column in Trade View to enable quick editing
+
+### Query
+A [Shared Query](https://docs.adaptabletools.com/docs/adaptable-functions/query-function) called "Active US Trades" has been supplied for Trades View to show active to show active trades for some counterparties.  The Expression it uses is:
+```
+'[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")'
+```      
               
 ### Action Column
 An [Action Column](https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function) has been added to the Trade View which displays a 'Cancel' button in any row where Status is 'active'.  When clicked it changes the Status to 'inactive'.
 
 ### User Menu Items 
-All 3 views have 2 menu items which when clicked will broadcast the Instrument via an FDC3 message:
-- 'Broadcast [Instrument Name]' [Context Menu](https://docs.adaptabletools.com/docs/user-interface/context-menu) Item which appears only when right-clicking in a cell in Instrument
-- 'Broadcast' [Column Menu](https://docs.adaptabletools.com/docs/user-interface/column-menu/) Item which appears only in Instrument Column Menu
+All 3 views have 2 menu items which when clicked will broadcast the Instrument via an [FDC3](https://fdc3.finos.org/) message (using current channel):
+- *Broadcast* [Context Menu](https://docs.adaptabletools.com/docs/user-interface/context-menu) Item which appears only when right-clicking in a cell in Instrument
+- *Broadcast* [Column Menu](https://docs.adaptabletools.com/docs/user-interface/column-menu/) Item which appears only in Instrument Column Menu
+
+The Trade View has a *Cancel* Context Menu Item which appears in all rows where *Status* is 'active'.  When the menu item is selected the *Status* changes to 'inactive'.
 
 
 ## Installation
