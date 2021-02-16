@@ -8,17 +8,23 @@
 This demo application illustrates how [Adaptable](https://adaptabletools.com) and [OpenFin](https://openfin.co/) combine neatly together to provide powerful, cutting-edge, feature-rich applications.
       
 It uses **dummy data** to mimic the types of screens, workflows and advanced use-cases typically found in Financial Services systems.
+
+> The demo application is not designed to be used 'off the shelf' but as an example of the functionality contained in AdapTable and OpenFin, and how they can work together to produce cutting edge excel-managemennt, notification and other benefits.
         
-The application took less than a day to develop and uses a small subset of the many, exceptional features found in both AdapTable and OpenFin.
+The demo took less than a day to develop and uses a small subset of the many, exceptional features found in both AdapTable and OpenFin.
 
 ## How it Works
        
 The Demo Application - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: Trade, Price and Positions.
         
-Each screen is an OpenFin application which shows 'ticking' data, and each updates based on data changes in the other screens:
+Each screen is an OpenFin application which shows 'ticking' data, and each updates based on ticking data upates and data changes made in the other screens.
+
+> These are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.
+
+The 3 blotters are:
 
 ### 1. Trade Blotter
-- Displays a collection of fictitous Trades (25 at startup), each of which has an *InstrumentId*
+- Displays a collection of fictitous Trades (25 at startup), each of which has an *InstrumentId* and a Status (of active or inactive)
 - Every 10 seconds a new trade is added to the dummy data and displayed in the Grid
 - Editable columns are: Trade Status, Notional (is this correct?)
 
@@ -27,19 +33,24 @@ Each screen is an OpenFin application which shows 'ticking' data, and each updat
 - Every x seconds the Price is updated (and flashes accordingly)
 - Each entry also contains a Closing Price, Spread and Bid and Ask
 - Editable columns are: Price, BidOfferSpread (is this correct?)
-### 3. Positions Blotter<
+### 3. Positions Blotter
 - Displays the position for each *InstrumentId* based on data from the Trade and Price screens
 - Each row aggregates all the trades for an <i>InstrumentId</i> and calculates the PnL based on the current Price
 - Each time a Trade is added or a Price changes, the Positions Blotter will update (via the OpenFin xxx)
 - No columns are editable
 
-### Keeping in Sync
-One essential feature in the Demo is that all 3 Blotters can stay in sync with each other by using OpenFin communication APIs.
+## Application Bar
+At the top of the demo are a series of useful buttons and dropdowns which help to manage and sync the various the windows.  It includes:
+- Instrument Picker: Selecting an Instrument from the dropdown will ****????.  This will cause each of the 3 blotters to filter to that Instrument and also????
+  
+- Channel Chooser - allows the user to pick a channel on which FDC3 messages will be broadcast
 
-This happens in various ways in the demo app:</p>
-- **Set the Filter** on the *InstrumentId* Column in any Blotter will cause the other Blotters to filter immediately on same instrument
-- **Clear the Filter** on the *InstrumentId* Column in any Blotter will clear the Filters for that Column in all screens
-- **Changing the Theme** in one screen will update the theme in all (also possible via the buttons at top of application)
+- Theme Picker - will update the [Adaptable Theme]() in all the Blotters?
+
+    > The same effect can be achieved by changing the theme in any of the individual Blotters
+
+- Button to toggle suspeending showing notifications
+  
 
 ## Audit Screens
 The Demo leverages the powerful [AdapTable Audit Log](https://docs.adaptabletools.com/docs/key-topics/audit-log) to provide a live 'view' of all data changes. 
@@ -48,9 +59,6 @@ There are 2 Audit Screens - each of which listens to the Audit Log stream and ou
 - **Trade Audit**: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when
 - **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter but also logs Ticking Data changes
 
-## OpenFin Channels
-Need a few sentences on how the apps talk to each other
-
 ## Notifications and Alerts
 The Positions Blotter has been set up to fire an [Adaptable Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) when any Position is greater than 50,000.
 
@@ -58,79 +66,31 @@ The Alert has been configured with the *ShowInOpenFin* property set to true (som
 
 The result is that the Alert is displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appears at the side of the grid when triggered.
 
-The Notification has been designed with 2 buttons. In each case we
-          handle the button click event and all the AdapTable API to peform a
-          connected action:
-        </p>
-        <ol>
-          <li>
-            <b>Increase Limit: </b>
-            This will add 1,000 to the amount that the Position must be before
-            it is triggered. (Note how after clicking this button, next time the
-            Alert fires it shows the updated limit as its trigger.)
-          </li>
-          <li>
-            <b>Show Me: </b>
-            This will highlight the Cell that triggered the Alert and also make
-            the grid 'jump' to show that cell if it was not already in view.{" "}
-          </li>
-        </ol>
-        <a id="live-export"></a>
-        <h3>Live Export</h3>
-        <p>
-          AdapTable ships with compelling, extra features, only available when
-          it is running in the OpenFin container.
-        </p>
-        <p>
-          One of these is Live Export - whereby grid data can be sent from
-          AdapTable to Excel with 2 way updates:
-        </p>
-        <ul>
-          <li>
-            Excel will automatically update in line with cell edits and ticking
-            data changes in AdapTable
-          </li>
-          <li>
-            Any date edits made directly in Excel will be automatically
-            reflected in AdapTable
-          </li>
-        </ul>
-        <p>
-          This can be achieved by selecting a report from the{" "}
-          <b>OpenFin Toolbar</b> in the Trades{" "}
-          <a
-            href="https://docs.adaptabletools.com/docs/user-interface/dashboard"
-            target="_blank"
-          >
-            Dashboard
-          </a>{" "}
-          and running Live Update (the triangular buttton).
-        </p>
-        <a id="adaptable-features"></a>
-        <h3>AdapTable Features</h3>
-        <p>
-          There are numerous{" "}
-          <a
-            href="https://docs.adaptabletools.com/docs/adaptable-functions/adaptable-functions-overview"
-            target="_blank"
-          >
-            AdapTable Functions
-          </a>{" "}
-          being used in this demo application to enhance the workflow and
-          improve the user experience.
-        </p>
-        <p>
-          Note: these have been configured at design-time through{" "}
-          <a
-            href="https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview"
-            target="_blank"
-          >
-            Predefined Config
-          </a>
-          , but they can, instead, be created at run-time via the AdapTable UI.
-        </p>
-        <p>Some of the Functions being used are:</p>
-        <ul>
+The Notification has been designed with 2 action buttons. In each case we handle the button click event and access the AdapTable API to peform a relevant task:
+- **Increase Limit**: This will add 1,000 to the amount that the Position must be before it is triggered. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)
+- **Show Me**: This will highlight the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.
+
+## Live Export
+AdapTable ships with many compelling, extra features, only available when it is running in the OpenFin container.
+
+One of these is 2-way Live Export - whereby grid data can be sent from AdapTable to Excel with the following features:
+
+- Excel will automatically update in line with cell edits and ticking data changes in AdapTable
+
+- Any date edits made directly in Excel will be automatically reflected in AdapTable
+  
+- Any [Cell Validation Rules](https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function) created in AdapTable will be invoked when data in Excel is edited which breaks a rule.  
+  
+  > When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit
+
+This can be achieved by selecting a report from the **OpenFin Toolbar** in the Trades [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) and running Live Update (the triangular buttton).
+       
+## AdapTable Features
+
+There are numerous [AdapTable Functions](https://docs.adaptabletools.com/docs/adaptable-functions/adaptable-functions-overview) being used in this demo to enhance the workflow and improve the user experience.
+> These have been configured at design-time through [Predefined Config](https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview), but they can, instead, be created at run-time via the AdapTable UI (or programmatically through the Adaptable API).
+
+Some of the Functions being used are:        <ul>
           <li>
             <a
               href="https://docs.adaptabletools.com/docs/user-interface/dashboard"
