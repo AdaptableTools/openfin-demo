@@ -15,30 +15,34 @@ The demo took less than a day to develop and uses a small subset of the many, ex
 ## How it Works
        
 The Demo Application - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: Trade, Price and Positions.
+
+It also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.
         
 Each screen is an OpenFin application which shows 'ticking' data, and each updates based on ticking data upates and data changes made in the other screens.
 
 > These are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.
 
-The 3 blotters are:
+### Blotters 
+The 3 blotters in the demo application are:
 
-### 1. Trade Blotter
+**1. Trade Blotter**
 - Displays a collection of fictitous Trades (25 at startup), each of which has an *InstrumentId* and a Status (of active or inactive)
 - Every 10 seconds a new trade is added to the dummy data and displayed in the Grid
 - Editable columns are: Trade Status, Notional (is this correct?)
 
-### 2. Price Blotter
+**1. Price Blotter**
 - Displays a made-up list of *Instruments*, each of which contains a Price
 - Every x seconds the Price is updated (and flashes accordingly)
 - Each entry also contains a Closing Price, Spread and Bid and Ask
 - Editable columns are: Price, BidOfferSpread (is this correct?)
-### 3. Positions Blotter
+
+**3. Positions Blotter**
 - Displays the position for each *InstrumentId* based on data from the Trade and Price screens
 - Each row aggregates all the trades for an <i>InstrumentId</i> and calculates the PnL based on the current Price
 - Each time a Trade is added or a Price changes, the Positions Blotter will update (via the OpenFin xxx)
 - No columns are editable
 
-## Application Bar
+### Application Bar
 At the top of the demo are a series of useful buttons and dropdowns which help to manage and sync the various the windows.  It includes:
 
 - **Instrument Picker**: Selecting an Instrument from the dropdown will ****????.  This will cause each of the 3 blotters to filter to that Instrument and also????
@@ -53,14 +57,14 @@ At the top of the demo are a series of useful buttons and dropdowns which help t
 
 - **Hide/Show Butto**n to toggle Sidebar visibility
 
-## Audit Screens
+### Audit Screens
 The Demo leverages the powerful [AdapTable Audit Log](https://docs.adaptabletools.com/docs/key-topics/audit-log) to provide a live 'view' of all data changes. 
  
 There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs the data directly to a new window:
 - **Trade Audit**: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when
 - **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes
 
-##  Sidebar 
+###  Sidebar 
 A sidebar is displayed on the left of the application giving access to all the screens available in the demo
 
 > This can be hidden / displayed via a button in the Application Toolbar
