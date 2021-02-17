@@ -108,7 +108,7 @@ This is activated by selecting a report from the **OpenFin Toolbar** in the Trad
 
 > Note: you must have Excel open **before** you run Live Export
        
-<img src="./images/liveexcel.GIF" margin-left= "auto"  margin-right ="auto" width="50%" />
+<img src="./images/liveexcel.GIF" />
 
 ## AdapTable Features
 
