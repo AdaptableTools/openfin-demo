@@ -21,6 +21,9 @@ body {
   }
 }
 
+#__docusaurus {
+  background: white;
+}
 body > #content {
   margin: 0px;
   max-width: 900px;
