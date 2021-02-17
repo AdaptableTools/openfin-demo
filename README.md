@@ -59,7 +59,7 @@ At the top of the demo are a series of useful buttons and dropdowns which help t
 
 - **Hide/Show Butto** - toggles Sidebar visibility
 
-<img src="./images/toolbar.gif" />
+<img src="./images/toolbar.GIF" />
 
 ### Audit Screens
 The Demo leverages the powerful [AdapTable Audit Log](https://docs.adaptabletools.com/docs/key-topics/audit-log) to provide a live 'view' of all data changes. 
