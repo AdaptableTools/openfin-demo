@@ -4,6 +4,8 @@ var path = require("path");
 let filename = "README.md";
 let pageTitle = process.argv[2] || "";
 
+console.log('Generating page', pageTitle)
+
 fs.readFile(__dirname + "/style.css", function (err, styleData) {
   fs.readFile(path.resolve(__dirname, "../", filename), function (err, data) {
     if (err) {
@@ -44,7 +46,7 @@ fs.readFile(__dirname + "/style.css", function (err, styleData) {
     html = preContent + converter.makeHtml(text) + postContent;
 
     converter.setFlavor("github");
-    console.log(html);
+   // console.log(html);
 
     let filePath = process.cwd() + "/README.html";
     fs.writeFile(filePath, html, { flag: "wx" }, function (err) {

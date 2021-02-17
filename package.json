@@ -19,9 +19,9 @@
     "start": "next start",
     "start-openfin": "openfin --launch --config ./openfin-app.json",
     "dev-openfin": "openfin --launch --config ./openfin-app-dev.json",
-    "build": "npm run build-help && next build && next export && npm run appjson && cp pack-settings.json out && cp _headers out",
+    "build": "next build && next export && npm run appjson && npm run build-help && cp pack-settings.json out && cp _headers out",
     "appjson": "node scripts/appdev.js",
-    "build-help": "node scripts/build-help.js"
+    "build-help": "rm -fr README.html && node scripts/build-help.js \"Demo Guide\" && cp README.html out/help.html"
   },
   "dependencies": {
     "@adaptabletools/adaptable": "8.0.5",
