@@ -68,7 +68,7 @@ There are 2 Audit Screens - each of which listens to the Audit Log stream and ou
 - **Trade Audit**: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when
 - **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes
 
-<img src="./images/audit.gif" />
+<img src="./images/audit.GIF" />
 
 ###  Sidebar 
 A sidebar is displayed on the left of the application giving access to all the screens available in the demo
@@ -87,14 +87,14 @@ The Notification has been designed with 2 [action buttons](https://cdn.openfin.c
 
 - **Show Me**: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.
 
-<img src="./images/notification.gif" />
+<img src="./images/notification.GIF" />
 
 ## Live Export
 AdapTable ships with many compelling, extra features, only available when it is running in the OpenFin container.
 
 One of these is 2-way Live Export - whereby grid data can be sent from AdapTable to Excel with the following features:
 
-<img src="./images/openfintoolbar.gif" />
+<img src="./images/openfintoolbar.GIF" />
 
 - Excel will automatically update in line with cell edits and ticking data changes in AdapTable
 
@@ -108,7 +108,7 @@ This is activated by selecting a report from the **OpenFin Toolbar** in the Trad
 
 > Note: you must have Excel open **before** you run Live Export
        
-<img src="./images/liveexcel.gif" margin-left= "auto"  margin-right ="auto" width="50%" />
+<img src="./images/liveexcel.GIF" margin-left= "auto"  margin-right ="auto" width="50%" />
 
 ## AdapTable Features
 
