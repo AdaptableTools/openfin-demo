@@ -1,0 +1,423 @@
+
+    <html>
+      <head>
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+      <body>
+        <div id='content'>
+    <h1 id="adaptable-openfin-demo">AdapTable OpenFin Demo</h1>
+<p><img src="./images/demo.jpg" /></p>
+<h2 id="overview">Overview</h2>
+<p>This demo application illustrates how <a href="https://adaptabletools.com">Adaptable</a> and <a href="https://openfin.co/">OpenFin</a> combine neatly together to offer powerful, cutting-edge, functionality that can be used to create feature-rich financial applications.</p>
+<p>It uses <strong>dummy data</strong> to mimic the types of screens, workflows and advanced use-cases typically found in Financial Services systems.</p>
+<blockquote>
+  <p>The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communicatino and many other benefits.</p>
+</blockquote>
+<p>The demo took less than a day to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.</p>
+<h2 id="how-it-works">How it Works</h2>
+<p>The demo - built using AdapTable's <a href="https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin">OpenFin Plugin</a> - displays a pseudo Front Office set-up with 3 views: <em>Trade</em>, <em>Price</em> &amp; <em>Positions</em>.</p>
+<p>Each blotter is an OpenFin application which shows 'ticking' data, and each updates in real time as a result of external ticking data updates and data changes made in the other screens.</p>
+<p>The demo also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.</p>
+<blockquote>
+  <p>All 5 screens are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.</p>
+</blockquote>
+<h3 id="blotters">Blotters</h3>
+<p>The 3 blotters in the demo application are:</p>
+<p><strong>1. Trade Blotter</strong></p>
+<ul>
+<li>Displays a collection of fictitous Trades (25 at startup), each of which has an <em>InstrumentId</em> and a <em>Status</em> (of active or inactive)</li>
+<li>Every 10 seconds a new trade is added to the dummy data and displayed in the Grid</li>
+<li>Editable columns are: <em>Status</em> and <em>Notional</em></li>
+</ul>
+<p><strong>2. Price Blotter</strong></p>
+<ul>
+<li>Displays a made-up list of <em>Instruments</em>, each of which contains a Price</li>
+<li>Every few seconds the Price is updated (and flashes accordingly)</li>
+<li>Each row also contains a <em>Closing Price</em>, <em>Spread</em> and <em>Bid</em> and <em>Ask</em></li>
+<li>Editable columns are: <em>Price</em>, <em>BidOfferSpread</em> </li>
+</ul>
+<p><strong>3. Positions Blotter</strong></p>
+<ul>
+<li>Displays the position for each <em>InstrumentId</em> based on data from the Trade and Price screens</li>
+<li>Each row aggregates all the trades for an <i>InstrumentId</i> and calculates the PnL based on the current Price</li>
+<li>Each time a Trade is added or a Price changes, the Positions Blotter will update (via the OpenFin xxx)</li>
+<li>No columns are editable</li>
+</ul>
+<h3 id="application-bar">Application Bar</h3>
+<p>At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows.  It includes:</p>
+<ul>
+<li><p><strong>Channel Chooser</strong> - allows the user to pick the (coloured) <a href="https://developers.openfin.co/docs/channels">OpenFin Channel</a> on which FDC3 messages will be broadcast</p></li>
+<li><p><strong>Instrument Picker</strong>: Selecting an Instrument from the dropdown does 2 things:</p></li>
+</ul>
+<ol>
+<li>broadcasts an <a href="https://fdc3.finos.org/">FDC3</a> message on the current channel providing details of the selected instrument; this allows 3rd party applications running in OpenFin to react accordingly</li>
+<li>sends a message via the <a href="https://developers.openfin.co/docs/introduction">OpenFin IAB</a> (Inter-Application Message Bus); this is intercepted by each of the 3 blotters which then filter to show only rows containing that Instrument </li>
+</ol>
+<ul>
+<li><p><strong>Theme Button</strong> - toggles the <a href="https://docs.adaptabletools.com/docs/adaptable-functions/theme-function">Adaptable Theme</a> in all the Blotters between white and dark themes.</p>
+<blockquote>
+  <p>The same effect can be achieved by changing the theme in any of the individual Blotters</p>
+</blockquote></li>
+<li><p><strong>Pause/Display Button</strong> - sets whether OpenFin Notifications wil appear</p></li>
+<li><p><strong>Hide/Show Butto</strong> - toggles Sidebar visibility</p></li>
+</ul>
+<p><img src="./images/toolbar.GIF" /></p>
+<h3 id="audit-screens">Audit Screens</h3>
+<p>The Demo leverages the powerful <a href="https://docs.adaptabletools.com/docs/key-topics/audit-log">AdapTable Audit Log</a> to provide a live 'view' of all data changes. </p>
+<p>There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs the data directly to an AdapTable instance:</p>
+<ul>
+<li><strong>Trade Audit</strong>: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when</li>
+<li><strong>Price Blotter</strong>: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes</li>
+</ul>
+<p><img src="./images/audit.GIF" /></p>
+<h3 id="sidebar">Sidebar</h3>
+<p>A sidebar is displayed on the left of the application giving access to all the screens available in the demo</p>
+<blockquote>
+  <p>This can be hidden / displayed via a button in the Application Toolbar</p>
+</blockquote>
+<h2 id="notifications-and-alerts">Notifications and Alerts</h2>
+<p>The Positions Blotter has been set up to fire an <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Adaptable Alert</a> when any Position is greater than 70,000.</p>
+<p>The Alert has been configured with the <em>ShowInOpenFin</em> property set to true (something only available when running in the OpenFin container).</p>
+<p>The result is that, when triggered, the Alert is displayed as an <a href="https://www.npmjs.com/package/openfin-notifications">OpenFin Notification</a> and appears at the side of the grid.</p>
+<p>The Notification has been designed with 2 <a href="https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html">action buttons</a>. In each case the demo app handles the button click event and accesses the AdapTable API to peform a relevant task:</p>
+<ul>
+<li><p><strong>Increase Limit</strong>: adds 1,000 to the Position amount that, when exceeded, triggeres the Alert. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)</p></li>
+<li><p><strong>Show Me</strong>: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.</p></li>
+</ul>
+<p><img src="./images/notification.GIF" /></p>
+<h2 id="live-export">Live Export</h2>
+<p>AdapTable ships with many compelling, extra features, only available when it is running in the OpenFin container.</p>
+<p>One of these is 2-way Live Export - whereby grid data can be sent from AdapTable to Excel with the following features:</p>
+<p><img src="./images/openfintoolbar.GIF" /></p>
+<ul>
+<li><p>Excel will automatically update in line with cell edits and ticking data changes in AdapTable</p></li>
+<li><p>Any date edits made directly in Excel will be automatically reflected in AdapTable</p></li>
+<li><p>Any <a href="https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function">Cell Validation Rules</a> created in AdapTable will be invoked when data in Excel is edited which breaks a rule.  </p></li>
+</ul>
+<blockquote>
+  <p>When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit</p>
+</blockquote>
+<p>This is activated by selecting a report from the <strong>OpenFin Toolbar</strong> in the Trades <a href="https://docs.adaptabletools.com/docs/user-interface/dashboard">Dashboard</a> and running Live Update (the play buttton).</p>
+<blockquote>
+  <p>Note: you must have Excel open <strong>before</strong> you run Live Export</p>
+</blockquote>
+<p><img src="./images/liveexcel.GIF" /></p>
+<h2 id="adaptable-features">AdapTable Features</h2>
+<p>There are numerous <a href="https://docs.adaptabletools.com/docs/adaptable-functions/adaptable-functions-overview">AdapTable Functions</a> being used in this demo to enhance the workflow and improve the user experience.</p>
+<blockquote>
+  <p>For this demo, these have been configured as JSON at design-time through <a href="https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview">Predefined Config</a>, but they can, instead, be created at run-time via the AdapTable UI (or programmatically through the <a href="https://docs.adaptabletools.com/docs/adaptable-api/adaptable-api-overview">Adaptable API</a>).</p>
+</blockquote>
+<p>The AdapTable Functions being used in this demo include: </p>
+<h3 id="dashboard">Dashboard</h3>
+<p>The AdapTable <a href="https://docs.adaptabletools.com/docs/user-interface/dashboard">Dashboard</a> has been set up as follows in the various blotters:</p>
+<ul>
+<li><em>Trades View</em> - has 2 Tabs - <em>Blotter</em> and <em>Reports</em> (each with own set of Toolbars)</li>
+<li><em>Position View</em> &amp; <em>Price View</em> - a single Tab with a different set of Toolbars</li>
+<li><em>Position View</em> &amp; <em>Price View</em> - configued so Dashboard is in 'Collapsed' mode at startup</li>
+</ul>
+<h3 id="layout">Layout</h3>
+<p>There are a number of Layouts configured for the demo:</p>
+<ul>
+<li><em>Trades View</em> contains 2 <a href="https://docs.adaptabletools.com/docs/adaptable-functions/layout-function">Layouts</a> :</li>
+</ul>
+<ol>
+<li><em>Latest Trades</em> - shows all Columns ordered by <em>TradeId</em> in descending order</li>
+<li><em>Counterparties</em> - shows a subset of Columns grouped by <em>Counterparty</em> (and with <em>Notional</em> aggregated)</li>
+</ol>
+<ul>
+<li><em>Price View</em> contains a single Layout called Price - this includes all 3 <a href="https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function">Calculated Columns</a> created for that view.</li>
+</ul>
+<h3 id="alert">Alert</h3>
+<p>An <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Alert</a> (of type 'Warning') has been configured in <em>Position View</em> to fire when Position Coumn value &gt; 70,000 - will trigger an OpenFin Notification</p>
+<h3 id="conditional-style">Conditional Style</h3>
+<p>The following <a href="https://docs.adaptabletools.com/docs/adaptable-functions/conditional-style-function">Conditional Styles</a> have been set up:</p>
+<ul>
+<li><em>Trades View</em> - Styles the whole Row light yellow where <em>Status</em> column value is 'active'</li>
+<li><em>Price View</em> - 2 Styles for 'Change of Day' column: green background for positive values and red background for negative values</li>
+<li><em>Position View</em> - 'PnL' column displays a green / red font for positive / negative numbers</li>
+</ul>
+<h3 id="calculated-column">Calculated Column</h3>
+<p>3 <a href="https://docs.adaptabletools.com/docs/adaptable-functions/calculated-column-function">Calculated Columns</a> have been configured in <em>Price View</em>:</p>
+<ul>
+<li><strong>Bid</strong>: Created with Expression: <code>'[price] - [bidOfferSpread] / 2'</code></li>
+<li><strong>Ask</strong>: Created with Expression: <code>'[price] + [bidOfferSpread] / 2'</code></li>
+<li><strong>Change on Day</strong>: Created with Expression: <code>'[price] - [closingPrice]'</code></li>
+</ul>
+<h3 id="format-column">Format Column</h3>
+<p>All the views have <a href="https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function">Format Columns</a> configured:</p>
+<ul>
+<li><em>Trades View</em>: All Date Columns (Trade Date, Settlement Date, LastUpdated) use a Date Format of 'MM/DD/YYYY'</li>
+<li><em>Price View</em>: 'Bid', 'Ask', 'Change On Day', 'Price' have Display Format of 4 dp and right cell alignment</li>
+<li><em>Position View</em>: 'Current Price', 'Closing Price' have Display Format of 4 dp; 'PnL' has negative numbers in parentheses</li>
+</ul>
+<h3 id="gradient-column">Gradient Column</h3>
+<p>The <em>Notional</em> column in <em>Trades View</em> has a <a href="https://docs.adaptabletools.com/docs/adaptable-functions/gradient-column-function">Gradient Column</a> applied using a light green background.</p>
+<h3 id="flashing-cell">Flashing Cell</h3>
+<p>These <a href="https://docs.adaptabletools.com/docs/adaptable-functions/flashing-cell-function">Flashing Cell</a> columns have been configured:</p>
+<ul>
+<li><em>Price View</em>: 'Bid', 'Ask', and 'Price' all have Flashing Cells set (to Green and Red)</li>
+<li><em>Position View</em>: 'Position' has Flashing Cells set (to Green and Red)</li>
+</ul>
+<h3 id="plus-minus">Plus Minus</h3>
+<p><em>Price View</em> contains 2 <a href="https://docs.adaptabletools.com/docs/adaptable-functions/plus-minus-function">Plus / Minus Rules</a> for the 'Bid Offer Spread' column:</p>
+<ul>
+<li>Default Nudge value of 0.5 - how cells in Column will increment / decrement when the '+' or '-' keys are pressed</li>
+<li>A Custom Plus Minus Rule which specifies that if the <em>InstrumentId</em> is 'AAPL', the cell will nudge instead by 1</li>
+</ul>
+<h3 id="export">Export</h3>
+<p><em>Trades View</em> contains an 'Active Trades' Report for <a href="https://docs.adaptabletools.com/docs/adaptable-functions/export-function">Export</a> which;</p>
+<ul>
+<li>includes All Columns and any Rows where Status is 'Active'</li>
+<li>is also available in the OpenFin Toolbar and so can be exported to Excel as a "Live Report (which will update in real time)</li>
+</ul>
+<h3 id="cell-validation">Cell Validation</h3>
+<p>A <a href="https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function">Cell Validation Rule</a> has been added to the <em>Trades</em> view that the 'Notional' column cannot be negative.</p>
+<h3 id="editlookup">EditLookUp</h3>
+<p>An <a href="https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems">Edit Lookup</a> Item has been added to <em>Status</em> column in <em>Trades View</em> to enable quick editing</p>
+<h3 id="query">Query</h3>
+<p>A <a href="https://docs.adaptabletools.com/docs/adaptable-functions/query-function">Shared Query</a> called "Active US Trades" has been supplied for <em>Trades View</em> to show active to show active trades for some counterparties.  The Expression it uses is:</p>
+<pre><code>'[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")'
+</code></pre>
+<pre><code>  
+</code></pre>
+<h3 id="action-column">Action Column</h3>
+<p>An <a href="https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function">Action Column</a> has been added to the <em>Trades View</em> which displays a 'Cancel' button in any row where Status is 'active'.  When clicked it changes the Status to 'inactive'.</p>
+<h3 id="user-menu-items">User Menu Items</h3>
+<p>All 3 views have 2 menu items which when clicked will broadcast the Instrument via an <a href="https://fdc3.finos.org/">FDC3</a> message (using current channel):</p>
+<ul>
+<li><em>Broadcast</em> <a href="https://docs.adaptabletools.com/docs/user-interface/context-menu">Context Menu</a> Item which appears only when right-clicking in a cell in Instrument</li>
+<li><em>Broadcast</em> <a href="https://docs.adaptabletools.com/docs/user-interface/column-menu/">Column Menu</a> Item which appears only in Instrument Column Menu</li>
+</ul>
+<p>The <em>Trades View</em> has a <em>Cancel</em> Context Menu Item which appears in all rows where <em>Status</em> is 'active'.  When the menu item is selected the <em>Status</em> changes to 'inactive'.</p>
+<h2 id="installation">Installation</h2>
+<p>NOTE: In order to be able to run <code>npm install</code>, you need first to be logged into our private NPM registry - follow the instructions in the <a href="https://docs.adaptabletools.com/docs/getting-started/installationn">Adaptable Documentation</a></p>
+<blockquote>
+  <p>If you do not have an Adpatable Login please contact support@adaptabletools.com</p>
+</blockquote>
+<p>Run <code>npm install</code> (or <code>yarn</code>), depending on what tool you're using.</p>
+<h2 id="running-in-production">Running in production</h2>
+<p>If you want to run the live app just run the command below on a Windows machine</p>
+<pre><code class="sh language-sh">$ npx openfin-cli --launch --config https://openfin-demo.adaptabletools.com/openfin-app.json
+</code></pre>
+<p>This will launch the OpenFin runtime and open the AdapTable demo for you.</p>
+<h3 id="running-in-dev">Running in dev</h3>
+<p>To run the demo in development mode run these 2 commands:</p>
+<pre><code class="sh language-sh">$  npm run dev
+$  npm run dev-openfin
+</code></pre>
+<h2 id="licences">Licences</h2>
+<p>A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.</p>
+<p>Licences can be purchased individually, for a team, for an organisation or for integration into software for onward sale.</p>
+<p>We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.</p>
+<p>Please contact <a href="mailto:sales@adaptabletools.com"><code>sales@adaptabletools.com</code></a> for more information.</p>
+<h2 id="more-information">More Information</h2>
+<ul>
+<li><p>For general information about Adaptable Tools is available at our <a href="http://www.adaptabletools.com">Website</a> </p></li>
+<li><p>To see AdapTable in action visit our <a href="https://demo.adaptabletools.com">Demo Site</a> which contains large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).</p></li>
+<li><p>Developers can learn how to access AdapTable programmatically at <a href="https://docs.adaptabletools.com">AdapTable Documentation</a>.</p></li>
+<li><p>For all support enquiries please email <a href="mailto:support@adaptabletools.com"><code>support@adaptabletools.com</code></a> or <a href="https://adaptabletools.zendesk.com/hc/en-us/requests/new">raise a Support Ticket</a>.</p></li>
+</ul>
+
+        </div>
+        <style type='text/css'>body {
+  font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  body > #content {
+    padding: 0px 20px 20px 20px !important;
+  }
+}
+
+body > #content {
+  margin: 0px;
+  max-width: 900px;
+  border: 1px solid #e1e4e8;
+  padding: 10px 40px;
+  padding-bottom: 20px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  color: #bbb;
+  background-color: #bbb;
+  height: 1px;
+  flex: 0 1 auto;
+  margin: 1em 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+ * Links
+ */
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+a:visited {
+  color: #0366d6;
+}
+a:hover {
+  color: #0366d6;
+  text-decoration: underline;
+}
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+/**
+  * Code blocks
+  */
+
+code {
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  word-wrap: break-word;
+  padding: 0.2em 0.4em;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace;
+}
+
+pre > code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+  font-size: 100%;
+}
+
+/**
+ * Blockquotes
+ */
+blockquote {
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  border-left-width: 3px;
+  padding: 0 1em;
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+blockquote * {
+  font-style: normal !important;
+  letter-spacing: 0;
+  color: #6a737d !important;
+}
+
+/**
+ * Tables
+ */
+table {
+  border-spacing: 2px;
+  display: block;
+  font-size: 14px;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+th {
+  font-weight: 600;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/**
+ * Others
+ */
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #24292e;
+}
+
+ul {
+  margin-top: 0;
+}
+
+li {
+  color: #24292e;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #24292e;
+}
+
+a:visited {
+  color: #0366d6;
+}
+
+h1,
+h2,
+h3 {
+  border-bottom: 1px solid #eaecef;
+  color: #111;
+  /* Darker */
+}
+</style>
+      </body>
+    </html>

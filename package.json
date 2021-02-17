@@ -15,12 +15,13 @@
   },
   "homepage": "https://github.com/AdaptableTools/adaptable-poc#readme",
   "scripts": {
-    "dev": "next -- -p 3001",
+    "dev": "npm run build-help && next -- -p 3001",
     "start": "next start",
     "start-openfin": "openfin --launch --config ./openfin-app.json",
     "dev-openfin": "openfin --launch --config ./openfin-app-dev.json",
-    "build": "next build && next export && npm run appjson && cp pack-settings.json out && cp _headers out",
-    "appjson": "node appdev.js"
+    "build": "npm run build-help && next build && next export && npm run appjson && cp pack-settings.json out && cp _headers out",
+    "appjson": "node scripts/appdev.js",
+    "build-help": "node scripts/build-help.js"
   },
   "dependencies": {
     "@adaptabletools/adaptable": "8.0.5",
@@ -31,6 +32,7 @@
     "@adaptabletools/adaptable-react-aggrid": "8.0.5",
     "@ag-grid-community/react": "^25.0.1",
     "@ag-grid-enterprise/all-modules": "^25.0.1",
+    "iframe-resizer-react": "^1.1.0",
     "modern-normalize": "^1.0.0",
     "next": "10.0.1",
     "normalize.css": "^8.0.1",
@@ -41,13 +43,14 @@
   },
   "devDependencies": {
     "@types/node": "^13.11.1",
+    "@types/openfin": "^51.0.0",
     "@types/react": "^16.9.56",
     "@zeit/next-css": "^1.0.1",
-    "@types/openfin": "^51.0.0",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^5.1.0",
     "openfin-cli": "^3.0.2",
     "prettier": "^2.1.2",
+    "showdown": "^1.9.1",
     "traverse": "^0.6.6",
     "typescript": "^4.0.5"
   }
