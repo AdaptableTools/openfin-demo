@@ -10,8 +10,13 @@ It uses **dummy data** to mimic the types of screens, workflows and advanced use
 
 > The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communicatino and many other benefits.
 
-The demo took less than a day to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.
+The demo took less than a day to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.  
 
+In particular it demonstrates 3 areas where AdapTable and OpenFin functionality combine in exciting ways:
+
+- [Notifications](#notifications-and-alerts) - AdapTables powerful Alerts can be shown as OpenFin notifications with action buttons
+- [FDC3 Messages](#application-bar) - FDC3 broadcasts can be sent from AdapTable to other OpenFin windows via current channel (and internally through the IAB message bus)
+- [Live 2-way Excel Integration](#live-export) - Ticking data can be sent from AdapTable to Excel and each updates in line with data changes made in the other, including full validation.
 ## How it Works
 
 The demo - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: _Trade_, _Price_ & _Positions_.
