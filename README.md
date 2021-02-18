@@ -53,7 +53,11 @@ The 3 blotters in the demo application are:
 
 ### Application Bar
 
-At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows. It includes:
+At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows. 
+
+<img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/toolbar.gif" />
+
+The Application Bar contains: 
 
 - **Channel Chooser** - allows the user to pick the (coloured) [OpenFin Channel](https://developers.openfin.co/docs/channels) on which FDC3 messages will be broadcast
 
@@ -70,7 +74,7 @@ At the top of the demo are a series of useful buttons and dropdowns which help t
 
 - **Hide/Show Butto** - toggles Sidebar visibility
 
-<img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/toolbar.gif" />
+
 
 ### Audit Screens
 
