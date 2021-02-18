@@ -8,13 +8,13 @@ This demo application illustrates how [Adaptable](https://adaptabletools.com) an
 
 It uses **dummy data** to mimic the types of screens, workflows and advanced use-cases typically found in Financial Services systems.
 
-> The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communicatino and many other benefits.
+> The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communication and many other benefits.
 
-The demo took less than a day to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.  
+The demo took just 2 days to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.  
 
 In particular it demonstrates 3 areas where AdapTable and OpenFin functionality combine in exciting ways:
 
-- [Notifications](#notifications-and-alerts) - AdapTables powerful Alerts can be shown as OpenFin notifications with action buttons
+- [Notifications](#notifications-and-alerts) - AdapTable's powerful Alerts can be shown as OpenFin Notifications with action buttons
 - [FDC3 Messages](#application-bar) - FDC3 broadcasts can be sent from AdapTable to other OpenFin windows via current channel (and internally through the IAB message bus)
 - [Live 2-way Excel Integration](#live-export) - Ticking data can be sent from AdapTable to Excel and each updates in line with data changes made in the other, including full validation.
 ## How it Works
@@ -25,7 +25,7 @@ Each blotter is an OpenFin application which shows 'ticking' data, and each upda
 
 The demo also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.
 
-> All 5 screens are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.
+> All 5 screens are OpenFin windows built using the [OpenFin Platform API](https://developers.openfin.co/docs/platform-api) including grouped, tabbed and windowed layouts, saving and applying custom snapshots, tear-outs and window customization.
 
 ### Blotters
 

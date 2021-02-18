@@ -73,6 +73,7 @@ const initialGridOptions: GridOptions = {
     initialWidth: 300,
     filter: true,
     floatingFilter: true,
+    resizable: true,
     sortable: true,
   },
   rowData: [],

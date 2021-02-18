@@ -13,7 +13,7 @@ import AdaptableReact, {
 import { modules } from "../components/modules";
 import { AgGridReact } from "@ag-grid-community/react";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
-import { GridOptions } from "@ag-grid-enterprise/all-modules";
+import { ColDef, GridOptions } from "@ag-grid-enterprise/all-modules";
 import { columnTypes } from "../data/columnTypes";
 import { useFilters } from "../components/hooks/useFilters";
 import { useThemeSync } from "../components/hooks/useThemeSync";
@@ -31,7 +31,7 @@ type Item = {
   trigger: string;
 };
 
-const columns = [
+const columns: ColDef[] = [
   {
     field: "timestamp",
     type: "abColDefDate",
@@ -67,6 +67,7 @@ const initialGridOptions: GridOptions = {
     editable: false,
     initialWidth: 300,
     filter: true,
+    resizable: true,
     floatingFilter: true,
     sortable: true,
   },
