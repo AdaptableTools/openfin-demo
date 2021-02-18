@@ -1,6 +1,6 @@
 # AdapTable OpenFin Demo
 
-<img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/demo.jpg" />
+<img src="./images/demo.PNG" />
 
 ## Overview
 
@@ -81,7 +81,7 @@ There are 2 Audit Screens - each of which listens to the Audit Log stream and ou
 - **Trade Audit**: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when
 - **Price Blotter**: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes
 
-<img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/audit.gif" />
+<img src="./images/priceaudit.PNG" />
 
 ### Sidebar
 
@@ -124,7 +124,7 @@ This is activated by selecting a report from the **OpenFin Toolbar** in the Trad
 
 > Note: you must have Excel open **before** you run Live Export
 
-<img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/liveexcel.gif" />
+<img src="./images/liveexcel.PNG" />
 
 ## AdapTable Features
 
