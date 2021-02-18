@@ -7,20 +7,26 @@
       <body>
         <div id='content'>
     <h1 id="adaptable-openfin-demo">AdapTable OpenFin Demo</h1>
-<p><img src="./images/demo.jpg" /></p>
+<p><img src="./images/demo.PNG" /></p>
 <h2 id="overview">Overview</h2>
 <p>This demo application illustrates how <a href="https://adaptabletools.com">Adaptable</a> and <a href="https://openfin.co/">OpenFin</a> combine neatly together to offer powerful, cutting-edge, functionality that can be used to create feature-rich financial applications.</p>
 <p>It uses <strong>dummy data</strong> to mimic the types of screens, workflows and advanced use-cases typically found in Financial Services systems.</p>
 <blockquote>
-  <p>The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communicatino and many other benefits.</p>
+  <p>The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communication and many other benefits.</p>
 </blockquote>
-<p>The demo took less than a day to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.</p>
+<p>The demo took just 2 days to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.  </p>
+<p>In particular it demonstrates 3 areas where AdapTable and OpenFin functionality combine in exciting ways:</p>
+<ul>
+<li><a href="#notifications-and-alerts">Notifications</a> - AdapTable's powerful Alerts can be shown as OpenFin Notifications with action buttons</li>
+<li><a href="#application-bar">FDC3 Messages</a> - FDC3 broadcasts can be sent from AdapTable to other OpenFin windows via current channel (and internally through the IAB message bus)</li>
+<li><a href="#live-export">Live 2-way Excel Integration</a> - Ticking data can be sent from AdapTable to Excel and each updates in line with data changes made in the other, including full validation.</li>
+</ul>
 <h2 id="how-it-works">How it Works</h2>
 <p>The demo - built using AdapTable's <a href="https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin">OpenFin Plugin</a> - displays a pseudo Front Office set-up with 3 views: <em>Trade</em>, <em>Price</em> &amp; <em>Positions</em>.</p>
 <p>Each blotter is an OpenFin application which shows 'ticking' data, and each updates in real time as a result of external ticking data updates and data changes made in the other screens.</p>
 <p>The demo also includes 2 Audit windows - Trade and Price - which show all the grid-related activity in the respective blotters.</p>
 <blockquote>
-  <p>All 5 screens are OpenFin windows so they can be dragged, tiled and grouped as each user prefers.</p>
+  <p>All 5 screens are OpenFin windows built using the <a href="https://developers.openfin.co/docs/platform-api">OpenFin Platform API</a> including grouped, tabbed and windowed layouts, saving and applying custom snapshots, tear-outs and window customization.</p>
 </blockquote>
 <h3 id="blotters">Blotters</h3>
 <p>The 3 blotters in the demo application are:</p>
@@ -35,7 +41,7 @@
 <li>Displays a made-up list of <em>Instruments</em>, each of which contains a Price</li>
 <li>Every few seconds the Price is updated (and flashes accordingly)</li>
 <li>Each row also contains a <em>Closing Price</em>, <em>Spread</em> and <em>Bid</em> and <em>Ask</em></li>
-<li>Editable columns are: <em>Price</em>, <em>BidOfferSpread</em> </li>
+<li>Editable columns are: <em>Price</em>, <em>BidOfferSpread</em></li>
 </ul>
 <p><strong>3. Positions Blotter</strong></p>
 <ul>
@@ -45,32 +51,35 @@
 <li>No columns are editable</li>
 </ul>
 <h3 id="application-bar">Application Bar</h3>
-<p>At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows.  It includes:</p>
+<p>At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows. </p>
+<p><img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/toolbar.gif" /></p>
+<p>The Application Bar contains: </p>
 <ul>
 <li><p><strong>Channel Chooser</strong> - allows the user to pick the (coloured) <a href="https://developers.openfin.co/docs/channels">OpenFin Channel</a> on which FDC3 messages will be broadcast</p></li>
 <li><p><strong>Instrument Picker</strong>: Selecting an Instrument from the dropdown does 2 things:</p></li>
 </ul>
 <ol>
 <li>broadcasts an <a href="https://fdc3.finos.org/">FDC3</a> message on the current channel providing details of the selected instrument; this allows 3rd party applications running in OpenFin to react accordingly</li>
-<li>sends a message via the <a href="https://developers.openfin.co/docs/introduction">OpenFin IAB</a> (Inter-Application Message Bus); this is intercepted by each of the 3 blotters which then filter to show only rows containing that Instrument </li>
+<li>sends a message via the <a href="https://developers.openfin.co/docs/introduction">OpenFin IAB</a> (Inter-Application Message Bus); this is intercepted by each of the 3 blotters which then filter to show only rows containing that Instrument</li>
 </ol>
 <ul>
-<li><p><strong>Theme Button</strong> - toggles the <a href="https://docs.adaptabletools.com/docs/adaptable-functions/theme-function">Adaptable Theme</a> in all the Blotters between white and dark themes.</p>
+<li><strong>Theme Button</strong> - toggles the <a href="https://docs.adaptabletools.com/docs/adaptable-functions/theme-function">Adaptable Theme</a> in all the Blotters between white and dark themes.</li>
+</ul>
 <blockquote>
   <p>The same effect can be achieved by changing the theme in any of the individual Blotters</p>
-</blockquote></li>
+</blockquote>
+<ul>
 <li><p><strong>Pause/Display Button</strong> - sets whether OpenFin Notifications wil appear</p></li>
 <li><p><strong>Hide/Show Butto</strong> - toggles Sidebar visibility</p></li>
 </ul>
-<p><img src="./images/toolbar.GIF" /></p>
 <h3 id="audit-screens">Audit Screens</h3>
-<p>The Demo leverages the powerful <a href="https://docs.adaptabletools.com/docs/key-topics/audit-log">AdapTable Audit Log</a> to provide a live 'view' of all data changes. </p>
+<p>The Demo leverages the powerful <a href="https://docs.adaptabletools.com/docs/key-topics/audit-log">AdapTable Audit Log</a> to provide a live 'view' of all data changes.</p>
 <p>There are 2 Audit Screens - each of which listens to the Audit Log stream and outputs the data directly to an AdapTable instance:</p>
 <ul>
 <li><strong>Trade Audit</strong>: Displays a list of all Cell Edits made in the Trade Blotter - who made the change, what was changed and when</li>
 <li><strong>Price Blotter</strong>: Displays a list of all Cell Edits made in the Price Blotter and also logs all Ticking Data changes</li>
 </ul>
-<p><img src="./images/audit.GIF" /></p>
+<p><img src="./images/priceaudit.PNG" /></p>
 <h3 id="sidebar">Sidebar</h3>
 <p>A sidebar is displayed on the left of the application giving access to all the screens available in the demo</p>
 <blockquote>
@@ -85,30 +94,31 @@
 <li><p><strong>Increase Limit</strong>: adds 1,000 to the Position amount that, when exceeded, triggeres the Alert. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)</p></li>
 <li><p><strong>Show Me</strong>: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.</p></li>
 </ul>
-<p><img src="./images/notification.GIF" /></p>
+<p><img src="./images/notification.PNG" /></p>
 <h2 id="live-export">Live Export</h2>
 <p>AdapTable ships with many compelling, extra features, only available when it is running in the OpenFin container.</p>
 <p>One of these is 2-way Live Export - whereby grid data can be sent from AdapTable to Excel with the following features:</p>
-<p><img src="./images/openfintoolbar.GIF" /></p>
+<p><img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/openfintoolbar.gif" /></p>
 <ul>
 <li><p>Excel will automatically update in line with cell edits and ticking data changes in AdapTable</p></li>
 <li><p>Any date edits made directly in Excel will be automatically reflected in AdapTable</p></li>
-<li><p>Any <a href="https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function">Cell Validation Rules</a> created in AdapTable will be invoked when data in Excel is edited which breaks a rule.  </p></li>
+<li><p>Any <a href="https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function">Cell Validation Rules</a> created in AdapTable will be invoked when data in Excel is edited which breaks a rule.</p></li>
 </ul>
 <blockquote>
   <p>When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit</p>
 </blockquote>
+<p><img src="./images/validationerror.PNG" /></p>
 <p>This is activated by selecting a report from the <strong>OpenFin Toolbar</strong> in the Trades <a href="https://docs.adaptabletools.com/docs/user-interface/dashboard">Dashboard</a> and running Live Update (the play buttton).</p>
 <blockquote>
   <p>Note: you must have Excel open <strong>before</strong> you run Live Export</p>
 </blockquote>
-<p><img src="./images/liveexcel.GIF" /></p>
+<p><img src="./images/liveexcel.PNG" /></p>
 <h2 id="adaptable-features">AdapTable Features</h2>
 <p>There are numerous <a href="https://docs.adaptabletools.com/docs/adaptable-functions/adaptable-functions-overview">AdapTable Functions</a> being used in this demo to enhance the workflow and improve the user experience.</p>
 <blockquote>
   <p>For this demo, these have been configured as JSON at design-time through <a href="https://docs.adaptabletools.com/docs/predefined-config/predefined-config-overview">Predefined Config</a>, but they can, instead, be created at run-time via the AdapTable UI (or programmatically through the <a href="https://docs.adaptabletools.com/docs/adaptable-api/adaptable-api-overview">Adaptable API</a>).</p>
 </blockquote>
-<p>The AdapTable Functions being used in this demo include: </p>
+<p>The AdapTable Functions being used in this demo include:</p>
 <h3 id="dashboard">Dashboard</h3>
 <p>The AdapTable <a href="https://docs.adaptabletools.com/docs/user-interface/dashboard">Dashboard</a> has been set up as follows in the various blotters:</p>
 <ul>
@@ -176,20 +186,18 @@
 <h3 id="editlookup">EditLookUp</h3>
 <p>An <a href="https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems">Edit Lookup</a> Item has been added to <em>Status</em> column in <em>Trades View</em> to enable quick editing</p>
 <h3 id="query">Query</h3>
-<p>A <a href="https://docs.adaptabletools.com/docs/adaptable-functions/query-function">Shared Query</a> called "Active US Trades" has been supplied for <em>Trades View</em> to show active to show active trades for some counterparties.  The Expression it uses is:</p>
+<p>A <a href="https://docs.adaptabletools.com/docs/adaptable-functions/query-function">Shared Query</a> called "Active US Trades" has been supplied for <em>Trades View</em> to show active to show active trades for some counterparties. The Expression it uses is:</p>
 <pre><code>'[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")'
 </code></pre>
-<pre><code>  
-</code></pre>
 <h3 id="action-column">Action Column</h3>
-<p>An <a href="https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function">Action Column</a> has been added to the <em>Trades View</em> which displays a 'Cancel' button in any row where Status is 'active'.  When clicked it changes the Status to 'inactive'.</p>
+<p>An <a href="https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function">Action Column</a> has been added to the <em>Trades View</em> which displays a 'Cancel' button in any row where Status is 'active'. When clicked it changes the Status to 'inactive'.</p>
 <h3 id="user-menu-items">User Menu Items</h3>
 <p>All 3 views have 2 menu items which when clicked will broadcast the Instrument via an <a href="https://fdc3.finos.org/">FDC3</a> message (using current channel):</p>
 <ul>
 <li><em>Broadcast</em> <a href="https://docs.adaptabletools.com/docs/user-interface/context-menu">Context Menu</a> Item which appears only when right-clicking in a cell in Instrument</li>
 <li><em>Broadcast</em> <a href="https://docs.adaptabletools.com/docs/user-interface/column-menu/">Column Menu</a> Item which appears only in Instrument Column Menu</li>
 </ul>
-<p>The <em>Trades View</em> has a <em>Cancel</em> Context Menu Item which appears in all rows where <em>Status</em> is 'active'.  When the menu item is selected the <em>Status</em> changes to 'inactive'.</p>
+<p>The <em>Trades View</em> has a <em>Cancel</em> Context Menu Item which appears in all rows where <em>Status</em> is 'active'. When the menu item is selected the <em>Status</em> changes to 'inactive'.</p>
 <h2 id="installation">Installation</h2>
 <p>NOTE: In order to be able to run <code>npm install</code>, you need first to be logged into our private NPM registry - follow the instructions in the <a href="https://docs.adaptabletools.com/docs/getting-started/installationn">Adaptable Documentation</a></p>
 <blockquote>
@@ -213,7 +221,7 @@ $  npm run dev-openfin
 <p>Please contact <a href="mailto:sales@adaptabletools.com"><code>sales@adaptabletools.com</code></a> for more information.</p>
 <h2 id="more-information">More Information</h2>
 <ul>
-<li><p>For general information about Adaptable Tools is available at our <a href="http://www.adaptabletools.com">Website</a> </p></li>
+<li><p>For general information about Adaptable Tools is available at our <a href="http://www.adaptabletools.com">Website</a></p></li>
 <li><p>To see AdapTable in action visit our <a href="https://demo.adaptabletools.com">Demo Site</a> which contains large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).</p></li>
 <li><p>Developers can learn how to access AdapTable programmatically at <a href="https://docs.adaptabletools.com">AdapTable Documentation</a>.</p></li>
 <li><p>For all support enquiries please email <a href="mailto:support@adaptabletools.com"><code>support@adaptabletools.com</code></a> or <a href="https://adaptabletools.zendesk.com/hc/en-us/requests/new">raise a Support Ticket</a>.</p></li>
@@ -243,6 +251,9 @@ $  npm run dev-openfin
   }
 }
 
+#__docusaurus {
+  background: white;
+}
 body > #content {
   margin: 0px;
   max-width: 900px;
