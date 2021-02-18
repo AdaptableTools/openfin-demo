@@ -103,7 +103,7 @@ The Notification has been designed with 2 [action buttons](https://cdn.openfin.c
 
 - **Show Me**: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.
 
-<img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/notification.gif" />
+<img src="./images/notification.PNG" />
 
 ## Live Export
 
@@ -120,11 +120,14 @@ One of these is 2-way Live Export - whereby grid data can be sent from AdapTable
 
   > When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit
 
+  <img src="./images/validationerror.PNG" />
+
 This is activated by selecting a report from the **OpenFin Toolbar** in the Trades [Dashboard](https://docs.adaptabletools.com/docs/user-interface/dashboard) and running Live Update (the play buttton).
 
 > Note: you must have Excel open **before** you run Live Export
 
 <img src="./images/liveexcel.PNG" />
+
 
 ## AdapTable Features
 
