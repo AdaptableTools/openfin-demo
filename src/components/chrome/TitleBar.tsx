@@ -208,6 +208,7 @@ export const TitleBar = () => {
         <div style={{ marginRight: 10 }}>Channels: </div>
         <ChannelItem
           id="default"
+          key={"default"}
           selected={currentSystemChannelId === "default"}
           onClick={setCurrentSystemChannelId}
         />
@@ -217,6 +218,7 @@ export const TitleBar = () => {
           return (
             <ChannelItem
               id={id}
+              key={id}
               visualIdentity={channel.visualIdentity}
               selected={currentSystemChannelId === id}
               onClick={setCurrentSystemChannelId}

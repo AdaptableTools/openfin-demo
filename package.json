@@ -19,9 +19,9 @@
     "start": "next start",
     "start-openfin": "openfin --launch --config ./openfin-app.json",
     "dev-openfin": "openfin --launch --config ./openfin-app-dev.json",
-    "build": "next build && next export && npm run appjson && npm run build-help && cp pack-settings.json out && cp _headers out",
+    "build": "next build && next export && npm run appjson && npm run build-help && cpy pack-settings.json out && cpy _headers out",
     "appjson": "node scripts/appdev.js",
-    "build-help": "rm -fr README.html && node scripts/build-help.js \"Demo Guide\" && cp README.html out/help.html"
+    "build-help": "rimraf README.html && node scripts/build-help.js \"Demo Guide\" && cpy README.html out/help.html"
   },
   "dependencies": {
     "@adaptabletools/adaptable": "8.0.5",
@@ -46,10 +46,12 @@
     "@types/openfin": "^51.0.0",
     "@types/react": "^16.9.56",
     "@zeit/next-css": "^1.0.1",
+    "cpy-cli": "^3.1.1",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^5.1.0",
     "openfin-cli": "^3.0.2",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "showdown": "^1.9.1",
     "traverse": "^0.6.6",
     "typescript": "^4.0.5"
