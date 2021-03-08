@@ -22,9 +22,7 @@ import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import finance, {
-  abColDefFDC3Instrument,
-} from "@adaptabletools/adaptable-plugin-finance";
+import finance from "@adaptabletools/adaptable-plugin-finance";
 import {
   ActionColumnClickedEventArgs,
   ActionColumnClickedInfo,

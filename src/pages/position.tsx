@@ -75,74 +75,39 @@ fin.InterApplicationBus.subscribe(
 const openfinPluginOptions: OpenFinPluginOptions = {
   notificationTimeout: false,
   showAppIconInNotifications: true,
-  onShowNotification: (notification) => {
-    notification.buttons = [
-      {
-        title: "Increase Limit",
-        type: "button",
-        // cta: true,
-        onClick: {
-          task: "increase-limit",
-        },
-      },
-      {
-        title: "Show Me",
-        type: "button",
-        cta: true,
-        onClick: {
-          task: "jump-to-cell",
-        },
-      },
-    ];
-
-    if (notificationsPaused) {
-      return false;
-    }
-  },
-  onNotificationAction: (event) => {
-    if (event.result.task === "jump-to-cell") {
-      const alert = event.notification.alert as AdaptableAlert;
-
-      adaptableApiRef.current.gridApi.jumpToCell(
-        alert.DataChangedInfo?.primaryKeyValue,
-        alert.DataChangedInfo?.columnId || ""
-      );
-
-      adaptableApiRef.current.gridApi.highlightCell({
-        columnId: alert.DataChangedInfo?.columnId || "",
-        primaryKeyValue: alert.DataChangedInfo?.primaryKeyValue,
-        timeout: 2500,
-        highlightType: alert.AlertDefinition.MessageType,
-      });
-    }
-    if (event.result.task === "increase-limit") {
-      const alert: AdaptableAlert = event.notification.alert as AdaptableAlert;
-      if (alert) {
-        let alertDefinition: AlertDefinition = alert.AlertDefinition;
-        if (alertDefinition) {
-          let predicate = alertDefinition.Predicate;
-          if (predicate) {
-            let inputs: any[] | undefined = predicate.Inputs;
-            if (inputs && inputs.length > 0) {
-              let firstInput = inputs[0];
-              let newValue = firstInput + 1000;
-              let newPredicate: AdaptablePredicate = {
-                PredicateId: "GreaterThan",
-                Inputs: [newValue],
-              };
-              alertDefinition.Predicate = newPredicate;
-              adaptableApiRef.current.alertApi.editAlert(alertDefinition);
-            }
-          }
-        }
-      }
-    }
-  },
+  showAdaptableAlertsAsNotifications: true,
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Position View",
+  userFunctions: [
+    {
+      type: "AlertButtonActionFunction",
+      handler: (alert) => {
+        if (alert) {
+          let alertDefinition: AlertDefinition = alert.AlertDefinition;
+          if (alertDefinition) {
+            let predicate = alertDefinition.Predicate;
+            if (predicate) {
+              let inputs: any[] | undefined = predicate.Inputs;
+              if (inputs && inputs.length > 0) {
+                let firstInput = inputs[0];
+                let newValue = firstInput + 1000;
+                let newPredicate: AdaptablePredicate = {
+                  PredicateId: "GreaterThan",
+                  Inputs: [newValue],
+                };
+                alertDefinition.Predicate = newPredicate;
+                adaptableApiRef.current.alertApi.editAlert(alertDefinition);
+              }
+            }
+          }
+        }
+      },
+      name: "increaseLimit",
+    },
+  ],
   predefinedConfig: {
     Theme: ThemeConfig,
     FormatColumn: {
@@ -211,14 +176,33 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Scope: {
             ColumnIds: ["position"],
           },
-
+          AlertButtons: [
+            {
+              Text: "Increase Limit",
+              ButtonStyle: {
+                Variant: "raised",
+                ClassName: "",
+              },
+              AlertButtonActionFunction: "increaseLimit",
+            },
+            {
+              Text: "Show Me",
+              ButtonStyle: {
+                ClassName: "",
+                Variant: "outlined",
+                Tone: "error",
+              },
+              Action: ["highlight-cell", "jump-to-cell"],
+              AlertButtonActionFunction: "nope",
+            },
+          ],
           Predicate: {
             PredicateId: "GreaterThan",
-            Inputs: [70_000],
+            Inputs: [10_000], // return to 70,000
           },
           MessageType: "Warning",
           AlertProperties: {
-            ShowInOpenFin: true,
+            ShowPopup: true,
           },
         },
       ],
