@@ -178,7 +178,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           },
           AlertButtons: [
             {
-              Text: "Increase Limit",
+              Text: "Increase",
               ButtonStyle: {
                 Variant: "raised",
                 ClassName: "",
