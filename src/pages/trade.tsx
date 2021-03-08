@@ -22,7 +22,9 @@ import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
 import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import finance, {abColDefFDC3Instrument} from "@adaptabletools/adaptable-plugin-finance";
+import finance, {
+  abColDefFDC3Instrument,
+} from "@adaptabletools/adaptable-plugin-finance";
 import {
   ActionColumnClickedEventArgs,
   ActionColumnClickedInfo,
@@ -103,40 +105,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           );
         }
         return false;
-      },
-    },
-    {
-      type: "UserMenuItemLabelFunction",
-      name: "broadcastInstrumentLabel",
-      handler(menuInfo: MenuInfo) {
-        const node = menuInfo.RowNode;
-        if (node && node.data) {
-          const instrumentId = node.data["instrumentId"];
-          const instrumentName = getInstrumentName(instrumentId);
-          console.log(instrumentName);
-          return "Broadcast " + instrumentName;
-        }
-        return "Broadcast";
-      },
-    },
-    {
-      type: "UserMenuItemClickedFunction",
-      name: "broadcastInstrumentClick",
-      handler(menuInfo: MenuInfo) {
-        const node = menuInfo.RowNode;
-        if (node && node.data) {
-          const instrumentId = node.data["instrumentId"];
-          setInstrumentId(instrumentId);
-        }
-      },
-    },
-    {
-      type: "UserMenuItemShowPredicate",
-      name: "broadcastInstrumentPredicate",
-      handler(menuInfo: MenuInfo) {
-        return (
-          !menuInfo.IsGroupedNode && menuInfo.Column.ColumnId == "instrumentId"
-        );
       },
     },
   ],
@@ -296,21 +264,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           UserMenuItemClickedFunction: "cancelActiveTradeClick",
           UserMenuItemShowPredicate: "cancelActiveTradePredicate",
         },
-        {
-          Label: "Broadcast",
-          UserMenuItemLabelFunction: "broadcastInstrumentLabel",
-          UserMenuItemClickedFunction: "broadcastInstrumentClick",
-          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
-        },
       ],
-      ColumnMenuItems: [
-        {
-          Label: "Broadcast",
-          UserMenuItemLabelFunction: "broadcastInstrumentLabel",
-          UserMenuItemClickedFunction: "broadcastInstrumentClick",
-          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
-        },
-      ],
+
       EditLookUpItems: [
         {
           Scope: {

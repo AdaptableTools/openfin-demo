@@ -27,7 +27,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import finance, {abColDefFDC3Instrument} from "@adaptabletools/adaptable-plugin-finance";
+import finance from "@adaptabletools/adaptable-plugin-finance";
 import {
   AdaptableAlert,
   AdaptableApi,
@@ -143,39 +143,6 @@ const openfinPluginOptions: OpenFinPluginOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Position View",
-  userFunctions: [
-    {
-      type: "UserMenuItemLabelFunction",
-      name: "broadcastInstrumentLabel",
-      handler(menuInfo: MenuInfo) {
-        const node = menuInfo.RowNode;
-        if (node && node.data) {
-          const instrumentId = node.data["instrumentId"];
-          return "Broadcast " + getInstrumentName(instrumentId);
-        }
-      },
-    },
-    {
-      type: "UserMenuItemClickedFunction",
-      name: "broadcastInstrumentClick",
-      handler(menuInfo: MenuInfo) {
-        const node = menuInfo.RowNode;
-        if (node && node.data) {
-          const instrumentId = node.data["instrumentId"];
-          setInstrumentId(instrumentId);
-        }
-      },
-    },
-    {
-      type: "UserMenuItemShowPredicate",
-      name: "broadcastInstrumentPredicate",
-      handler(menuInfo: MenuInfo) {
-        return (
-          !menuInfo.IsGroupedNode && menuInfo.Column.ColumnId == "instrumentId"
-        );
-      },
-    },
-  ],
   predefinedConfig: {
     Theme: ThemeConfig,
     FormatColumn: {
@@ -256,29 +223,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-    UserInterface: {
-      ContextMenuItems: [
-        {
-          Label: "Broadcast",
-          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
-          UserMenuItemClickedFunction: "broadcastInstrumentClick",
-          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
-        },
-      ],
-      ColumnMenuItems: [
-        {
-          Label: "Broadcast",
-          UserMenuItemLabelFunction: "UserMenuItemLabelFunction",
-          UserMenuItemClickedFunction: "broadcastInstrumentClick",
-          UserMenuItemShowPredicate: "broadcastInstrumentPredicate",
-        },
-      ],
-    },
   },
-  plugins: [
-    openfin(openfinPluginOptions),
-    finance()
-  ],
+  plugins: [openfin(openfinPluginOptions), finance()],
 });
 
 const App: React.FC = () => {

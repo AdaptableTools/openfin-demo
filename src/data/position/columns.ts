@@ -5,7 +5,7 @@ export const positionColumns: ColDef[] = [
     field: "instrumentId",
     headerName: "Instrument",
     initialWidth: 130,
-    type: "abColDefString",
+    type: ["abColDefFDC3Instrument", "fdc3-type-CUSIP"],
   },
   {
     field: "position",
