@@ -27,6 +27,7 @@ import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import { getInstrumentName } from "../data/utils";
 import { setInstrumentId } from "../components/setInstrumentId";
+import finance, {abColDefFDC3Instrument} from "@adaptabletools/adaptable-plugin-finance";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -241,7 +242,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
     openfin({
       notificationTimeout: false,
       showAppIconInNotifications: true,
-    }),
+    }), 
+    finance()
   ],
 });
 

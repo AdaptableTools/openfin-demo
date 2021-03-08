@@ -27,6 +27,7 @@ import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import finance, {abColDefFDC3Instrument} from "@adaptabletools/adaptable-plugin-finance";
 import {
   AdaptableAlert,
   AdaptableApi,
@@ -274,7 +275,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
   },
-  plugins: [openfin(openfinPluginOptions)],
+  plugins: [
+    openfin(openfinPluginOptions),
+    finance()
+  ],
 });
 
 const App: React.FC = () => {
