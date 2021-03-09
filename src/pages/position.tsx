@@ -193,7 +193,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
                 Tone: "error",
               },
               Action: ["highlight-cell", "jump-to-cell"],
-              AlertButtonActionFunction: "nope",
             },
           ],
           Predicate: {

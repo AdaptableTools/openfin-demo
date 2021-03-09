@@ -97,17 +97,27 @@ A sidebar is displayed on the left of the application giving access to all the s
 
 The Positions Blotter has been set up to fire an [Adaptable Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) when any Position is greater than 70,000.
 
-The Alert has been configured with the _ShowInOpenFin_ property set to true (something only available when running in the OpenFin container).
+We have set the _showAdaptableAlertsAsNotifications_ property in OpenFinPluginOpetions to true.  The result is that, when triggered, Alerts are displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appear at the side of the grid.
 
-The result is that, when triggered, the Alert is displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appears at the side of the grid.
+The Alert has been configured with 2 butttons:
 
-The Notification has been designed with 2 [action buttons](https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html). In each case the demo app handles the button click event and accesses the AdapTable API to peform a relevant task:
+- **Show Me**: uses the 'highlight-cell' and 'jump-to-cell' [Predefined Actions](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#predefined-actions) to let the user see the Cell that triggered the Alert.
+- **Increase Limit**: sets a [Custom User Function](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#custom-user-function) to add 1,000 to the Position amount that, when exceeded, triggeres the Alert.
 
-- **Increase Limit**: adds 1,000 to the Position amount that, when exceeded, triggeres the Alert. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)
+  > (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)
 
-- **Show Me**: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.
+Both of the AdapTable Alert buttons automatically convert into [OpenFin action buttons](https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html) with 'cta' displaying based on the Button's style. 
 
 <img src="./images/notification.PNG" />
+
+## FDC3 Broadcasts
+
+In all 3 views the 'Instrument' column has been configued (using the [Finance Plugin](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin)) as of type 'InstrumentColumn'.
+
+As a result a 'Broadcast Instrument' [Context Menu item](https://docs.adaptabletools.com/docs/user-interface/context-menu) is automatically added to each Column' Context Menu.
+
+When that menu item is clicked, Adaptable (when running in OpenFin) listens to the [Broadcast Instrument event](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin#broadcast-instrument) and sends a broadcasts an FDC3 message on the current channel.
+
 
 ## Live Export
 
@@ -234,11 +244,6 @@ A [Shared Query](https://docs.adaptabletools.com/docs/adaptable-functions/query-
 An [Action Column](https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function) has been added to the _Trades View_ which displays a 'Cancel' button in any row where Status is 'active'. When clicked it changes the Status to 'inactive'.
 
 ### User Menu Items
-
-All 3 views have 2 menu items which when clicked will broadcast the Instrument via an [FDC3](https://fdc3.finos.org/) message (using current channel):
-
-- _Broadcast_ [Context Menu](https://docs.adaptabletools.com/docs/user-interface/context-menu) Item which appears only when right-clicking in a cell in Instrument
-- _Broadcast_ [Column Menu](https://docs.adaptabletools.com/docs/user-interface/column-menu/) Item which appears only in Instrument Column Menu
 
 The _Trades View_ has a _Cancel_ Context Menu Item which appears in all rows where _Status_ is 'active'. When the menu item is selected the _Status_ changes to 'inactive'.
 
