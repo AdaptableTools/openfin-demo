@@ -104,7 +104,7 @@ The Alert has been configured with 2 butttons:
 - **Show Me**: uses the 'highlight-cell' and 'jump-to-cell' [Predefined Actions](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#predefined-actions) to let the user see the Cell that triggered the Alert.
 - **Increase Limit**: sets a [Custom User Function](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#custom-user-function) to add 1,000 to the Position amount that, when exceeded, triggeres the Alert.
 
-  > (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)
+  > After this button is clicked, the next time the Alert fires it shows the updated limit as its trigger.
 
 Both of the AdapTable Alert buttons automatically convert into [OpenFin action buttons](https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html) with 'cta' displaying based on the Button's style. 
 
@@ -116,7 +116,7 @@ In all 3 views the 'Instrument' column has been configued (using the [Finance Pl
 
 As a result a 'Broadcast Instrument' [Context Menu item](https://docs.adaptabletools.com/docs/user-interface/context-menu) is automatically added to each Column' Context Menu.
 
-When that menu item is clicked, Adaptable (when running in OpenFin) listens to the [Broadcast Instrument event](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin#broadcast-instrument) and sends a broadcasts an FDC3 message on the current channel.
+When that menu item is clicked, Adaptable (when running in OpenFin) listens to the [Broadcast Instrument event](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin#broadcast-instrument) and broadcasts an FDC3 message on the current channel containing the [Instrument Context](https://fdc3.finos.org/docs/1.0/context-spec).
 
 
 ## Live Export
