@@ -112,9 +112,9 @@ Both of the AdapTable Alert buttons automatically convert into [OpenFin action b
 
 ## FDC3 Broadcasts
 
-In all 3 views the 'Instrument' column has been configued (using the [Finance Plugin](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin)) as of type 'InstrumentColumn'.
+In all 3 views the 'Instrument' column has been configued (using the [Finance Plugin](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin)) as of type **InstrumentColumn**.
 
-As a result a 'Broadcast Instrument' [Context Menu item](https://docs.adaptabletools.com/docs/user-interface/context-menu) is automatically added to each Column' Context Menu.
+As a result a *Broadcast Instrument* [Context Menu item](https://docs.adaptabletools.com/docs/user-interface/context-menu) is automatically added to each Column's Context Menu.
 
 When that menu item is clicked, Adaptable (when running in OpenFin) listens to the [Broadcast Instrument event](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin#broadcast-instrument) and broadcasts an FDC3 message on the current channel containing the [Instrument Context](https://fdc3.finos.org/docs/1.0/context-spec).
 
