@@ -5,7 +5,7 @@ export const priceColumns: ColDef[] = [
     field: "instrumentId",
     headerName: "Instrument",
     initialWidth: 130,
-    type: ["abColDefFDC3Instrument", "fdc3-type-CUSIP"],
+    type: ["abColDefString"],
   },
   {
     field: "price",

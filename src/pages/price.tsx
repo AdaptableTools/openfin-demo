@@ -2,7 +2,6 @@ import * as React from "react";
 import AdaptableReact, {
   AdaptableApi,
   AdaptableOptions,
-  MenuInfo,
 } from "@adaptabletools/adaptable-react-aggrid";
 import { AdaptableToolPanelAgGridComponent } from "@adaptabletools/adaptable/src/AdaptableComponents";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -25,8 +24,6 @@ import { useAudit } from "../components/hooks/useAudit";
 import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import { getInstrumentName } from "../data/utils";
-import { setInstrumentId } from "../components/setInstrumentId";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 
 const columnDefs: ColDef[] = priceColumns;
@@ -193,7 +190,14 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       notificationTimeout: false,
       showAppIconInNotifications: true,
     }),
-    finance(),
+    finance({
+      instrumentColumns: [
+        {
+          columnId: "instrumentId",
+          tickerColumnId: "instrumentId",
+        },
+      ],
+    }),
   ],
 });
 

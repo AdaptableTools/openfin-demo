@@ -207,7 +207,17 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
   },
-  plugins: [openfin(openfinPluginOptions), finance()],
+  plugins: [
+    openfin(openfinPluginOptions),
+    finance({
+      instrumentColumns: [
+        {
+          columnId: "instrumentId",
+          tickerColumnId: "instrumentId",
+        },
+      ],
+    }),
+  ],
 });
 
 const App: React.FC = () => {

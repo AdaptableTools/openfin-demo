@@ -280,7 +280,15 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       showAppIconInNotifications: true,
       onValidationFailureInExcel: "show-undo-notification",
     }),
-    finance(),
+    finance({
+      instrumentColumns: [
+        {
+          columnId: "instrumentId",
+          cusipColumnId: "cusip",
+          tickerColumnId: "instrumentId",
+        },
+      ],
+    }),
   ],
 });
 

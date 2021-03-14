@@ -8,7 +8,7 @@ export const tradeColumns = [
     field: "instrumentId",
     headerName: "Instrument",
     initialWidth: 150,
-    type: ["abColDefFDC3Instrument", "fdc3-type-CUSIP"],
+    type: ["abColDefString"],
   },
   {
     field: "instrumentName",
