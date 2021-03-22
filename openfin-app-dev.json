@@ -34,7 +34,7 @@
   "services": [
     {
       "name": "excel",
-      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json"
+      "manifestUrl": "https://cdn.openfin.co/release/exceljs/4.0.1/provider/app.json"
     },
     {
       "name": "notifications"

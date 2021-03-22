@@ -87,14 +87,21 @@
 </blockquote>
 <h2 id="notifications-and-alerts">Notifications and Alerts</h2>
 <p>The Positions Blotter has been set up to fire an <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Adaptable Alert</a> when any Position is greater than 70,000.</p>
-<p>The Alert has been configured with the <em>ShowInOpenFin</em> property set to true (something only available when running in the OpenFin container).</p>
-<p>The result is that, when triggered, the Alert is displayed as an <a href="https://www.npmjs.com/package/openfin-notifications">OpenFin Notification</a> and appears at the side of the grid.</p>
-<p>The Notification has been designed with 2 <a href="https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html">action buttons</a>. In each case the demo app handles the button click event and accesses the AdapTable API to peform a relevant task:</p>
+<p>We have set the <em>showAdaptableAlertsAsNotifications</em> property in OpenFinPluginOpetions to true.  The result is that, when triggered, Alerts are displayed as an <a href="https://www.npmjs.com/package/openfin-notifications">OpenFin Notification</a> and appear at the side of the grid.</p>
+<p>The Alert has been configured with 2 butttons:</p>
 <ul>
-<li><p><strong>Increase Limit</strong>: adds 1,000 to the Position amount that, when exceeded, triggeres the Alert. (Note how after clicking this button, next time the Alert fires it shows the updated limit as its trigger.)</p></li>
-<li><p><strong>Show Me</strong>: highlights the Cell that triggered the Alert and also make the grid 'jump' to show that cell if it was not already in view.</p></li>
+<li><strong>Show Me</strong>: uses the 'highlight-cell' and 'jump-to-cell' <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#predefined-actions">Predefined Actions</a> to let the user see the Cell that triggered the Alert.</li>
+<li><strong>Increase Limit</strong>: sets a <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#custom-user-function">Custom User Function</a> to add 1,000 to the Position amount that, when exceeded, triggeres the Alert.</li>
 </ul>
+<blockquote>
+  <p>After this button is clicked, the next time the Alert fires it shows the updated limit as its trigger.</p>
+</blockquote>
+<p>Both of the AdapTable Alert buttons automatically convert into <a href="https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html">OpenFin action buttons</a> with 'cta' displaying based on the Button's style. </p>
 <p><img src="./images/notification.PNG" /></p>
+<h2 id="fdc3-broadcasts">FDC3 Broadcasts</h2>
+<p>In all 3 views the 'Instrument' column has been configued (using the <a href="https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin">Finance Plugin</a>) as of type <strong>InstrumentColumn</strong>.</p>
+<p>As a result a <em>Broadcast Instrument</em> <a href="https://docs.adaptabletools.com/docs/user-interface/context-menu">Context Menu item</a> is automatically added to each Column's Context Menu.</p>
+<p>When that menu item is clicked, Adaptable (when running in OpenFin) listens to the <a href="https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin#broadcast-instrument">Broadcast Instrument event</a> and broadcasts an FDC3 message on the current channel containing the <a href="https://fdc3.finos.org/docs/1.0/context-spec">Instrument Context</a>.</p>
 <h2 id="live-export">Live Export</h2>
 <p>AdapTable ships with many compelling, extra features, only available when it is running in the OpenFin container.</p>
 <p>One of these is 2-way Live Export - whereby grid data can be sent from AdapTable to Excel with the following features:</p>
@@ -102,7 +109,7 @@
 <ul>
 <li><p>Excel will automatically update in line with cell edits and ticking data changes in AdapTable</p></li>
 <li><p>Any date edits made directly in Excel will be automatically reflected in AdapTable</p></li>
-<li><p>Any <a href="https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function">Cell Validation Rules</a> created in AdapTable will be invoked when data in Excel is edited which breaks a rule.</p></li>
+<li><p>Any <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Prevent Edit Alerts</a> created in AdapTable will be invoked when data in Excel is edited which breaks a rule.</p></li>
 </ul>
 <blockquote>
   <p>When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit</p>
@@ -140,6 +147,7 @@
 </ul>
 <h3 id="alert">Alert</h3>
 <p>An <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Alert</a> (of type 'Warning') has been configured in <em>Position View</em> to fire when Position Coumn value &gt; 70,000 - will trigger an OpenFin Notification</p>
+<p>A <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Prevent Edit Alert</a> has been added to the <em>Trades</em> view that the 'Notional' column cannot be negative.</p>
 <h3 id="conditional-style">Conditional Style</h3>
 <p>The following <a href="https://docs.adaptabletools.com/docs/adaptable-functions/conditional-style-function">Conditional Styles</a> have been set up:</p>
 <ul>
@@ -181,8 +189,6 @@
 <li>includes All Columns and any Rows where Status is 'Active'</li>
 <li>is also available in the OpenFin Toolbar and so can be exported to Excel as a "Live Report (which will update in real time)</li>
 </ul>
-<h3 id="cell-validation">Cell Validation</h3>
-<p>A <a href="https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function">Cell Validation Rule</a> has been added to the <em>Trades</em> view that the 'Notional' column cannot be negative.</p>
 <h3 id="editlookup">EditLookUp</h3>
 <p>An <a href="https://docs.adaptabletools.com/docs/predefined-config/user-interface-config#editlookupitems">Edit Lookup</a> Item has been added to <em>Status</em> column in <em>Trades View</em> to enable quick editing</p>
 <h3 id="query">Query</h3>
@@ -192,11 +198,6 @@
 <h3 id="action-column">Action Column</h3>
 <p>An <a href="https://docs.adaptabletools.com/docs/adaptable-functions/action-column-function">Action Column</a> has been added to the <em>Trades View</em> which displays a 'Cancel' button in any row where Status is 'active'. When clicked it changes the Status to 'inactive'.</p>
 <h3 id="user-menu-items">User Menu Items</h3>
-<p>All 3 views have 2 menu items which when clicked will broadcast the Instrument via an <a href="https://fdc3.finos.org/">FDC3</a> message (using current channel):</p>
-<ul>
-<li><em>Broadcast</em> <a href="https://docs.adaptabletools.com/docs/user-interface/context-menu">Context Menu</a> Item which appears only when right-clicking in a cell in Instrument</li>
-<li><em>Broadcast</em> <a href="https://docs.adaptabletools.com/docs/user-interface/column-menu/">Column Menu</a> Item which appears only in Instrument Column Menu</li>
-</ul>
 <p>The <em>Trades View</em> has a <em>Cancel</em> Context Menu Item which appears in all rows where <em>Status</em> is 'active'. When the menu item is selected the <em>Status</em> changes to 'inactive'.</p>
 <h2 id="installation">Installation</h2>
 <p>NOTE: In order to be able to run <code>npm install</code>, you need first to be logged into our private NPM registry - follow the instructions in the <a href="https://docs.adaptabletools.com/docs/getting-started/installationn">Adaptable Documentation</a></p>
