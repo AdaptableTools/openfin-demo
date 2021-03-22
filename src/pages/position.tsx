@@ -84,9 +84,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   userFunctions: [
     {
       type: "AlertButtonActionFunction",
-      handler: (alert) => {
-        if (alert) {
-          let alertDefinition: AlertDefinition = alert.AlertDefinition;
+      handler: (info) => {
+        if (info && info.alert) {
+          let alertDefinition: AlertDefinition = info.alert.AlertDefinition;
           if (alertDefinition) {
             let predicate = alertDefinition.Predicate;
             if (predicate) {
@@ -176,25 +176,27 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Scope: {
             ColumnIds: ["position"],
           },
-          AlertButtons: [
-            {
-              Text: "Increase",
-              ButtonStyle: {
-                Variant: "raised",
-                ClassName: "",
+          AlertForm: {
+            Buttons: [
+              {
+                Label: "Increase",
+                ButtonStyle: {
+                  Variant: "raised",
+                  ClassName: "",
+                },
+                AlertButtonActionFunction: "increaseLimit",
               },
-              AlertButtonActionFunction: "increaseLimit",
-            },
-            {
-              Text: "Show Me",
-              ButtonStyle: {
-                ClassName: "",
-                Variant: "outlined",
-                Tone: "error",
+              {
+                Label: "Show Me",
+                ButtonStyle: {
+                  ClassName: "",
+                  Variant: "outlined",
+                  Tone: "error",
+                },
+                Action: ["highlight-cell", "jump-to-cell"],
               },
-              Action: ["highlight-cell", "jump-to-cell"],
-            },
-          ],
+            ],
+          },
           Predicate: {
             PredicateId: "GreaterThan",
             Inputs: [10_000], // return to 70,000
