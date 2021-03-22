@@ -109,12 +109,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
-      VisibleButtons: [
-        "GridInfo",
-        "CellValidation",
-        "Layout",
-        "ConditionalStyle",
-      ],
+      VisibleButtons: ["GridInfo", "Alert", "Layout", "ConditionalStyle"],
       Tabs: [
         {
           Name: "Blotter",
@@ -137,14 +132,18 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-    CellValidation: {
-      CellValidations: [
+    Alert: {
+      AlertDefinitions: [
         {
           Scope: {
             ColumnIds: ["notional"],
           },
           Predicate: {
             PredicateId: "Negative",
+          },
+          MessageType: "Error",
+          AlertProperties: {
+            PreventEdit: true,
           },
         },
       ],

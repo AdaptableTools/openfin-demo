@@ -24,12 +24,12 @@
     "build-help": "rimraf README.html && node scripts/build-help.js \"Demo Guide\" && rimraf out/help.html && cpy README.html --rename=help.html out"
   },
   "dependencies": {
-    "@adaptabletools/adaptable": "8.1.3",
-    "@adaptabletools/adaptable-plugin-charts": "8.1.3",
-    "@adaptabletools/adaptable-plugin-finance": "8.1.3",
-    "@adaptabletools/adaptable-plugin-nocode-aggrid": "8.1.3",
-    "@adaptabletools/adaptable-plugin-openfin": "8.1.3",
-    "@adaptabletools/adaptable-react-aggrid": "8.1.3",
+    "@adaptabletools/adaptable": "8.2.0",
+    "@adaptabletools/adaptable-plugin-charts": "8.2.0",
+    "@adaptabletools/adaptable-plugin-finance": "8.2.0",
+    "@adaptabletools/adaptable-plugin-nocode-aggrid": "8.2.0",
+    "@adaptabletools/adaptable-plugin-openfin": "8.2.0",
+    "@adaptabletools/adaptable-react-aggrid": "8.2.0",
     "@ag-grid-community/react": "^25.0.1",
     "@ag-grid-enterprise/all-modules": "^25.0.1",
     "iframe-resizer-react": "^1.1.0",

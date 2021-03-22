@@ -130,7 +130,7 @@ One of these is 2-way Live Export - whereby grid data can be sent from AdapTable
 - Excel will automatically update in line with cell edits and ticking data changes in AdapTable
 
 - Any date edits made directly in Excel will be automatically reflected in AdapTable
-- Any [Cell Validation Rules](https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function) created in AdapTable will be invoked when data in Excel is edited which breaks a rule.
+- Any [Prevent Edit Alerts](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) created in AdapTable will be invoked when data in Excel is edited which breaks a rule.
 
   > When that happens an OpenFin Notification will popup giving details of the validation rule and an Action Button to undo the edit
 
@@ -173,6 +173,8 @@ There are a number of Layouts configured for the demo:
 ### Alert
 
 An [Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) (of type 'Warning') has been configured in _Position View_ to fire when Position Coumn value > 70,000 - will trigger an OpenFin Notification
+
+A [Prevent Edit Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) has been added to the _Trades_ view that the 'Notional' column cannot be negative.
 
 ### Conditional Style
 
@@ -222,10 +224,6 @@ _Trades View_ contains an 'Active Trades' Report for [Export](https://docs.adapt
 
 - includes All Columns and any Rows where Status is 'Active'
 - is also available in the OpenFin Toolbar and so can be exported to Excel as a "Live Report (which will update in real time)
-
-### Cell Validation
-
-A [Cell Validation Rule](https://docs.adaptabletools.com/docs/adaptable-functions/cell-validation-function) has been added to the _Trades_ view that the 'Notional' column cannot be negative.
 
 ### EditLookUp
 
