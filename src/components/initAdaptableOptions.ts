@@ -17,18 +17,7 @@ export const initAdaptableOptions = (
         url: "https://docs.adaptabletools.com/img/favicon_white.png",
       },
     },
-    filterOptions: { quickFilterTrigger: "click" },
-    auditOptions: {
-      auditCellEdits: {
-        auditAsEvent: true,
-      },
-      auditUserStateChanges: {
-        auditAsEvent: true,
-      },
-      auditTickingDataUpdates: {
-        auditAsEvent: true,
-      },
-    },
+    searchOptions: { quickFilterTrigger: "click" },
   };
 
   const defaults = {

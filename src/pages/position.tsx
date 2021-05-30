@@ -31,10 +31,11 @@ import finance from "@adaptabletools/adaptable-plugin-finance";
 import {
   AdaptableAlert,
   AdaptableApi,
+  AdaptableButton,
   AdaptableOptions,
   AdaptablePredicate,
+  AlertButtonContext,
   AlertDefinition,
-  MenuInfo,
   OpenFinPluginOptions,
 } from "@adaptabletools/adaptable/src/types";
 import { setInstrumentId } from "../components/setInstrumentId";
@@ -83,12 +84,15 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   adaptableId: "Position View",
   userFunctions: [
     {
-      type: "AlertButtonActionFunction",
-      handler: (info) => {
-        if (info && info.alert) {
-          let alertDefinition: AlertDefinition = info.alert.AlertDefinition;
+      name: "increaseLimit",
+      type: "ButtonClickedFunction",
+
+      handler(button: AdaptableButton, context: AlertButtonContext) {
+        const alert: AdaptableAlert = context?.alert;
+        if (alert) {
+          let alertDefinition: AlertDefinition = alert.alertDefinition;
           if (alertDefinition) {
-            let predicate = alertDefinition.Predicate;
+            let predicate = alertDefinition.Rule?.Predicate;
             if (predicate) {
               let inputs: any[] | undefined = predicate.Inputs;
               if (inputs && inputs.length > 0) {
@@ -98,16 +102,18 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
                   PredicateId: "GreaterThan",
                   Inputs: [newValue],
                 };
-                alertDefinition.Predicate = newPredicate;
-                adaptableApiRef.current.alertApi.editAlert(alertDefinition);
+                alertDefinition.Rule.Predicate = newPredicate;
+                adaptableApiRef.current.alertApi.editAlertDefinition(
+                  alertDefinition
+                );
               }
             }
           }
         }
       },
-      name: "increaseLimit",
     },
   ],
+
   predefinedConfig: {
     Theme: ThemeConfig,
     FormatColumn: {
@@ -129,11 +135,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-    FlashingCell: {
-      FlashingCells: [
-        { ColumnId: "position", IsLive: true, UpColor: GREEN, DownColor: RED },
-      ],
-    },
+
     ConditionalStyle: {
       ConditionalStyles: [
         {
@@ -143,8 +145,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Style: {
             ForeColor: "green",
           },
-          Predicate: {
-            PredicateId: "Positive",
+          Rule: {
+            Predicate: {
+              PredicateId: "Positive",
+            },
           },
         },
         {
@@ -154,8 +158,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Style: {
             ForeColor: "red",
           },
-          Predicate: {
-            PredicateId: "Negative",
+          Rule: {
+            Predicate: {
+              PredicateId: "Negative",
+            },
           },
         },
       ],
@@ -184,7 +190,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
                   Variant: "raised",
                   ClassName: "",
                 },
-                AlertButtonActionFunction: "increaseLimit",
+                ButtonClickedFunction: "increaseLimit",
               },
               {
                 Label: "Show Me",
@@ -197,13 +203,33 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
               },
             ],
           },
-          Predicate: {
-            PredicateId: "GreaterThan",
-            Inputs: [10_000], // return to 70,000
+          Rule: {
+            Predicate: {
+              PredicateId: "GreaterThan",
+              Inputs: [10_000], // return to 70,000
+            },
           },
           MessageType: "Warning",
           AlertProperties: {
-            ShowPopup: true,
+            DisplayNotification: true,
+          },
+        },
+      ],
+      FlashingAlertDefinitions: [
+        {
+          Scope: {
+            ColumnIds: ["position"],
+          },
+          Rule: {
+            Predicate: {
+              PredicateId: "Any",
+            },
+          },
+          UpChangeStyle: {
+            BackColor: GREEN,
+          },
+          DownChangeStyle: {
+            BackColor: RED,
           },
         },
       ],

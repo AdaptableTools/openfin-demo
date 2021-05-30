@@ -24,11 +24,9 @@ import { GREEN, RED } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 import {
-  ActionColumnClickedEventArgs,
-  ActionColumnClickedInfo,
-  ActionColumnRenderParams,
-  DataChangedInfo,
-  MenuInfo,
+  ActionColumnButtonContext,
+  AdaptableButton,
+  MenuContext,
   OpenFinApi,
 } from "@adaptabletools/adaptable/src/types";
 import { getInstrumentName } from "../data/utils";
@@ -60,52 +58,72 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "tradeId",
   adaptableId: "Trade View",
+  menuOptions: {
+    contextMenuItems: [
+      {
+        label: "Cancel Trade",
+        onClick: (menuContext: MenuContext) => {
+          const node = menuContext.rowNode;
+          if (node && node.data) {
+            const tradeId = node.data["tradeId"];
+            adaptableApiRef.current.gridApi.setCellValue(
+              "status",
+              "inactive",
+              tradeId,
+              true
+            );
+          }
+        },
+        shouldRender: (menuContext: MenuContext) => {
+          if (!menuContext.isGroupedNode) {
+            const node = menuContext.rowNode;
+            return (
+              node &&
+              node.data &&
+              node.data["status"] &&
+              node.data["status"] == "active"
+            );
+          }
+          return false;
+        },
+      },
+    ],
+  },
   userFunctions: [
     {
       name: "renderCancelButton",
-      type: "ActionColumnShouldRenderPredicate",
-      handler: (params: ActionColumnRenderParams) => {
+      type: "ButtonRenderPredicate",
+      handler(button: AdaptableButton, context: ActionColumnButtonContext) {
         return (
-          params.rowNode &&
-          params.rowNode.data &&
-          params.rowNode.data["status"] &&
-          params.rowNode.data["status"] == "active"
+          context.rowNode?.data != null &&
+          context.rowNode.data[status] == "active"
         );
       },
     },
     {
-      type: "UserMenuItemClickedFunction",
-      name: "cancelActiveTradeClick",
-      handler(menuInfo: MenuInfo) {
-        const node = menuInfo.RowNode;
-        if (node && node.data) {
-          const tradeId = node.data["tradeId"];
-          menuInfo.AdaptableApi.gridApi.setCellValue(
-            "status",
-            "inactive",
-            tradeId,
-            true
-          );
-        }
-      },
-    },
-    {
-      type: "UserMenuItemShowPredicate",
-      name: "cancelActiveTradePredicate",
-      handler(menuInfo: MenuInfo) {
-        if (!menuInfo.IsGroupedNode) {
-          const node = menuInfo.RowNode;
-          return (
-            node &&
-            node.data &&
-            node.data["status"] &&
-            node.data["status"] == "active"
-          );
-        }
-        return false;
+      name: "cancelButtonClicked",
+      type: "ButtonClickedFunction",
+
+      handler(button: AdaptableButton, context: ActionColumnButtonContext) {
+        adaptableApiRef.current.gridApi.setCellValue(
+          "status",
+          "inactive",
+          context.primaryKeyValue,
+          true
+        );
       },
     },
   ],
+  userInterfaceOptions: {
+    editLookUpItems: [
+      {
+        scope: {
+          ColumnIds: ["status"],
+        },
+        values: ["active", "inactive"],
+      },
+    ],
+  },
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
@@ -121,26 +139,19 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-    GradientColumn: {
-      GradientColumns: [
-        {
-          BaseValue: 4500000,
-          ColumnId: "notional",
-          NegativeColor: RED,
-          PositiveColor: GREEN,
-          PositiveValue: 10000000,
-        },
-      ],
-    },
+
     Alert: {
       AlertDefinitions: [
         {
           Scope: {
             ColumnIds: ["notional"],
           },
-          Predicate: {
-            PredicateId: "Negative",
+          Rule: {
+            Predicate: {
+              PredicateId: "Negative",
+            },
           },
+
           MessageType: "Error",
           AlertProperties: {
             PreventEdit: true,
@@ -153,8 +164,11 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         {
           ColumnId: "setStatusCancel",
           FriendlyName: "Cancel",
-          ButtonText: "Cancel",
-          ShouldRenderPredicate: "renderCancelButton",
+          ActionColumnButton: {
+            Label: "Cancel",
+            ButtonRenderPredicate: "renderCancelButton",
+            ButtonClickedFunction: "cancelButtonClicked",
+          },
         },
       ],
     },
@@ -162,9 +176,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       SharedQueries: [
         {
           Name: "Active US Trades",
-          Expression:
+          BooleanExpression:
             '[status]="active" AND [counterparty] IN ("Goldman Sachs","Bank of America","JP Morgan","Morgan Stanley")',
-          Uuid: "active-us-trades",
         },
       ],
     },
@@ -180,7 +193,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             FontStyle: "Italic",
             ForeColor: "#000000",
           },
-          Expression: '[status] = "active"',
+          Rule: {
+            BooleanExpression: '[status] = "active"',
+          },
           ExcludeGroupedRows: true,
         },
       ],
@@ -195,6 +210,22 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             Formatter: "DateFormatter",
             Options: {
               Pattern: "dd-MM-yyyy",
+            },
+          },
+        },
+        {
+          Scope: {
+            ColumnIds: ["notional"],
+          },
+          NumericColumnStyle: {
+            GradientStyle: {
+              CellRanges: [
+                {
+                  Min: 4500000,
+                  Max: 10000000,
+                  Color: GREEN,
+                },
+              ],
             },
           },
         },
@@ -250,25 +281,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Name: "Active Trades",
           ReportColumnScope: "AllColumns",
           ReportRowScope: "ExpressionRows",
-          Expression: '[status] = "active"',
-        },
-      ],
-    },
-    UserInterface: {
-      ContextMenuItems: [
-        {
-          Label: "Cancel Trade",
-          UserMenuItemClickedFunction: "cancelActiveTradeClick",
-          UserMenuItemShowPredicate: "cancelActiveTradePredicate",
-        },
-      ],
-
-      EditLookUpItems: [
-        {
-          Scope: {
-            ColumnIds: ["status"],
+          Query: {
+            BooleanExpression: '[status] = "active"',
           },
-          LookUpValues: ["active", "inactive"],
         },
       ],
     },
@@ -335,21 +350,6 @@ const App: React.FC = () => {
           onAdaptableReady={({ adaptableApi, vendorGrid }) => {
             adaptableApiRef.current = adaptableApi;
             gridOptionsRef.current = vendorGrid;
-
-            adaptableApi.eventApi.on(
-              "ActionColumnClicked",
-              (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
-                let info: ActionColumnClickedInfo = adaptableApi.eventApi.getActionColumnClickedInfoFromEventArgs(
-                  actionColumnEventArgs
-                );
-                adaptableApi.gridApi.setCellValue(
-                  "status",
-                  "inactive",
-                  info.primaryKeyValue,
-                  true
-                );
-              }
-            );
           }}
         />
 

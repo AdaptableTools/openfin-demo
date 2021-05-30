@@ -50,22 +50,7 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Price View",
-  editOptions: {
-    // validateOnServer: (dataChangeInfo: DataChangedInfo) => {
-    //   if (dataChangeInfo.columnId === 'bidOfferSpread') {
-    //     const bidOfferSpread = dataChangeInfo.newValue * 1;
-    //     if (isNaN(bidOfferSpread)) {
-    //       return Promise.resolve({
-    //         NewValue: 1,
-    //         ValidationMessage: 'Bid offer spread has to be a numeric value',
-    //       });
-    //     }
-    //   }
-    //   return Promise.resolve({
-    //     NewValue: dataChangeInfo.newValue * 1,
-    //   });
-    // },
-  },
+
   predefinedConfig: {
     Theme: ThemeConfig,
     ConditionalStyle: {
@@ -78,8 +63,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             BackColor: GREEN,
             ForeColor: "#000000",
           },
-          Predicate: {
-            PredicateId: "Positive",
+          Rule: {
+            Predicate: {
+              PredicateId: "Positive",
+            },
           },
         },
         {
@@ -90,8 +77,10 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             BackColor: RED,
             ForeColor: "#000000",
           },
-          Predicate: {
-            PredicateId: "Negative",
+          Rule: {
+            Predicate: {
+              PredicateId: "Negative",
+            },
           },
         },
       ],
@@ -101,39 +90,48 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         {
           ColumnId: "bid",
           FriendlyName: "Bid",
-          ColumnExpression: "[price] - [bidOfferSpread] / 2",
+          Query: {
+            ScalarExpression: "[price] - [bidOfferSpread] / 2",
+          },
         },
         {
           ColumnId: "ask",
           FriendlyName: "Ask",
-          ColumnExpression: "[price] + [bidOfferSpread] / 2",
+          Query: {
+            ScalarExpression: "[price] + [bidOfferSpread] / 2",
+          },
         },
         {
           ColumnId: "changeOnDay",
           FriendlyName: "Change on Day",
-          ColumnExpression: "[price] - [closingPrice]",
+          Query: {
+            ScalarExpression: "[price] - [closingPrice]",
+          },
         },
       ],
     },
     PlusMinus: {
-      PlusMinusRules: [
+      PlusMinusNudges: [
         {
-          ColumnId: "bidOfferSpread",
+          Scope: {
+            ColumnIds: ["bidOfferSpread"],
+          },
           NudgeValue: 0.5,
-          IsDefaultNudge: true,
+          Rule: {
+            Predicate: {
+              PredicateId: "Any",
+            },
+          },
         },
         {
-          ColumnId: "bidOfferSpread",
+          Scope: {
+            ColumnIds: ["bidOfferSpread"],
+          },
           NudgeValue: 1,
-          IsDefaultNudge: false,
-          Expression: '[instrumentId]= "AAPL"',
+          Rule: {
+            BooleanExpression: '[instrumentId]= "AAPL"',
+          },
         },
-        // {
-        //   ColumnId: 'bidOfferSpread',
-        //   NudgeValue: 0,
-        //   IsDefaultNudge: false,
-        //   Expression: '[price] > 130',
-        // },
       ],
     },
     FormatColumn: {
@@ -176,12 +174,16 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-
-    FlashingCell: {
-      FlashingCells: [
-        { ColumnId: "price", IsLive: true, UpColor: GREEN, DownColor: RED },
-        { ColumnId: "bid", IsLive: true, UpColor: GREEN, DownColor: RED },
-        { ColumnId: "ask", IsLive: true, UpColor: GREEN, DownColor: RED },
+    Alert: {
+      FlashingAlertDefinitions: [
+        {
+          Scope: {
+            ColumnIds: ["price", "bid", "ask"],
+          },
+          Rule: { Predicate: { PredicateId: "Any" } },
+          UpChangeStyle: { BackColor: GREEN },
+          DownChangeStyle: { BackColor: RED },
+        },
       ],
     },
   },
