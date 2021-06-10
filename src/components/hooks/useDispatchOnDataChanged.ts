@@ -1,7 +1,4 @@
-import {
-  AdaptableApi,
-  GridDataChangedEventArgs,
-} from "@adaptabletools/adaptable/types";
+import { AdaptableApi, CellChangedInfo } from "@adaptabletools/adaptable/types";
 import { MutableRefObject, useEffect } from "react";
 import { ChannelClient } from "./useChannelData";
 
@@ -20,12 +17,8 @@ export const useDispatchOnDataChanged = ({
       return;
     }
     const off = eventApi.on(
-      "GridDataChanged",
-      (event: GridDataChangedEventArgs) => {
-        const {
-          dataChangedInfo,
-        } = eventApi.getGridDataChangedInfoFromEventArgs(event);
-
+      "CellChanged",
+      ({ cellChange: dataChangedInfo }: CellChangedInfo) => {
         client.dispatch(dispatchChannelName, {
           primaryKey: dataChangedInfo.primaryKeyValue,
           columnId: dataChangedInfo.columnId,

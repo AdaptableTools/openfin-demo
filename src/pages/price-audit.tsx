@@ -21,6 +21,7 @@ import { once } from "../components/once";
 import { DisplayFormat4Digits } from "../data/displayFormat";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
 
 type Item = {
   timestamp: string;
@@ -49,10 +50,6 @@ const columns: ColDef[] = [
   {
     field: "newValue",
     type: "abColDefNumber",
-  },
-  {
-    field: "username",
-    type: "abColDefString",
   },
 
   {
@@ -101,7 +98,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "instrumentId",
             "oldValue",
             "newValue",
-            "username",
             "trigger",
           ],
           ColumnSorts: [
@@ -185,6 +181,11 @@ const App = () => {
   useThemeSync(adaptableApiRef);
   useFilters(adaptableApiRef);
 
+  const onAdaptableReady = useAdaptableReady(({ adaptableApi, vendorGrid }) => {
+    adaptableApiRef.current = adaptableApi;
+    gridOptionsRef.current = vendorGrid;
+  });
+
   return (
     <>
       <Head title="Price Audit" />
@@ -194,10 +195,7 @@ const App = () => {
           gridOptions={initialGridOptions}
           modules={modules}
           adaptableOptions={adaptableOptions}
-          onAdaptableReady={({ adaptableApi, vendorGrid }) => {
-            adaptableApiRef.current = adaptableApi;
-            gridOptionsRef.current = vendorGrid;
-          }}
+          onAdaptableReady={onAdaptableReady}
         />
 
         <AgGridReact gridOptions={initialGridOptions} modules={modules} />

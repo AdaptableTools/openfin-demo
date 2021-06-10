@@ -38,8 +38,8 @@ import {
   AlertDefinition,
   OpenFinPluginOptions,
 } from "@adaptabletools/adaptable/src/types";
-import { setInstrumentId } from "../components/setInstrumentId";
-import { getInstrumentName } from "../data/utils";
+
+import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
 
 let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
 const columnDefs: ColDef[] = positionColumns;
@@ -82,37 +82,38 @@ const openfinPluginOptions: OpenFinPluginOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Position View",
-  userFunctions: [
-    {
-      name: "increaseLimit",
-      type: "ButtonClickedFunction",
+  alertOptions: {
+    actionHandlers: [
+      {
+        name: "increaseLimit",
 
-      handler(button: AdaptableButton, context: AlertButtonContext) {
-        const alert: AdaptableAlert = context?.alert;
-        if (alert) {
-          let alertDefinition: AlertDefinition = alert.alertDefinition;
-          if (alertDefinition) {
-            let predicate = alertDefinition.Rule?.Predicate;
-            if (predicate) {
-              let inputs: any[] | undefined = predicate.Inputs;
-              if (inputs && inputs.length > 0) {
-                let firstInput = inputs[0];
-                let newValue = firstInput + 1000;
-                let newPredicate: AdaptablePredicate = {
-                  PredicateId: "GreaterThan",
-                  Inputs: [newValue],
-                };
-                alertDefinition.Rule.Predicate = newPredicate;
-                adaptableApiRef.current.alertApi.editAlertDefinition(
-                  alertDefinition
-                );
+        handler(button: AdaptableButton, context: AlertButtonContext) {
+          const alert: AdaptableAlert = context?.alert;
+          if (alert) {
+            let alertDefinition: AlertDefinition = alert.alertDefinition;
+            if (alertDefinition) {
+              let predicate = alertDefinition.Rule?.Predicate;
+              if (predicate) {
+                let inputs: any[] | undefined = predicate.Inputs;
+                if (inputs && inputs.length > 0) {
+                  let firstInput = inputs[0];
+                  let newValue = firstInput + 1000;
+                  let newPredicate: AdaptablePredicate = {
+                    PredicateId: "GreaterThan",
+                    Inputs: [newValue],
+                  };
+                  alertDefinition.Rule.Predicate = newPredicate;
+                  adaptableApiRef.current.alertApi.editAlertDefinition(
+                    alertDefinition
+                  );
+                }
               }
             }
           }
-        }
+        },
       },
-    },
-  ],
+    ],
+  },
 
   predefinedConfig: {
     Theme: ThemeConfig,
@@ -183,21 +184,19 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             ColumnIds: ["position"],
           },
           AlertForm: {
-            Buttons: [
+            buttons: [
               {
-                Label: "Increase",
-                ButtonStyle: {
-                  Variant: "raised",
-                  ClassName: "",
+                label: "Increase",
+                buttonStyle: {
+                  variant: "raised",
                 },
-                ButtonClickedFunction: "increaseLimit",
+                action: "increaseLimit",
               },
               {
-                Label: "Show Me",
-                ButtonStyle: {
-                  ClassName: "",
-                  Variant: "outlined",
-                  Tone: "error",
+                label: "Show Me",
+                buttonStyle: {
+                  variant: "outlined",
+                  tone: "error",
                 },
                 Action: ["highlight-cell", "jump-to-cell"],
               },
@@ -267,6 +266,9 @@ const App: React.FC = () => {
   useFilters(adaptableApiRef);
   useThemeSync(adaptableApiRef);
 
+  const onAdaptableReady = useAdaptableReady(({ adaptableApi }) => {
+    adaptableApiRef.current = adaptableApi;
+  });
   return (
     <>
       <Head title="Positions" />
@@ -276,9 +278,7 @@ const App: React.FC = () => {
           gridOptions={gridOptions}
           adaptableOptions={adaptableOptions}
           modules={modules}
-          onAdaptableReady={({ adaptableApi }) => {
-            adaptableApiRef.current = adaptableApi;
-          }}
+          onAdaptableReady={onAdaptableReady}
         />
 
         <AgGridReact

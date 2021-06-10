@@ -20,17 +20,15 @@ import Head from "../components/Head";
 import { initAdaptableOptions } from "../components/initAdaptableOptions";
 import { useAudit } from "../components/hooks/useAudit";
 import { ThemeConfig } from "../components/ThemeConfig";
-import { GREEN, RED } from "../components/colors";
+import { GREEN } from "../components/colors";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 import {
   ActionColumnButtonContext,
   AdaptableButton,
   MenuContext,
-  OpenFinApi,
 } from "@adaptabletools/adaptable/src/types";
-import { getInstrumentName } from "../data/utils";
-import { setInstrumentId } from "../components/setInstrumentId";
+import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -89,32 +87,41 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       },
     ],
   },
-  userFunctions: [
-    {
-      name: "renderCancelButton",
-      type: "ButtonRenderPredicate",
-      handler(button: AdaptableButton, context: ActionColumnButtonContext) {
-        return (
-          context.rowNode?.data != null &&
-          context.rowNode.data[status] == "active"
-        );
-      },
-    },
-    {
-      name: "cancelButtonClicked",
-      type: "ButtonClickedFunction",
 
-      handler(button: AdaptableButton, context: ActionColumnButtonContext) {
-        adaptableApiRef.current.gridApi.setCellValue(
-          "status",
-          "inactive",
-          context.primaryKeyValue,
-          true
-        );
-      },
-    },
-  ],
   userInterfaceOptions: {
+    actionColumns: [
+      {
+        columnId: "cancel",
+        friendlyName: "Cancel",
+        actionColumnButton: {
+          label: "Cancel",
+          buttonStyle: {
+            variant: "raised",
+            tone: "accent",
+          },
+          shouldRender: (
+            button: AdaptableButton,
+            context: ActionColumnButtonContext
+          ) => {
+            return (
+              context.rowNode?.data != null &&
+              context.rowNode.data.status == "active"
+            );
+          },
+          onClick: (
+            button: AdaptableButton,
+            context: ActionColumnButtonContext
+          ) => {
+            adaptableApiRef.current.gridApi.setCellValue(
+              "status",
+              "inactive",
+              context.primaryKeyValue,
+              true
+            );
+          },
+        },
+      },
+    ],
     editLookUpItems: [
       {
         scope: {
@@ -159,21 +166,9 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-    ActionColumn: {
-      ActionColumns: [
-        {
-          ColumnId: "setStatusCancel",
-          FriendlyName: "Cancel",
-          ActionColumnButton: {
-            Label: "Cancel",
-            ButtonRenderPredicate: "renderCancelButton",
-            ButtonClickedFunction: "cancelButtonClicked",
-          },
-        },
-      ],
-    },
+
     Query: {
-      SharedQueries: [
+      NamedQueries: [
         {
           Name: "Active US Trades",
           BooleanExpression:
@@ -217,7 +212,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           Scope: {
             ColumnIds: ["notional"],
           },
-          NumericColumnStyle: {
+          ColumnStyle: {
             GradientStyle: {
               CellRanges: [
                 {
@@ -241,7 +236,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "instrumentName",
             "notional",
             "status",
-            "setStatusCancel",
+            "cancel",
             "counterparty",
             "currency",
             "rating",
@@ -338,6 +333,11 @@ const App: React.FC = () => {
 
   useThemeSync(adaptableApiRef);
 
+  const onAdaptableReady = useAdaptableReady(({ adaptableApi, vendorGrid }) => {
+    adaptableApiRef.current = adaptableApi;
+    gridOptionsRef.current = vendorGrid;
+  });
+
   return (
     <>
       <Head title="Trades" />
@@ -347,10 +347,7 @@ const App: React.FC = () => {
           gridOptions={initialGridOptions}
           modules={modules}
           adaptableOptions={adaptableOptions}
-          onAdaptableReady={({ adaptableApi, vendorGrid }) => {
-            adaptableApiRef.current = adaptableApi;
-            gridOptionsRef.current = vendorGrid;
-          }}
+          onAdaptableReady={onAdaptableReady}
         />
 
         <AgGridReact gridOptions={initialGridOptions} modules={modules} />

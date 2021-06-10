@@ -25,6 +25,7 @@ import { GREEN, RED } from "../components/colors";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
 import finance from "@adaptabletools/adaptable-plugin-finance";
+import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
 
 const columnDefs: ColDef[] = priceColumns;
 
@@ -229,6 +230,14 @@ const App: React.FC = () => {
     adaptableApiRef,
   });
 
+  const onAdaptableReady = useAdaptableReady(({ adaptableApi, vendorGrid }) => {
+    adaptableApiRef.current = adaptableApi;
+    gridOptionsRef.current = vendorGrid;
+
+    (globalThis as any).adaptableApi = adaptableApi;
+    (globalThis as any).gridOptions = vendorGrid;
+  });
+
   return (
     <>
       <Head title="Prices" />
@@ -238,13 +247,7 @@ const App: React.FC = () => {
           gridOptions={initialGridOptions}
           adaptableOptions={adaptableOptions}
           modules={modules}
-          onAdaptableReady={({ adaptableApi, vendorGrid }) => {
-            adaptableApiRef.current = adaptableApi;
-            gridOptionsRef.current = vendorGrid;
-
-            (globalThis as any).adaptableApi = adaptableApi;
-            (globalThis as any).gridOptions = vendorGrid;
-          }}
+          onAdaptableReady={onAdaptableReady}
         />
 
         <AgGridReact gridOptions={initialGridOptions} modules={modules} />

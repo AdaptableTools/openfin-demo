@@ -115,7 +115,8 @@ export async function makeProvider() {
     }
     const trigger = priceAudit.audit_trigger;
 
-    if (trigger !== "TickingDataUpdate" && trigger !== "CellEdit") {
+    if (trigger !== "tick" && trigger !== "edit") {
+      // trigger is 'edit' | 'tick'
       return;
     }
 
@@ -131,13 +132,12 @@ export async function makeProvider() {
     }
     const trigger = tradeAudit.audit_trigger;
 
-    if (trigger !== "TickingDataUpdate" && trigger !== "CellEdit") {
+    if (trigger !== "tick" && trigger !== "edit") {
       return;
     }
 
     tradeAudits = tradeAudits.concat(tradeAudit);
 
-    console.log("audits", tradeAudits);
     publish("addtradeaudit", tradeAudit);
     publish("tradeaudits", tradeAudits);
   });

@@ -1,6 +1,6 @@
 import { AdaptableApi } from "@adaptabletools/adaptable/types";
 
-import { MutableRefObject, useCallback, useEffect } from "react";
+import { MutableRefObject, useEffect } from "react";
 
 export const useFilters = (adaptableApiRef: MutableRefObject<AdaptableApi>) => {
   const { current: adaptableApi } = adaptableApiRef;

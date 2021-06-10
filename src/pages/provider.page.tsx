@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { makeProvider } from '../components/provider';
+import * as React from "react";
+import { makeProvider } from "../components/provider";
 
-const STORAGE_KEY = 'adaptable-layout-17-820';
+const STORAGE_KEY = "adaptable-layout-18-820";
 async function setLastSnapShot() {
   const platform = fin.Platform.getCurrentSync();
   const snapshot = await platform.getSnapshot();
@@ -48,7 +48,7 @@ async function init() {
     },
   });
 
-  console.log('creating a provider');
+  console.log("creating a provider");
   makeProvider();
 
   setInterval(setLastSnapShot, 250);

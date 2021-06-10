@@ -22,6 +22,7 @@ import { DisplayFormat4Digits } from "../data/displayFormat";
 import { Trade } from "../data/trades";
 import { ThemeConfig } from "../components/ThemeConfig";
 import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
 
 type Item = {
   timestamp: string;
@@ -53,10 +54,6 @@ const columns = [
   },
   {
     field: "column",
-    type: "abColDefString",
-  },
-  {
-    field: "username",
     type: "abColDefString",
   },
 
@@ -106,7 +103,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "oldValue",
             "newValue",
             "column",
-            "username",
+
             "trigger",
           ],
           ColumnSorts: [
@@ -189,6 +186,11 @@ const App = () => {
   useThemeSync(adaptableApiRef);
   useFilters(adaptableApiRef);
 
+  const onAdaptableReady = useAdaptableReady(({ adaptableApi, vendorGrid }) => {
+    adaptableApiRef.current = adaptableApi;
+    gridOptionsRef.current = vendorGrid;
+  });
+
   return (
     <>
       <Head title="Trade Audit" />
@@ -198,10 +200,7 @@ const App = () => {
           gridOptions={initialGridOptions}
           modules={modules}
           adaptableOptions={adaptableOptions}
-          onAdaptableReady={({ adaptableApi, vendorGrid }) => {
-            adaptableApiRef.current = adaptableApi;
-            gridOptionsRef.current = vendorGrid;
-          }}
+          onAdaptableReady={onAdaptableReady}
         />
 
         <AgGridReact gridOptions={initialGridOptions} modules={modules} />
