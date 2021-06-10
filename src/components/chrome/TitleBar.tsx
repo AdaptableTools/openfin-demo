@@ -26,15 +26,19 @@ export const getCurrentTheme = () => {
   return isLight ? LIGHT_THEME : DARK_THEME;
 };
 
-let pausedNotifications = false
+let pausedNotifications = false;
 
 const toggleNotifications = () => {
-  pausedNotifications = !pausedNotifications
+  pausedNotifications = !pausedNotifications;
 
-  fin.Platform.getCurrentSync().setWindowContext({ theme: getCurrentTheme(), pausedNotifications });
-  fin.InterApplicationBus.publish("toggle-notifications",{pausedNotifications});
-
-}
+  fin.Platform.getCurrentSync().setWindowContext({
+    theme: getCurrentTheme(),
+    pausedNotifications,
+  });
+  fin.InterApplicationBus.publish("toggle-notifications", {
+    pausedNotifications,
+  });
+};
 
 const getOtherTheme = () => {
   return getCurrentTheme() === DARK_THEME ? LIGHT_THEME : DARK_THEME;
@@ -114,10 +118,10 @@ const ChannelItem = ({
 let defaultBroadcastFn: SystemChannel["broadcast"] | null = null;
 export const TitleBar = () => {
   const [instrumentId, setInstrumentId] = useState("");
-  const [renderId, setRenderId] = useState(0)
-  const rerender = () =>setRenderId(x=>x+1)
+  const [renderId, setRenderId] = useState(0);
+  const rerender = () => setRenderId((x) => x + 1);
   const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(
-    'default'
+    "default"
   );
   const [systemChannels, setSystemChannels] = useState<
     Record<string, SystemChannel>
@@ -146,7 +150,7 @@ export const TitleBar = () => {
     });
 
     addContextListener((context: any) => {
-      const instrumentId = context.instrumentCode;
+      const instrumentId = context.id?.ticker;
       if (getInstrumentName(instrumentId)) {
         setInstrumentId(instrumentId);
       }
@@ -192,9 +196,13 @@ export const TitleBar = () => {
     }
   }, [currentSystemChannelId, instrumentId]);
 
-  React.useEffect(()     =>   {
-    fin.InterApplicationBus.subscribe({ uuid: '*' }, 'set-instrumentid', setInstrumentId);
-  },[])
+  React.useEffect(() => {
+    fin.InterApplicationBus.subscribe(
+      { uuid: "*" },
+      "set-instrumentid",
+      setInstrumentId
+    );
+  }, []);
 
   const renderChannelPicker = () => {
     if (!systemChannels) {
@@ -254,12 +262,19 @@ export const TitleBar = () => {
             );
           })}
         </select>
-        <div className="button" title={pausedNotifications? "Resume notifications": 'Pause notifications'}
-          id="notifications-button" onClick={() => {
+        <div
+          className="button"
+          title={
+            pausedNotifications ? "Resume notifications" : "Pause notifications"
+          }
+          id="notifications-button"
+          onClick={() => {
             toggleNotifications();
-            rerender()
-          }} style={{opacity: pausedNotifications? 0.25:1}}>
-            <Icon name="alert"/>
+            rerender();
+          }}
+          style={{ opacity: pausedNotifications ? 0.25 : 1 }}
+        >
+          <Icon name="alert" />
         </div>
         <div
           className="button"
