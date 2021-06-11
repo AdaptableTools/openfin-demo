@@ -1,4 +1,4 @@
-name: BUILD
+name: BUILD-branch:master
 
 on:
   push:
