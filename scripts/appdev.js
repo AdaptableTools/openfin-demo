@@ -1,6 +1,6 @@
 const initialPrefix = "http://localhost:3001";
 const BASE_URL = "https://openfin-demo.adaptabletools.com";
-const HOME_BASE_URL = "https://openfin-home.adaptabletools.com";
+const HOME_BASE_URL = "https://home.openfin-demo.adaptabletools.com";
 
 
 const fs = require("fs");
@@ -11,7 +11,7 @@ const json = JSON.parse(
 );
 
 const homeJSON = {
-  ...json,
+...json,
   platform: {
     ...json.platform,
     "interop": {
