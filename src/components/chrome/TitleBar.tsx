@@ -16,8 +16,9 @@ import {
 } from "../../data/utils";
 
 import { useState } from "react";
-import type { Context, SystemChannel } from "openfin-fdc3";
 
+type Context = any;
+type SystemChannel = any;
 export const getCurrentTheme = () => {
   const isLight = document.documentElement.classList.contains(
     lightThemeClassName
@@ -115,32 +116,25 @@ const ChannelItem = ({
   );
 };
 
-let defaultBroadcastFn: SystemChannel["broadcast"] | null = null;
 export const TitleBar = () => {
   const [instrumentId, setInstrumentId] = useState("");
   const [renderId, setRenderId] = useState(0);
   const rerender = () => setRenderId((x) => x + 1);
   const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(
-    "default"
+    "green"
   );
   const [systemChannels, setSystemChannels] = useState<
     Record<string, SystemChannel>
   >(null);
 
   React.useLayoutEffect(() => {
-    const {
-      addContextListener,
-      broadcast,
-      getSystemChannels,
-    } = (globalThis as any).fdc3;
-    defaultBroadcastFn = broadcast;
-
     const initialTheme = localStorage.getItem("theme") || "dark";
     if (initialTheme) {
       syncTheme(initialTheme);
     }
 
-    getSystemChannels().then((channels) => {
+    fdc3.getSystemChannels().then((channels) => {
+      setCurrentSystemChannelId(channels[0].id);
       setSystemChannels(
         channels.reduce((acc, channel: SystemChannel) => {
           acc[channel.id] = channel;
@@ -149,7 +143,7 @@ export const TitleBar = () => {
       );
     });
 
-    addContextListener((context: any) => {
+    (fdc3 as any).addContextListener(null, (context: any) => {
       const instrumentId = context.id?.ticker;
       if (getInstrumentName(instrumentId)) {
         setInstrumentId(instrumentId);
@@ -161,10 +155,12 @@ export const TitleBar = () => {
     const theChannel = systemChannels?.[currentSystemChannelId];
     if (theChannel) {
       return (message: Context) => {
-        return theChannel.broadcast(message);
+        (fdc3 as any).leaveCurrentChannel().then(() => {
+          (fdc3 as any).joinChannel(currentSystemChannelId).then(() => {
+            return fdc3.broadcast(message);
+          });
+        });
       };
-    } else {
-      return defaultBroadcastFn;
     }
   };
 
@@ -186,7 +182,7 @@ export const TitleBar = () => {
       );
       // broadcast FDC3 message for the given instrumnet (with cusip and name info)
       broadcast({
-        type: "fdc3.instrument",
+        type: "instrument",
         name,
         id: {
           ticker: instrumentId,
@@ -214,12 +210,7 @@ export const TitleBar = () => {
         style={{ display: "flex", flexFlow: "row", alignItems: "center" }}
       >
         <div style={{ marginRight: 10 }}>Channels: </div>
-        <ChannelItem
-          id="default"
-          key={"default"}
-          selected={currentSystemChannelId === "default"}
-          onClick={setCurrentSystemChannelId}
-        />
+
         {Object.keys(systemChannels).map((id) => {
           const channel = systemChannels[id];
 
@@ -227,7 +218,7 @@ export const TitleBar = () => {
             <ChannelItem
               id={id}
               key={id}
-              visualIdentity={channel.visualIdentity}
+              visualIdentity={channel.displayMetadata}
               selected={currentSystemChannelId === id}
               onClick={setCurrentSystemChannelId}
             />

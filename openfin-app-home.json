@@ -1,0 +1,171 @@
+{
+  "runtime": {
+    "arguments": "",
+    "version": "19.89.61.5"
+  },
+  "shortcut": {
+    "company": "AdapTable",
+    "description": "AdapTable OpenFin Demo App",
+    "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
+    "name": "AdapTable OpenFin Demo App"
+  },
+  "platform": {
+    "providerUrl": "http://localhost:3001/provider",
+    "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
+    "uuid": "AdapTable OpenFin Demo App",
+    "autoShow": false,
+    "frame": true,
+    "alwaysOnTop": true,
+    "maximizable": true,
+    "defaultHeight": 1200,
+    "defaultWidth": 1200,
+    "resizable": true,
+    "fdc3InteropApi": "1.2",
+    "defaultWindowOptions": {
+      "url": "http://localhost:3001/platform-window",
+      "contextMenu": true,
+      "fdc3InteropApi": "1.2",
+      "frame": false
+    },
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true
+      }
+    },
+    "interop": {
+      "providerId": "openfin-browser",
+      "contextDeclaration": [
+        "instrument",
+        "fdc3.instrument"
+      ]
+    }
+  },
+  "services": [
+    {
+      "name": "excel",
+      "manifestUrl": "https://cdn.openfin.co/release/exceljs/4.0.1/provider/app.json"
+    },
+    {
+      "name": "notifications"
+    }
+  ],
+  "snapshot": {
+    "windows": [
+      {
+        "defaultWidth": 1200,
+        "defaultHeight": 900,
+        "defaultLeft": 0,
+        "defaultTop": 0,
+        "saveWindowState": true,
+        "backgroundThrottling": true,
+        "layout": {
+          "content": [
+            {
+              "type": "column",
+              "id": "mainRow",
+              "isClosable": true,
+              "reorderEnabled": true,
+              "title": "",
+              "content": [
+                {
+                  "type": "row",
+                  "isClosable": true,
+                  "reorderEnabled": true,
+                  "title": "Price and position",
+                  "width": 50,
+                  "content": [
+                    {
+                      "type": "stack",
+                      "height": 50,
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "",
+                      "activeItemIndex": 0,
+                      "content": [
+                        {
+                          "type": "component",
+                          "componentName": "view",
+                          "componentState": {
+                            "url": "http://localhost:3001/price",
+                            "name": "Price View"
+                          },
+                          "isClosable": true,
+                          "reorderEnabled": true,
+                          "title": "view"
+                        },
+                        {
+                          "type": "component",
+                          "componentName": "view",
+                          "componentState": {
+                            "url": "http://localhost:3001/price-audit",
+                            "name": "Price Audit"
+                          },
+                          "isClosable": true,
+                          "reorderEnabled": true,
+                          "title": ""
+                        }
+                      ]
+                    },
+                    {
+                      "type": "stack",
+                      "height": 50,
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "",
+                      "activeItemIndex": 0,
+                      "content": [
+                        {
+                          "type": "component",
+                          "componentName": "view",
+                          "componentState": {
+                            "url": "http://localhost:3001/position",
+                            "name": "Position View"
+                          },
+                          "isClosable": true,
+                          "reorderEnabled": true,
+                          "title": "view"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "stack",
+                  "width": 50,
+                  "isClosable": true,
+                  "reorderEnabled": true,
+                  "title": "",
+                  "activeItemIndex": 0,
+                  "content": [
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "url": "http://localhost:3001/trade",
+                        "name": "Trade View"
+                      },
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": "view"
+                    },
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "url": "http://localhost:3001/trade-audit",
+                        "name": "Trade Audit"
+                      },
+                      "isClosable": true,
+                      "reorderEnabled": true,
+                      "title": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

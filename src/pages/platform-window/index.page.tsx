@@ -1,4 +1,5 @@
 import * as React from "react";
+import Head from "next/head";
 
 import { LeftMenu } from "../../components/chrome/LeftMenu";
 import { TitleBar } from "../../components/chrome/TitleBar";
@@ -24,6 +25,9 @@ const CustomPlatformWindow: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>AdapTable OpenFin Demo App</title>
+      </Head>
       <div
         id="customWindow"
         style={{
