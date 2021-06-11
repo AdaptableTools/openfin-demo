@@ -1,9 +1,9 @@
-name: BUILD-branch:master
+name: BUILD-branch:home
 
 on:
   push:
     branches:
-      - master
+      - home
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
         name: Push changes
         with:
           github_token: ${{ secrets.POC_GITHUB_TOKEN }}
-          branch: master
+          branch: home
           directory: poc-dist
           repository: ${{ github.repository }}-dist
           commit_message: ${COMMIT_MESSAGE}
