@@ -132,7 +132,7 @@ export const TitleBar = () => {
       addContextListener,
       broadcast,
       getSystemChannels,
-    } = require("openfin-fdc3");
+    } = (globalThis as any).fdc3;
     defaultBroadcastFn = broadcast;
 
     const initialTheme = localStorage.getItem("theme") || "dark";

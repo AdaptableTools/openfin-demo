@@ -1,7 +1,7 @@
 {
   "runtime": {
     "arguments": "",
-    "version": "17.85.54.32"
+    "version": "19.89.61.5"
   },
   "shortcut": {
     "company": "AdapTable",
@@ -9,6 +9,7 @@
     "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
     "name": "AdapTable OpenFin Demo App"
   },
+  
   "platform": {
     "providerUrl": "http://localhost:3001/provider",
     "applicationIcon": "https://adaptabletools.com/img/favicon-32x32.png",
@@ -20,11 +21,14 @@
     "defaultHeight": 1200,
     "defaultWidth": 1200,
     "resizable": true,
+    "fdc3InteropApi": "1.2",
     "defaultWindowOptions": {
       "url": "http://localhost:3001/platform-window",
       "contextMenu": true,
+      "fdc3InteropApi": "1.2",
       "frame": false
     },
+   
     "permissions": {
       "System": {
         "launchExternalProcess": true
@@ -38,9 +42,6 @@
     },
     {
       "name": "notifications"
-    },
-    {
-      "name": "fdc3"
     }
   ],
   "snapshot": {
