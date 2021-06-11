@@ -50,6 +50,7 @@ jobs:
       - name: checkout POC DIST repo
         uses: actions/checkout@v2
         with:
+          branch: home
           token: ${{ secrets.POC_GITHUB_TOKEN }}
           repository: ${{ github.repository }}-dist
           path: poc-dist
