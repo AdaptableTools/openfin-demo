@@ -16,6 +16,7 @@ import {
 } from "../../data/utils";
 
 import { useState } from "react";
+import { useCallback } from "react";
 
 type Context = any;
 type SystemChannel = any;
@@ -116,13 +117,73 @@ const ChannelItem = ({
   );
 };
 
+let SYSTEM_CHANNELS: SystemChannel[] = null;
+
+let CURRENT_SYSTEM_ID: string = null;
+
+const getSystemChannels: () => Promise<SystemChannel[]> = () => {
+  return Promise.resolve(
+    SYSTEM_CHANNELS ??
+      fdc3.getSystemChannels().then((channels) => {
+        SYSTEM_CHANNELS = channels;
+        return channels;
+      })
+  );
+};
+
+const reduceChannels = (
+  channels: SystemChannel[]
+): Record<string, SystemChannel> => {
+  return channels.reduce((acc, channel: SystemChannel) => {
+    acc[channel.id] = channel;
+    return acc;
+  }, {} as Record<string, SystemChannel>);
+};
+
+const getSystemChannelsMap: () => Promise<
+  Record<string, SystemChannel>
+> = () => {
+  return getSystemChannels().then(reduceChannels);
+};
+
+const getCurrentBroadcastFn = (): SystemChannel["broadcast"] => {
+  return (message: Context) => {
+    getSystemChannelsMap().then((systemChannels) => {
+      const theChannel = systemChannels?.[CURRENT_SYSTEM_ID];
+      if (theChannel) {
+        (fdc3 as any).leaveCurrentChannel().then(() => {
+          (fdc3 as any).joinChannel(CURRENT_SYSTEM_ID).then(() => {
+            console.log(
+              "broadcasting",
+              message,
+              "to",
+              CURRENT_SYSTEM_ID,
+              "channel"
+            );
+            return fdc3.broadcast(message);
+          });
+        });
+      }
+    });
+  };
+};
+
+const broadcast = (what: any) => {
+  getCurrentBroadcastFn()?.(what);
+};
+
 export const TitleBar = () => {
   const [instrumentId, setInstrumentId] = useState("");
-  const [renderId, setRenderId] = useState(0);
+  const [_renderId, setRenderId] = useState(0);
   const rerender = () => setRenderId((x) => x + 1);
-  const [currentSystemChannelId, setCurrentSystemChannelId] = useState<any>(
+  const [currentSystemChannelId, doSetCurrentSystemChannelId] = useState<any>(
     "green"
   );
+
+  const setCurrentSystemChannelId = useCallback((id: string) => {
+    CURRENT_SYSTEM_ID = id;
+    doSetCurrentSystemChannelId(id);
+  }, []);
   const [systemChannels, setSystemChannels] = useState<
     Record<string, SystemChannel>
   >(null);
@@ -133,36 +194,34 @@ export const TitleBar = () => {
       syncTheme(initialTheme);
     }
 
-    fdc3.getSystemChannels().then((channels) => {
+    getSystemChannels().then((channels) => {
+      console.log("got channels", channels);
       setCurrentSystemChannelId(channels[0].id);
-      setSystemChannels(
-        channels.reduce((acc, channel: SystemChannel) => {
-          acc[channel.id] = channel;
-          return acc;
-        }, {} as Record<string, SystemChannel>)
-      );
+      setSystemChannels(reduceChannels(channels));
     });
 
     (fdc3 as any).addContextListener(null, (context: any) => {
+      if (context.skipFilter) {
+        return;
+      }
+
       const instrumentId = context.id?.ticker;
+
       if (getInstrumentName(instrumentId)) {
         setInstrumentId(instrumentId);
       }
     });
-  }, []);
 
-  const getCurrentBroadcastFn = (): SystemChannel["broadcast"] => {
-    const theChannel = systemChannels?.[currentSystemChannelId];
-    if (theChannel) {
-      return (message: Context) => {
-        (fdc3 as any).leaveCurrentChannel().then(() => {
-          (fdc3 as any).joinChannel(currentSystemChannelId).then(() => {
-            return fdc3.broadcast(message);
-          });
-        });
-      };
-    }
-  };
+    fin.InterApplicationBus.subscribe(
+      { uuid: "*" },
+      "broadcast-instrument",
+      (instrumentContext) => {
+        console.log("got new instrument", instrumentContext);
+
+        broadcast(instrumentContext);
+      }
+    );
+  }, []);
 
   useThemeChangeInProvider(syncTheme);
 
@@ -170,16 +229,6 @@ export const TitleBar = () => {
     fin.InterApplicationBus.publish("set-filters", instrumentId);
     const name = getInstrumentName(instrumentId);
     if (name) {
-      const broadcast = getCurrentBroadcastFn();
-      if (!broadcast) {
-        return;
-      }
-      console.log(
-        "broadcasting:",
-        instrumentId,
-        "to channel",
-        currentSystemChannelId
-      );
       // broadcast FDC3 message for the given instrumnet (with cusip and name info)
       broadcast({
         type: "instrument",
@@ -190,7 +239,7 @@ export const TitleBar = () => {
         },
       });
     }
-  }, [currentSystemChannelId, instrumentId]);
+  }, [instrumentId]);
 
   React.useEffect(() => {
     fin.InterApplicationBus.subscribe(

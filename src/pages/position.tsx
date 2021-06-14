@@ -40,6 +40,7 @@ import {
 } from "@adaptabletools/adaptable/src/types";
 
 import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
+import { broadcastFDC3Instrument } from "./broadcastFDC3Instrument";
 
 let adaptableApiRef: React.MutableRefObject<AdaptableApi>;
 const columnDefs: ColDef[] = positionColumns;
@@ -77,6 +78,7 @@ const openfinPluginOptions: OpenFinPluginOptions = {
   notificationTimeout: false,
   showAppIconInNotifications: true,
   showAdaptableAlertsAsNotifications: true,
+  broadcastFDC3Instrument,
 };
 
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
@@ -178,42 +180,44 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     Alert: {
-      AlertDefinitions: [
-        {
-          Scope: {
-            ColumnIds: ["position"],
-          },
-          AlertForm: {
-            buttons: [
-              {
-                label: "Increase",
-                buttonStyle: {
-                  variant: "raised",
-                },
-                action: "increaseLimit",
-              },
-              {
-                label: "Show Me",
-                buttonStyle: {
-                  variant: "outlined",
-                  tone: "error",
-                },
-                Action: ["highlight-cell", "jump-to-cell"],
-              },
-            ],
-          },
-          Rule: {
-            Predicate: {
-              PredicateId: "GreaterThan",
-              Inputs: [10_000], // return to 70,000
-            },
-          },
-          MessageType: "Warning",
-          AlertProperties: {
-            DisplayNotification: true,
-          },
-        },
-      ],
+      Revision: 2,
+
+      // AlertDefinitions: [
+      //   {
+      //     Scope: {
+      //       ColumnIds: ["position"],
+      //     },
+      //     AlertForm: {
+      //       buttons: [
+      //         {
+      //           label: "Increase",
+      //           buttonStyle: {
+      //             variant: "raised",
+      //           },
+      //           action: "increaseLimit",
+      //         },
+      //         {
+      //           label: "Show Me",
+      //           buttonStyle: {
+      //             variant: "outlined",
+      //             tone: "error",
+      //           },
+      //           Action: ["highlight-cell", "jump-to-cell"],
+      //         },
+      //       ],
+      //     },
+      //     Rule: {
+      //       Predicate: {
+      //         PredicateId: "GreaterThan",
+      //         Inputs: [10_000], // return to 70,000
+      //       },
+      //     },
+      //     MessageType: "Warning",
+      //     AlertProperties: {
+      //       DisplayNotification: true,
+      //     },
+      //   },
+      // ],
       FlashingAlertDefinitions: [
         {
           Scope: {

@@ -29,6 +29,7 @@ import {
   MenuContext,
 } from "@adaptabletools/adaptable/src/types";
 import { useAdaptableReady } from "../components/hooks/useAdaptableReady";
+import { broadcastFDC3Instrument } from "./broadcastFDC3Instrument";
 
 const columnDefs: ColDef[] = tradeColumns;
 
@@ -288,6 +289,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       notificationTimeout: false,
       showAppIconInNotifications: true,
       onValidationFailureInExcel: "show-undo-notification",
+      broadcastFDC3Instrument,
     }),
     finance({
       instrumentColumns: [
