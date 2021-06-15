@@ -14,7 +14,7 @@
 <blockquote>
   <p>The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communication and many other benefits.</p>
 </blockquote>
-<p>The demo took just 2 days to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.  </p>
+<p>The demo took just 2 days to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.</p>
 <p>In particular it demonstrates 3 areas where AdapTable and OpenFin functionality combine in exciting ways:</p>
 <ul>
 <li><a href="#notifications-and-alerts">Notifications</a> - AdapTable's powerful Alerts can be shown as OpenFin Notifications with action buttons</li>
@@ -51,9 +51,9 @@
 <li>No columns are editable</li>
 </ul>
 <h3 id="application-bar">Application Bar</h3>
-<p>At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows. </p>
+<p>At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows.</p>
 <p><img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/toolbar.gif" /></p>
-<p>The Application Bar contains: </p>
+<p>The Application Bar contains:</p>
 <ul>
 <li><p><strong>Channel Chooser</strong> - allows the user to pick the (coloured) <a href="https://developers.openfin.co/docs/channels">OpenFin Channel</a> on which FDC3 messages will be broadcast</p></li>
 <li><p><strong>Instrument Picker</strong>: Selecting an Instrument from the dropdown does 2 things:</p></li>
@@ -87,7 +87,7 @@
 </blockquote>
 <h2 id="notifications-and-alerts">Notifications and Alerts</h2>
 <p>The Positions Blotter has been set up to fire an <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function">Adaptable Alert</a> when any Position is greater than 70,000.</p>
-<p>We have set the <em>showAdaptableAlertsAsNotifications</em> property in OpenFinPluginOpetions to true.  The result is that, when triggered, Alerts are displayed as an <a href="https://www.npmjs.com/package/openfin-notifications">OpenFin Notification</a> and appear at the side of the grid.</p>
+<p>We have set the <em>showAdaptableAlertsAsNotifications</em> property in OpenFinPluginOpetions to true. The result is that, when triggered, Alerts are displayed as an <a href="https://www.npmjs.com/package/openfin-notifications">OpenFin Notification</a> and appear at the side of the grid.</p>
 <p>The Alert has been configured with 2 butttons:</p>
 <ul>
 <li><strong>Show Me</strong>: uses the 'highlight-cell' and 'jump-to-cell' <a href="https://docs.adaptabletools.com/docs/adaptable-functions/alert-function#predefined-actions">Predefined Actions</a> to let the user see the Cell that triggered the Alert.</li>
@@ -96,7 +96,7 @@
 <blockquote>
   <p>After this button is clicked, the next time the Alert fires it shows the updated limit as its trigger.</p>
 </blockquote>
-<p>Both of the AdapTable Alert buttons automatically convert into <a href="https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html">OpenFin action buttons</a> with 'cta' displaying based on the Button's style. </p>
+<p>Both of the AdapTable Alert buttons automatically convert into <a href="https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html">OpenFin action buttons</a> with 'cta' displaying based on the Button's style.</p>
 <p><img src="./images/notification.PNG" /></p>
 <h2 id="fdc3-broadcasts">FDC3 Broadcasts</h2>
 <p>In all 3 views the 'Instrument' column has been configued (using the <a href="https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin">Finance Plugin</a>) as of type <strong>InstrumentColumn</strong>.</p>
@@ -160,7 +160,7 @@
 <ul>
 <li><strong>Bid</strong>: Created with Expression: <code>'[price] - [bidOfferSpread] / 2'</code></li>
 <li><strong>Ask</strong>: Created with Expression: <code>'[price] + [bidOfferSpread] / 2'</code></li>
-<li><strong>Change on Day</strong>: Created with Expression: <code>'[price] - [closingPrice]'</code></li>
+<li><strong>Change on Day</strong>: Created with Expression: <code>'[price] - [close]'</code></li>
 </ul>
 <h3 id="format-column">Format Column</h3>
 <p>All the views have <a href="https://docs.adaptabletools.com/docs/adaptable-functions/format-column-function">Format Columns</a> configured:</p>

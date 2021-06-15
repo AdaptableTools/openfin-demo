@@ -177,7 +177,7 @@ export async function makeProvider() {
 
   setInterval(() => {
     addTrade(createTrade());
-  }, 10_000);
+  }, 20_000);
 
   const instrumentIds = getInstrumentIds();
   for (let i = 0; i < instrumentIds.length; i++) {
@@ -201,7 +201,7 @@ export async function makeProvider() {
     prices[priceIndex] = priceObject;
 
     provider.publish("tickprice", priceObject);
-  }, 2000);
+  }, 2_000);
 
   console.log("PROVIDER DONE");
 }

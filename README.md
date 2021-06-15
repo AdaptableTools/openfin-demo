@@ -10,13 +10,14 @@ It uses **dummy data** to mimic the types of screens, workflows and advanced use
 
 > The demo application is not designed to be used 'off the shelf' but as an example of the functionality offered by AdapTable and OpenFin, and how they can be used in tandem to produce cutting-edge applications with advanced features like live 2-way excel exports, notifications, cross-widget communication and many other benefits.
 
-The demo took just 2 days to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.  
+The demo took just 2 days to develop and uses just a small subset of the many, exceptional features found in both AdapTable and OpenFin.
 
 In particular it demonstrates 3 areas where AdapTable and OpenFin functionality combine in exciting ways:
 
 - [Notifications](#notifications-and-alerts) - AdapTable's powerful Alerts can be shown as OpenFin Notifications with action buttons
 - [FDC3 Messages](#application-bar) - FDC3 broadcasts can be sent from AdapTable to other OpenFin windows via current channel (and internally through the IAB message bus)
 - [Live 2-way Excel Integration](#live-export) - Ticking data can be sent from AdapTable to Excel and each updates in line with data changes made in the other, including full validation.
+
 ## How it Works
 
 The demo - built using AdapTable's [OpenFin Plugin](https://docs.adaptabletools.com/docs/plugins/openfin/openfin-plugin) - displays a pseudo Front Office set-up with 3 views: _Trade_, _Price_ & _Positions_.
@@ -53,11 +54,11 @@ The 3 blotters in the demo application are:
 
 ### Application Bar
 
-At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows. 
+At the top of the demo are a series of useful buttons and dropdowns which help to manage, and sync data between, the various windows.
 
 <img src="https://github.com/AdaptableTools/openfin-demo/raw/master/images/toolbar.gif" />
 
-The Application Bar contains: 
+The Application Bar contains:
 
 - **Channel Chooser** - allows the user to pick the (coloured) [OpenFin Channel](https://developers.openfin.co/docs/channels) on which FDC3 messages will be broadcast
 
@@ -73,8 +74,6 @@ The Application Bar contains:
 - **Pause/Display Button** - sets whether OpenFin Notifications wil appear
 
 - **Hide/Show Butto** - toggles Sidebar visibility
-
-
 
 ### Audit Screens
 
@@ -97,7 +96,7 @@ A sidebar is displayed on the left of the application giving access to all the s
 
 The Positions Blotter has been set up to fire an [Adaptable Alert](https://docs.adaptabletools.com/docs/adaptable-functions/alert-function) when any Position is greater than 70,000.
 
-We have set the _showAdaptableAlertsAsNotifications_ property in OpenFinPluginOpetions to true.  The result is that, when triggered, Alerts are displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appear at the side of the grid.
+We have set the _showAdaptableAlertsAsNotifications_ property in OpenFinPluginOpetions to true. The result is that, when triggered, Alerts are displayed as an [OpenFin Notification](https://www.npmjs.com/package/openfin-notifications) and appear at the side of the grid.
 
 The Alert has been configured with 2 butttons:
 
@@ -106,7 +105,7 @@ The Alert has been configured with 2 butttons:
 
   > After this button is clicked, the next time the Alert fires it shows the updated limit as its trigger.
 
-Both of the AdapTable Alert buttons automatically convert into [OpenFin action buttons](https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html) with 'cta' displaying based on the Button's style. 
+Both of the AdapTable Alert buttons automatically convert into [OpenFin action buttons](https://cdn.openfin.co/docs/services/notifications/stable/api/modules/actions.html) with 'cta' displaying based on the Button's style.
 
 <img src="./images/notification.PNG" />
 
@@ -114,10 +113,9 @@ Both of the AdapTable Alert buttons automatically convert into [OpenFin action b
 
 In all 3 views the 'Instrument' column has been configued (using the [Finance Plugin](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin)) as of type **InstrumentColumn**.
 
-As a result a *Broadcast Instrument* [Context Menu item](https://docs.adaptabletools.com/docs/user-interface/context-menu) is automatically added to each Column's Context Menu.
+As a result a _Broadcast Instrument_ [Context Menu item](https://docs.adaptabletools.com/docs/user-interface/context-menu) is automatically added to each Column's Context Menu.
 
 When that menu item is clicked, Adaptable (when running in OpenFin) listens to the [Broadcast Instrument event](https://docs.adaptabletools.com/docs/plugins/finance/finance-plugin#broadcast-instrument) and broadcasts an FDC3 message on the current channel containing the [Instrument Context](https://fdc3.finos.org/docs/1.0/context-spec).
-
 
 ## Live Export
 
@@ -141,7 +139,6 @@ This is activated by selecting a report from the **OpenFin Toolbar** in the Trad
 > Note: you must have Excel open **before** you run Live Export
 
 <img src="./images/liveexcel.PNG" />
-
 
 ## AdapTable Features
 
@@ -190,7 +187,7 @@ The following [Conditional Styles](https://docs.adaptabletools.com/docs/adaptabl
 
 - **Bid**: Created with Expression: `'[price] - [bidOfferSpread] / 2'`
 - **Ask**: Created with Expression: `'[price] + [bidOfferSpread] / 2' `
-- **Change on Day**: Created with Expression: `'[price] - [closingPrice]'`
+- **Change on Day**: Created with Expression: `'[price] - [close]'`
 
 ### Format Column
 

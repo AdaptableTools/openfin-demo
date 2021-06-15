@@ -8,7 +8,7 @@ export type Position = {
   position: number;
 
   currentPrice: number;
-  closingPrice: number;
+  close: number;
   pnl: number;
 };
 export const getPositions = (
@@ -32,8 +32,8 @@ export const getPositions = (
         instrumentId: instrument,
         position,
         currentPrice: priceObj.price,
-        closingPrice: priceObj.closingPrice,
-        pnl: (priceObj.price - priceObj.closingPrice) * position,
+        close: priceObj.close,
+        pnl: (priceObj.price - priceObj.close) * position,
       });
     }
   }

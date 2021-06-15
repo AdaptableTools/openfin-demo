@@ -88,6 +88,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       ],
     },
     CalculatedColumn: {
+      Revision: 1,
       CalculatedColumns: [
         {
           ColumnId: "bid",
@@ -107,7 +108,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           ColumnId: "changeOnDay",
           FriendlyName: "Change on Day",
           Query: {
-            ScalarExpression: "[price] - [closingPrice]",
+            ScalarExpression: "[price] - [close]",
           },
         },
       ],
@@ -158,6 +159,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       IsCollapsed: true,
     },
     Layout: {
+      Revision: 2,
       CurrentLayout: "Price",
       Layouts: [
         {
@@ -168,8 +170,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             "bidOfferSpread",
             "bid",
             "ask",
-            "closingPrice",
             "changeOnDay",
+            "close",
             "bbgBid",
             "bbgAsk",
           ],

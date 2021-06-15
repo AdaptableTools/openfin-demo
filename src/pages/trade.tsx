@@ -57,6 +57,7 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "tradeId",
   adaptableId: "Trade View",
+  adaptableStateKey: "trade-view-state",
   menuOptions: {
     contextMenuItems: [
       {
@@ -177,26 +178,8 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
       ],
     },
-    ConditionalStyle: {
-      ConditionalStyles: [
-        {
-          Scope: {
-            All: true,
-          },
-
-          Style: {
-            BackColor: "#ffffcc",
-            FontStyle: "Italic",
-            ForeColor: "#000000",
-          },
-          Rule: {
-            BooleanExpression: '[status] = "active"',
-          },
-          ExcludeGroupedRows: true,
-        },
-      ],
-    },
     FormatColumn: {
+      Revision: 2,
       FormatColumns: [
         {
           Scope: {
@@ -206,22 +189,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
             Formatter: "DateFormatter",
             Options: {
               Pattern: "dd-MM-yyyy",
-            },
-          },
-        },
-        {
-          Scope: {
-            ColumnIds: ["notional"],
-          },
-          ColumnStyle: {
-            GradientStyle: {
-              CellRanges: [
-                {
-                  Min: 4500000,
-                  Max: 10000000,
-                  Color: GREEN,
-                },
-              ],
             },
           },
         },
@@ -267,18 +234,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           RowGroupedColumns: ["counterparty"],
           AggregationColumns: {
             notional: true,
-          },
-        },
-      ],
-    },
-    Export: {
-      Reports: [
-        {
-          Name: "Active Trades",
-          ReportColumnScope: "AllColumns",
-          ReportRowScope: "ExpressionRows",
-          Query: {
-            BooleanExpression: '[status] = "active"',
           },
         },
       ],

@@ -120,6 +120,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   predefinedConfig: {
     Theme: ThemeConfig,
     FormatColumn: {
+      Revision: 1,
       FormatColumns: [
         {
           Scope: {
@@ -132,7 +133,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
         },
         {
           Scope: {
-            ColumnIds: ["currentPrice", "closingPrice"],
+            ColumnIds: ["currentPrice", "close"],
           },
           DisplayFormat: DisplayFormat4Digits,
         },

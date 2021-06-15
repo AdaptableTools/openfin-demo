@@ -20,13 +20,13 @@ export type Price = {
   bidOfferSpread: number;
   bid: number;
   ask: number;
-  closingPrice: number;
+  close: number;
   // changeOnDay: number;
   bbgBid: number;
   bbgAsk: number;
 };
 
-const createPrice = (instrument: string) => {
+const createPrice = (instrument: string): Price => {
   var price = getMeaningfulDouble();
   var closingPrice = getMeaningfulDouble();
   var bidOfferSpread = getRandomItem(getBidOfferSpreads());
@@ -38,7 +38,7 @@ const createPrice = (instrument: string) => {
     bidOfferSpread,
     bid: bid,
     ask: ask,
-    closingPrice: closingPrice,
+    close: closingPrice,
     // changeOnDay: price - closingPrice,
     bbgBid: roundTo4Dp(bid - 0.01),
     bbgAsk: roundTo4Dp(ask + 0.01),

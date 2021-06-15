@@ -18,7 +18,7 @@ export const priceColumns: ColDef[] = [
     editable: true,
   },
   {
-    field: "closingPrice",
+    field: "close",
     type: "abColDefNumber",
   },
   {

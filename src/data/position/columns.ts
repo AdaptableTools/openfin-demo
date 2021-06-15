@@ -17,7 +17,7 @@ export const positionColumns: ColDef[] = [
     type: "abColDefNumber",
   },
   {
-    field: "closingPrice",
+    field: "close",
     type: "abColDefNumber",
   },
   {
