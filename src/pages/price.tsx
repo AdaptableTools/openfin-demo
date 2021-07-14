@@ -52,43 +52,13 @@ const initialGridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   primaryKey: "instrumentId",
   adaptableId: "Price View",
+  adaptableStateKey: "price-view",
 
   predefinedConfig: {
     Theme: ThemeConfig,
-    ConditionalStyle: {
-      ConditionalStyles: [
-        {
-          Scope: {
-            ColumnIds: ["changeOnDay"],
-          },
-          Style: {
-            BackColor: GREEN,
-            ForeColor: "#000000",
-          },
-          Rule: {
-            Predicate: {
-              PredicateId: "Positive",
-            },
-          },
-        },
-        {
-          Scope: {
-            ColumnIds: ["changeOnDay"],
-          },
-          Style: {
-            BackColor: RED,
-            ForeColor: "#000000",
-          },
-          Rule: {
-            Predicate: {
-              PredicateId: "Negative",
-            },
-          },
-        },
-      ],
-    },
+
     CalculatedColumn: {
-      Revision: 1,
+      Revision: 2,
       CalculatedColumns: [
         {
           ColumnId: "bid",
@@ -102,13 +72,6 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
           FriendlyName: "Ask",
           Query: {
             ScalarExpression: "[price] + [bidOfferSpread] / 2",
-          },
-        },
-        {
-          ColumnId: "changeOnDay",
-          FriendlyName: "Change on Day",
-          Query: {
-            ScalarExpression: "[price] - [close]",
           },
         },
       ],
@@ -159,7 +122,7 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
       IsCollapsed: true,
     },
     Layout: {
-      Revision: 2,
+      Revision: 3,
       CurrentLayout: "Price",
       Layouts: [
         {

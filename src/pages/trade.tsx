@@ -136,15 +136,12 @@ const adaptableOptions: AdaptableOptions = initAdaptableOptions({
   predefinedConfig: {
     Theme: ThemeConfig,
     Dashboard: {
+      Revision: 1,
       VisibleButtons: ["GridInfo", "Alert", "Layout", "ConditionalStyle"],
       Tabs: [
         {
           Name: "Blotter",
           Toolbars: ["Layout", "CellSummary", "Query", "Filter"],
-        },
-        {
-          Name: "Reports",
-          Toolbars: ["OpenFin", "Export"],
         },
       ],
     },
